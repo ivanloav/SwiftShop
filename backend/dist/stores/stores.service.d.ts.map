@@ -1,0 +1,1 @@
+{"version":3,"file":"stores.service.d.ts","sourceRoot":"","sources":["../../src/stores/stores.service.ts"],"names":[],"mappings":"AAGA,qBACa,aAAa;IACtB,OAAO,CAAC,QAAQ,CAAC,MAAM,CAAQ;;IA4B/B,OAAO;IAIP,OAAO,CAAC,EAAE,EAAE,MAAM;IAIlB,MAAM,CAAC,KAAK,EAAE,GAAG;IAKjB,MAAM,CAAC,EAAE,EAAE,MAAM,EAAE,KAAK,EAAE,GAAG;IAQ7B,MAAM,CAAC,EAAE,EAAE,MAAM;;;CAOpB"}

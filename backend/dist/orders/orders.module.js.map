@@ -1,0 +1,1 @@
+{"version":3,"file":"orders.module.js","sourceRoot":"","sources":["../../src/orders/orders.module.ts"],"names":[],"mappings":";;;;;;;;;AACA,2CAAwC;AACxC,qDAAiD;AACjD,2DAAuD;AAMhD,IAAM,YAAY,GAAlB,MAAM,YAAY;CAAG,CAAA;AAAf,YAAY;IAJxB,IAAA,eAAM,EAAC;QACJ,WAAW,EAAE,CAAC,oCAAgB,CAAC;QAC/B,SAAS,EAAE,CAAC,8BAAa,CAAC;KAC7B,CAAC;GACW,YAAY,CAAG;AAAf,oCAAY"}
