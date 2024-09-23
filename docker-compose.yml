@@ -1,0 +1,58 @@
+version: "3"
+services:
+  # Servicio Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Expone el puerto 3000 para el backend
+    environment:
+      - NODE_ENV=development # Define el entorno de desarrollo
+      - DB_HOST=db # Host de la base de datos es el servicio db
+      - DB_USER=user # Usuario de la base de datos
+      - DB_PASSWORD=userpassword
+      - DB_NAME=swiftshop # Nombre de la base de datos
+    volumes:
+      - ./backend:/app # Mapea el código fuente en el contenedor para desarrollo
+      - /app/node_modules # Evita conflictos de node_modules en el contenedor y localmente
+    depends_on:
+      - db # El backend espera a que MySQL esté disponible
+    networks:
+      - app-network
+
+  # Servicio Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5000" # Expone el puerto 5000 para el frontend
+    environment:
+      - NODE_ENV=development # Define el entorno de desarrollo
+    volumes:
+      - ./frontend:/app # Mapea el código fuente en el contenedor para desarrollo
+      - /app/node_modules # Evita conflictos de node_modules
+    networks:
+      - app-network
+
+  # Servicio Base de Datos MySQL
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: swiftshop
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    volumes:
+      - db-data:/var/lib/mysql # Persistencia de datos de MySQL
+    ports:
+      - "3306:3306" # Exposición del puerto MySQL
+    networks:
+      - app-network
+
+volumes:
+  db-data: # Volumen persistente para la base de datos
+
+networks:
+  app-network: # Red compartida entre los servicios

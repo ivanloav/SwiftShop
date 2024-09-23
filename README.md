@@ -7,6 +7,13 @@
 ```bash
 npm install --force
 npm install -g @nestjs/cli
+npm install dotenv --force
+npm install @nestjs/config --force
+npm install @types/node --save-dev --force
+
+-- npm install @nestjs/common@^8.0.0 @nestjs/core@^8.0.0 @nestjs/swagger@^5.0.0
+
+npm install @nestjs/typeorm typeorm mysql2 --force
 npm init
 npm start
 # (Se ejecuta en http://localhost:3000/api/)
