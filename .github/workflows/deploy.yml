@@ -11,32 +11,138 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3 # Actualiza a la versión v3
+        uses: actions/checkout@v2
 
-      - name: Copy files via SSH
+      - name: Copy files via SCP
         uses: appleboy/scp-action@v0.1.1
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
+          host: ec2-54-235-225-199.compute-1.amazonaws.com # Pon aquí el DNS o IP de tu instancia EC2
+          username: ubuntu # Usuario de EC2, típicamente 'ubuntu'
+          key: |
+            -----BEGIN OPENSSH PRIVATE KEY-----
+            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
+            -----END OPENSSH PRIVATE KEY-----
           source: "."
           target: "/home/ubuntu/SwiftShop"
+          port: 22
+          timeout: 30s
+          command_timeout: 10m
 
       - name: Execute commands via SSH
         uses: appleboy/ssh-action@v0.1.2
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
+          host: ec2-54-235-225-199.compute-1.amazonaws.com
+          username: ubuntu
+          key: |
+            -----BEGIN OPENSSH PRIVATE KEY-----
+            b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn
+            NhAAAAAwEAAQAAAgEAwPqrA6hgrlxM4cKYHYnVMAtaBJ9ncsjbIglCQGW/VK9DgBC16tZ1
+            LffdDWhn+Hy8B8I7A7uXIE5Re6KvlMKWbW7yVx3nuPjwzXZrnTsamoeRRlMZm9/tFs/y1P
+            jG0soDNrmNFybOqxcD+V4Q1PjTSdkh/U4OEp1+hiubdN4Pvs/fNJQGkJX1cskBUl5vHosm
+            wQnCqDAn/Hg9q6GAp/ZytFR7CN7uDbEHs/EVMYHsfN2ngCLRf7zGgGRpg1rsTMgL2WMWNz
+            fIqfPeKuuQEYD9TLMeksIHo/XDoX03fbomoB7nFFP+TbW3+iVk4CHXuPKn98WL4apn8E8l
+            max/2nYoTbXYdi4K4d3njUi1zCK8bHIL6sMzGZnADPKVogj9TV25O/LgMAwAVihYnC4rlv
+            dLX9VTed6nLyYxBFNEAE/V4SGk5u6sF3TzJscR7/Mnay8kAogk1SgiOtI0Pgjwv0XLyGiE
+            dkw7YBXU8tXYKGiZ4vSX0espkpnFbQKQLpJ7ikPyIs+moETgeT51s9oEmuRItl1wOCJPOr
+            R1l3AF40khsiz0y/5l0sOl7/ypYsZWA5nKVUwT6AE9mdG1VppMLBHmlqMYj4vrip9FkGxx
+            /64sMrxIXW6++bd94gimzG+yzPzsMLDlUs3F2YOss7HOTWD8aSwKMF7CShdhIFil1nvUTP
+            UAAAdYiEj8+ohI/PoAAAAHc3NoLXJzYQAAAgEAwPqrA6hgrlxM4cKYHYnVMAtaBJ9ncsjb
+            IglCQGW/VK9DgBC16tZ1LffdDWhn+Hy8B8I7A7uXIE5Re6KvlMKWbW7yVx3nuPjwzXZrnT
+            samoeRRlMZm9/tFs/y1PjG0soDNrmNFybOqxcD+V4Q1PjTSdkh/U4OEp1+hiubdN4Pvs/f
+            NJQGkJX1cskBUl5vHosmwQnCqDAn/Hg9q6GAp/ZytFR7CN7uDbEHs/EVMYHsfN2ngCLRf7
+            zGgGRpg1rsTMgL2WMWNzfIqfPeKuuQEYD9TLMeksIHo/XDoX03fbomoB7nFFP+TbW3+iVk
+            4CHXuPKn98WL4apn8E8lmax/2nYoTbXYdi4K4d3njUi1zCK8bHIL6sMzGZnADPKVogj9TV
+            25O/LgMAwAVihYnC4rlvdLX9VTed6nLyYxBFNEAE/V4SGk5u6sF3TzJscR7/Mnay8kAogk
+            1SgiOtI0Pgjwv0XLyGiEdkw7YBXU8tXYKGiZ4vSX0espkpnFbQKQLpJ7ikPyIs+moETgeT
+            51s9oEmuRItl1wOCJPOrR1l3AF40khsiz0y/5l0sOl7/ypYsZWA5nKVUwT6AE9mdG1VppM
+            LBHmlqMYj4vrip9FkGxx/64sMrxIXW6++bd94gimzG+yzPzsMLDlUs3F2YOss7HOTWD8aS
+            wKMF7CShdhIFil1nvUTPUAAAADAQABAAACAEZs9G4wS6A2JQSazIKzI28WJXLcbZdRP89r
+            C5eOykVwdLTO5GTggQEWnMBg4tinRMOcGYdiNWPf0RLKq0MhxF4JiD1Mt50klFSXK+zEfg
+            /4+4Zrm0Psc4zItPkOFRkmCgg1rQzO58s+af/eWUwvxoQDzsivbKlUerEiRuheheZ/3BhH
+            ESJA58NNIcNanTjLVYhLNJPGh0E27GKvXNFvOisfTYtOOBgdDA+aIr7fiFuFVLSJgGUakm
+            KWwn7idqwKsXBTHe9m1z9WtTR6pSgOJ+KO19B9KOaoMQ3FMbQbdC8pN/GOOZdIguyyKt80
+            2pIvVCczG7puQuJLMBCmCD7Esi4PopvfnlIoKzYQp/Bi+eusDBlKuMofzDgnyj9MY0KurX
+            5ragxOtdyYfiLT7wHUWk34Wem6cYnntIoKVBADxCTvXnsxPhO/ioZM2Vo7pvPxnJOcbUlp
+            hcpj4WNG8eKh38QOpwUifo/gAsPVMHsRp00W1wYzaaXNd3cFxova3jarlHFO++OR5Ns0OH
+            dMeARA+gAqQWlbJsGdTdiLxOOGo6HphVWBtSlw23kDyoj9hcjvwzxiMkrKTpWqB+50dzvk
+            BvgdEUnmWf9BEL4XyT/yLsP/eMSkPySixLN5tuqhCZRwwwlWuXO6nPi6VG1S4T9VdLN2XB
+            uLa61cMF9L9HoxOocdAAABAQDROkQ0milPyTI57w5+t9LYvGsRx5+QJjXU8cZpySUh2WxK
+            8mSdgIPqWtP/wbn6BKLopdWBMq//cSFp4rLtxkc5EOCueTBJUOJdNmbazNcTfSIlTd9Uik
+            fAeG607pcP+27tjNmYOPBj6UnNjNYjIzYnI/6ZqQI3KQA8VzedTjkTbX3++55TGgfoRiyK
+            WwyKeuOtXrrWSftQGz0QOwEhksXSGFcbwYbn8T94bNHb2GkJ8thbiLK5zXez7PXzI+Snta
+            vFdadJTxfrj9W6XWy/Q+RUn6Ot21oSzd7POpk5Ea0IXUagFbMiob7Fn3CC7Jc48WdoNZ1J
+            GGpmc5nxmhLKhoxaAAABAQDmVyU6EQhvvVaq3wD4oeON6oGcMtyCxpBEBMD9P7UdB0dStT
+            6JG5weeQ7SHgzcfHmEMqLU/4ssPvv9TMWnzVd7vYAJWl9dA5halrtuo1Ls2cZ0bpadhzqo
+            T8epDS9lbbU8mjyN/G7IQ8QFJCJGa4bzoYB7iHJFarfHq2e0ACNDO23ft5JExv45IUdTYo
+            oMXaUTzP1vcgpFAiLazOiEvmXLW0WtTUhmmeumqQv97InbBGv4v+4bz2WtRsGvwmP1Src6
+            vxnGrqSq6yKwbFhFGs8WxHi+Lo3yeXKX72pHcJASkqDOIy858AHoBXycb7cuda9nEEueoa
+            Mgf2iit82xFpIXAAABAQDWeg29/saC/YXg9jgbguDEyuZjKlv5awLET78IkPslC676TyVv
+            /SuvvYsL/bjSi9OyOP9Sk4DP6EYFxcu8ZpgabjK34RLap315z6KKbuJnFWuZ7+rfbhQFwl
+            kbbSmSvXeDnAFcgMmmggR2FR1DQyCWCrgJcWVxJPWhrM+sfAG3Tn81/L/dpohbVmCMl3Yf
+            K4CPdleacp15H0iCXmV/pap/QclKDm9C88kAqmmDgQ0Fo+z4iDtPivQ+1OHfE/DmlAPBxk
+            CsX9QfGpGbiGGCv8hNK2TgeeQXNRH7Y5od2j8d4gssYWpnLslDCSWZ3/3wzib3v5H5J4a8
+            rY2pwF7wN7zTAAAAHml2YW5ATWFjQm9vay1Qcm8tZGUtSXZhbi5sb2NhbAECAwQ=
+            -----END OPENSSH PRIVATE KEY-----
           script: |
             cd /home/ubuntu/SwiftShop
             git pull origin main
+            # Backend deployment
             cd backend
             npm install
             pm2 restart backend
+            # Frontend deployment
             cd ../frontend
             npm install
             npm run build
             sudo cp -r dist/* /var/www/html/
             sudo nginx -t
             sudo systemctl restart nginx
+          port: 22
+          timeout: 30s
+          command_timeout: 10m
