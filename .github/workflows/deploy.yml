@@ -36,4 +36,27 @@ jobs:
           timeout: 60s # Aumenta el tiempo de espera
           command_timeout: 20m # Aumenta el tiempo de espera para ejecutar comandos
           script: |
-            echo "SSH connection successful"
+            # Navega al directorio de tu proyecto en EC2
+            cd /home/ubuntu/SwiftShop
+
+            # Actualiza el repositorio desde GitHub
+            git pull origin main
+
+            # Backend deployment
+            cd /home/ubuntu/SwiftShop/backend
+            npm install  # Instala dependencias de backend
+            pm2 restart backend  # Reinicia el backend (usa pm2 o el sistema que estés utilizando)
+
+            # Frontend deployment
+            cd /home/ubuntu/SwiftShop/frontend
+            npm install  # Instala dependencias de frontend
+            npm run build  # Compila el frontend
+
+            # Copia los archivos compilados a la carpeta que Nginx utiliza para servir el frontend
+            sudo cp -r /home/ubuntu/SwiftShop/frontend/dist/* /var/www/html/
+
+            # Verifica la configuración de Nginx
+            sudo nginx -t
+
+            # Reinicia Nginx
+            sudo systemctl restart nginx
