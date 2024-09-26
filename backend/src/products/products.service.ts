@@ -1,44 +1,39 @@
-
-import { Injectable } from '@nestjs/common';
-import * as fs from 'fs';
-import * as path from 'path';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { Product } from "./product.entity";
+import { CreateProductDto } from "./create-product.dto";
+import { UpdateProductDto } from "./update-product.dto";
 
 @Injectable()
 export class ProductsService {
-    private readonly products: any[];
+  constructor(
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>
+  ) {}
 
-    constructor() {
-        const filePath = path.join(__dirname, '../mock-data/products.json');
-        const fileContents = fs.readFileSync(filePath, 'utf8');
-        this.products = JSON.parse(fileContents);
-    }
+  findAll(): Promise<Product[]> {
+    return this.productRepository.find();
+  }
 
-    findAll() {
-        return this.products;
-    }
+  findOne(id: number): Promise<Product> {
+    return this.productRepository.findOne({ where: { id } });
+  }
 
-    findOne(id: number) {
-        return this.products.find(product => product.id === id);
-    }
+  create(createProductDto: CreateProductDto): Promise<Product> {
+    const newProduct = this.productRepository.create(createProductDto);
+    return this.productRepository.save(newProduct);
+  }
 
-    create(product: any) {
-        this.products.push(product);
-        return product;
-    }
+  async update(
+    id: number,
+    updateProductDto: UpdateProductDto
+  ): Promise<Product> {
+    await this.productRepository.update(id, updateProductDto);
+    return this.productRepository.findOne({ where: { id } });
+  }
 
-    update(id: number, product: any) {
-        const index = this.products.findIndex(p => p.id === id);
-        if (index !== -1) {
-            this.products[index] = product;
-        }
-        return product;
-    }
-
-    remove(id: number) {
-        const index = this.products.findIndex(p => p.id === id);
-        if (index !== -1) {
-            this.products.splice(index, 1);
-        }
-        return { message: 'Producto eliminado exitosamente.' };
-    }
+  async remove(id: number): Promise<void> {
+    await this.productRepository.delete(id);
+  }
 }
