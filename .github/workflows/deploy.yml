@@ -13,12 +13,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Copy files via SSH
+        uses: appleboy/scp-action@v0.1.1
+        with:
+          host: ${{ secrets.EC2_HOST }} # Asegúrate de que EC2_HOST esté configurado
+          username: ubuntu # Asegúrate de que el usuario sea correcto (ubuntu en tu caso)
+          key: ${{ secrets.EC2_SSH_KEY }} # Usa el secreto configurado con la clave privada
+          source: "." # Copia todos los archivos del repo
+          target: "/home/ubuntu/SwiftShop"
+          port: 22
+          timeout: 30s
+          command_timeout: 10m
+          use_insecure_cipher: false
+          rm: false
+
       - name: Execute commands via SSH
         uses: appleboy/ssh-action@v0.1.2
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu # Usuario adecuado para la instancia
-          key: ${{ secrets.EC2_SSH_KEY }}
+          host: ${{ secrets.EC2_HOST }} # Host de la instancia EC2
+          username: ubuntu # Usuario correcto (ubuntu)
+          key: ${{ secrets.EC2_SSH_KEY }} # Secreto configurado con la clave privada
           port: 22
           script: |
             cd /home/ubuntu/SwiftShop
@@ -27,7 +41,7 @@ jobs:
             # Backend deployment
             cd /home/ubuntu/SwiftShop/backend
             npm install  # Instala dependencias del backend
-            pm2 restart backend  # Reinicia el backend
+            pm2 restart backend  # Reinicia el backend (asegúrate que pm2 esté instalado y configurado)
 
             # Frontend deployment
             cd /home/ubuntu/SwiftShop/frontend
