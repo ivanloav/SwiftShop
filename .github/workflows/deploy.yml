@@ -36,16 +36,4 @@ jobs:
           timeout: 60s # Aumenta el tiempo de espera
           command_timeout: 20m # Aumenta el tiempo de espera para ejecutar comandos
           script: |
-            cd /home/ubuntu/SwiftShop
-            git pull origin main
-            # Backend deployment
-            cd /home/ubuntu/SwiftShop/backend
-            npm install
-            pm2 restart backend
-            # Frontend deployment
-            cd /home/ubuntu/SwiftShop/frontend
-            npm install
-            npm run build
-            sudo cp -r /home/ubuntu/SwiftShop/frontend/dist/* /var/www/html/
-            sudo nginx -t
-            sudo systemctl restart nginx
+            echo "SSH connection successful"
