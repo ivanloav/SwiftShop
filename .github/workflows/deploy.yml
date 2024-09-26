@@ -18,8 +18,8 @@ jobs:
       - name: Copy files via SSH
         uses: appleboy/scp-action@v0.1.1
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
+          host: ec2-54-235-225-199.compute-1.amazonaws.com
+          username: ubuntu # Cambiado para Ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "."
           target: "/home/ubuntu/SwiftShop"
@@ -28,8 +28,8 @@ jobs:
       - name: Execute commands via SSH
         uses: appleboy/ssh-action@v0.1.2
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
+          host: ec2-54-235-225-199.compute-1.amazonaws.com
+          username: ubuntu # Cambiado para Ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/SwiftShop
