@@ -4,7 +4,7 @@ export function Hero() {
   return (
     <>
       <div className="hero">
-        <h1>SwiftShop test EC2 final</h1>
+        <h1>SwiftShop test EC2 final 2</h1>
         <h2> Complete your registration </h2>
         <ul>
           <li>40+ different types of cards</li>
