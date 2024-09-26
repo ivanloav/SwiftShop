@@ -1,3 +1,116 @@
+# Amazon AWS
+
+- Crear instancia EC2 Ubuntu
+- Conexión SSH: ssh -i /ruta/a/tu/archivo.pem ubuntu@tu-dns-publico-amazon:
+
+```bash
+  # Actualiza
+  sudo apt update && sudo apt upgrade -y
+
+  # Instala curl
+  sudo apt install curl -y
+
+  # Añade el repositorio de Node.js 18
+  curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+
+  # Instala Node.js y NPM
+  sudo apt install -y nodejs
+
+  # Verifica la instalación
+  node -v
+  npm -v
+
+  # Instala Git
+  sudo apt install git -y
+
+  # Clona tu repositorio
+  git clone URL al Repo GitHub
+
+  # Entra en la carpeta del proyecto
+  cd Proyecto
+
+  # Instala PM2 globalmente
+  sudo npm install -g pm2
+
+  # Configura PM2 para que se inicie con el sistema
+  pm2 startup
+  sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
+
+  # Instala Nginx
+  sudo apt install nginx -y
+
+  # Inicia Nginx
+  sudo systemctl start nginx
+
+  # Habilita Nginx para que se inicie con el sistema
+  sudo systemctl enable nginx
+
+  # Construir el Front-End
+  cd /home/ubuntu/SwiftShop/frontend
+  npm install  # Instala las dependencias del frontend
+  npm run build  # Genera los archivos estáticos de producción
+
+  #Configura Nginx
+  sudo nano /etc/nginx/sites-available/default
+
+    server {
+    listen 80;
+    server_name tu-dominio-o-ip;  # Cambia esto por tu dominio o deja la IP pública de tu servidor EC2
+
+    # Servir el frontend desde /home/ubuntu/SwiftShop/frontend/build o dist
+    root /home/ubuntu/SwiftShop/frontend/dist;
+    index index.html index.htm;
+
+    location / {
+        try_files $uri /index.html;  # Redirigir a index.html para que funcione el routing del frontend
+    }
+
+    # Configuración para el backend (API)
+    location /api/ {
+        proxy_pass http://localhost:3000;  # El backend de Node.js corriendo en el puerto 3000
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+    }
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
+}
+
+  # Construir el Back-End
+    # Entra en la carpeta de backend
+    cd /home/ubuntu/SwiftShop/backend
+
+    # Instala las dependencias de tu aplicación
+    npm install
+
+    # Ejecuta la aplicación usando PM2
+    pm2 start npm --name "backend" -- start
+
+    # Para verificar que PM2 esté corriendo
+    pm2 list
+
+  # Verifica que Nginx está bien configurado
+  sudo nginx -t
+
+  sudo chmod 755 /home/ubuntu
+  sudo chmod 755 /home/ubuntu/SwiftShop
+  sudo chmod 755 /home/ubuntu/SwiftShop/frontend
+  sudo chmod 755 /home/ubuntu/SwiftShop/frontend/dist
+
+  # Reiniciar Nginx
+  sudo systemctl restart nginx
+```
+
 # Información del Frontend
 
 # Información del Backend

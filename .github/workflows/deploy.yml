@@ -3,40 +3,50 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main # La rama que dispara el deploy (cambia "main" según sea necesario)
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout code from GitHub
         uses: actions/checkout@v2
 
-      - name: Copy files via SSH
-        uses: appleboy/scp-action@v0.1.1
+      - name: Set up Node.js 18.x
+        uses: actions/setup-node@v3
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          source: "."
-          target: "/home/ec2-user/SwiftShop"
+          node-version: "18.x"
 
-      - name: Execute commands via SSH
+      - name: Install SSH Key
         uses: appleboy/ssh-action@v0.1.2
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
           script: |
-            cd /home/ec2-user/SwiftShop
-            git pull origin main  # Actualiza el código desde GitHub
-            # Instalar dependencias del frontend
-            cd frontend  # Navega a la carpeta del frontend
-            npm install  # Instala las dependencias de frontend
-            npm run build  # (Opcional) Si necesitas construir el frontend
-            cd ..  # Vuelve a la raíz del proyecto
-            # Instalar dependencias del backend
-            cd backend  # Navega a la carpeta del backend
-            npm install  # Instala las dependencias de backend
-            pm2 restart all  # Reinicia tu aplicación con PM2
+            # Navega al directorio de tu proyecto en EC2
+            cd /home/ubuntu/SwiftShop
+
+            # Actualiza el repositorio desde GitHub
+            git pull origin main
+
+            # Backend deployment
+            cd /home/ubuntu/SwiftShop/backend
+            npm install  # Instala dependencias de backend
+            pm2 restart backend  # Reinicia el backend (usa pm2 o el sistema que estés utilizando)
+
+            # Frontend deployment
+            cd /home/ubuntu/SwiftShop/frontend
+            npm install  # Instala dependencias de frontend
+            npm run build  # Compila el frontend
+
+            # Copia los archivos compilados a la carpeta que Nginx utiliza para servir el frontend
+            sudo cp -r /home/ubuntu/SwiftShop/frontend/dist/* /var/www/html/
+
+            # Verifica la configuración de Nginx
+            sudo nginx -t
+
+            # Reinicia Nginx
+            sudo systemctl restart nginx
