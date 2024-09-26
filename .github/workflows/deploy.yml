@@ -30,7 +30,13 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ec2-user/SwiftShop
-            git pull origin main
-            # Ejecuta los comandos necesarios, como reiniciar el servidor o instalar dependencias
-            npm install
-            pm2 restart all  # O el comando que uses para tu servidor
+            git pull origin main  # Actualiza el código desde GitHub
+            # Instalar dependencias del frontend
+            cd frontend  # Navega a la carpeta del frontend
+            npm install  # Instala las dependencias de frontend
+            npm run build  # (Opcional) Si necesitas construir el frontend
+            cd ..  # Vuelve a la raíz del proyecto
+            # Instalar dependencias del backend
+            cd backend  # Navega a la carpeta del backend
+            npm install  # Instala las dependencias de backend
+            pm2 restart all  # Reinicia tu aplicación con PM2
