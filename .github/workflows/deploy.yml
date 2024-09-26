@@ -11,46 +11,32 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3 # Actualiza a la versión v3
 
       - name: Copy files via SSH
         uses: appleboy/scp-action@v0.1.1
         with:
-          host: ${{ secrets.EC2_HOST }} # Asegúrate de que EC2_HOST esté configurado
-          username: ubuntu # Asegúrate de que el usuario sea correcto (ubuntu en tu caso)
-          key: ${{ secrets.EC2_SSH_KEY }} # Usa el secreto configurado con la clave privada
-          source: "." # Copia todos los archivos del repo
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "."
           target: "/home/ubuntu/SwiftShop"
-          port: 22
-          timeout: 30s
-          command_timeout: 10m
-          use_insecure_cipher: false
-          rm: false
 
       - name: Execute commands via SSH
         uses: appleboy/ssh-action@v0.1.2
         with:
-          host: ${{ secrets.EC2_HOST }} # Host de la instancia EC2
-          username: ubuntu # Usuario correcto (ubuntu)
-          key: ${{ secrets.EC2_SSH_KEY }} # Secreto configurado con la clave privada
-          port: 22
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/SwiftShop
-            git pull origin main  # Actualiza el código desde GitHub
-
-            # Backend deployment
-            cd /home/ubuntu/SwiftShop/backend
-            npm install  # Instala dependencias del backend
-            pm2 restart backend  # Reinicia el backend (asegúrate que pm2 esté instalado y configurado)
-
-            # Frontend deployment
-            cd /home/ubuntu/SwiftShop/frontend
-            npm install  # Instala dependencias del frontend
-            npm run build  # Compila el frontend
-
-            # Copia los archivos compilados a la carpeta que Nginx utiliza para servir el frontend
-            sudo cp -r /home/ubuntu/SwiftShop/frontend/dist/* /var/www/html/
-
-            # Verifica la configuración de Nginx y reinicia el servicio
+            git pull origin main
+            cd backend
+            npm install
+            pm2 restart backend
+            cd ../frontend
+            npm install
+            npm run build
+            sudo cp -r dist/* /var/www/html/
             sudo nginx -t
             sudo systemctl restart nginx
