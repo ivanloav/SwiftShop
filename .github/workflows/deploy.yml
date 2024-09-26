@@ -10,21 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code from GitHub
+      - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Node.js 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18.x"
 
       - name: Install SSH Key
         uses: appleboy/ssh-action@v0.1.2
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
+          host: ${{ secrets.EC2_HOST }} # IP o DNS público de la instancia EC2
+          username: ubuntu # Usuario de tu instancia EC2
+          key: ${{ secrets.EC2_SSH_KEY }} # Clave SSH en los secretos
+          port: 22 # Puerto para la conexión SSH
           script: |
             # Navega al directorio de tu proyecto en EC2
             cd /home/ubuntu/SwiftShop
@@ -35,7 +30,7 @@ jobs:
             # Backend deployment
             cd /home/ubuntu/SwiftShop/backend
             npm install  # Instala dependencias de backend
-            pm2 restart backend  # Reinicia el backend (usa pm2 o el sistema que estés utilizando)
+            pm2 restart backend  # Reinicia el backend
 
             # Frontend deployment
             cd /home/ubuntu/SwiftShop/frontend
