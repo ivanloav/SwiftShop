@@ -111,6 +111,22 @@
   sudo systemctl restart nginx
 ```
 
+# WorkFlow de GitHub Actions
+
+Por defecto en Ubuntu de EC2 no funciona, hay que seguir los siguientes pasos:
+
+```bash
+  sudo nano /etc/ssh/sshd_config
+```
+
+- Descomentar las siguientes líneas:
+
+  - _PubkeyAuthentication yes_
+  - _AuthorizedKeysFile .ssh/authorized_keys .ssh/authorized_keys2_
+
+- Añadir la siguiente línea debajo de _PubkeyAuthentication yes_:
+  - PubkeyAcceptedAlgorithms +ssh-rsa
+
 # Información del Frontend
 
 # Información del Backend
