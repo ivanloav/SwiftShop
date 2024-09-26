@@ -3,16 +3,36 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main
+      - main # Rama principal para despliegue
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout el código desde GitHub
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
+      # Cache para node_modules del backend
+      - name: Cache Backend node_modules
+        uses: actions/cache@v2
+        with:
+          path: backend/node_modules
+          key: backend-${{ runner.os }}-${{ hashFiles('backend/package-lock.json') }}
+          restore-keys: |
+            backend-${{ runner.os }}-
+
+      # Cache para node_modules del frontend
+      - name: Cache Frontend node_modules
+        uses: actions/cache@v2
+        with:
+          path: frontend/node_modules
+          key: frontend-${{ runner.os }}-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: |
+            frontend-${{ runner.os }}-
+
+      # Copiar los archivos vía SCP
       - name: Copy files via SCP
         uses: appleboy/scp-action@v0.1.3
         with:
@@ -22,32 +42,33 @@ jobs:
           source: "."
           target: "/home/ubuntu/SwiftShop"
 
-      - name: Execute commands via SSH
+      # Ejecutar los comandos de despliegue vía SSH
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v0.1.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # Navega al directorio de tu proyecto en EC2
+            # Cambia al directorio del proyecto
             cd /home/ubuntu/SwiftShop
+
             # Actualiza el repositorio desde GitHub
             git pull origin main
-            # Backend deployment
+
+            # Instala las dependencias del backend
             cd backend
-            npm install
-            pm2 restart backend
-            # Frontend deployment
+            npm install  # Usa el cache si existe
+            pm2 restart backend  # Reinicia el backend con PM2
+
+            # Construir el frontend solo si hay cambios
             cd ../frontend
-            # Asegúrate de que el usuario tenga permisos de escritura en la carpeta dist
-            sudo chown -R $USER:$USER /home/ubuntu/SwiftShop/frontend/dist
-            sudo chmod -R 755 /home/ubuntu/SwiftShop/frontend/dist
-            # Instala dependencias y compila el frontend
-            npm install
-            npm run build
-            # Copia los archivos compilados a la carpeta que Nginx utiliza para servir el frontend
-            sudo cp -r /home/ubuntu/SwiftShop/frontend/dist/* /var/www/html/
-            # Verifica la configuración de Nginx
+            npm install  # Usa el cache si existe
+            npm run build  # Construye el frontend
+
+            # Copia el frontend compilado a Nginx
+            sudo cp -r dist/* /var/www/html/
+
+            # Verifica la configuración de Nginx y reinicia
             sudo nginx -t
-            # Reinicia Nginx
             sudo systemctl restart nginx
