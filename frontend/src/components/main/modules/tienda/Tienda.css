@@ -1,3 +1,7 @@
 .inventario {
-    text-align: left;
+  text-align: left;
+}
+
+.priceClass {
+  text-align: right;
 }
