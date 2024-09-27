@@ -10,7 +10,6 @@ export const Tienda = () => {
   const { data, loading, fetchData } = useProductsLogic();
   const { handleDelete } = useProductActions();
 
-
   const handleOpenProductForm = () => {
     OpenInNewWindow("/postproduct");
   };
@@ -43,7 +42,9 @@ export const Tienda = () => {
             <tbody>
               {data.map((product) => (
                 <tr key={product.id}>
-                  <td>{product.id}</td>
+                  <td>
+                    {product.id} {product.name}
+                  </td>
                   <td>{product.price}</td>
                   <td>{product.category}</td>
                   <td>{product.description}</td>
