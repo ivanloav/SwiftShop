@@ -3,8 +3,8 @@ import { Product } from "./product.entity";
 import { CreateProductDto } from "./create-product.dto";
 import { UpdateProductDto } from "./update-product.dto";
 export declare class ProductsService {
-    private readonly productRepository;
-    constructor(productRepository: Repository<Product>);
+    private productsRepository;
+    constructor(productsRepository: Repository<Product>);
     findAll(): Promise<Product[]>;
     findOne(id: number): Promise<Product>;
     create(createProductDto: CreateProductDto): Promise<Product>;
