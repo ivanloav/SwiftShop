@@ -9,9 +9,16 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
+  // Habilitar CORS
+  app.enableCors({
+    origin: "*", // Cambia esto a la URL de tu frontend
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    credentials: true, // Si necesitas enviar cookies o encabezados de autenticación
+  });
+
   const config = new DocumentBuilder()
-    .setTitle("TFM Mock API")
-    .setDescription("API mockeada para la documentación de proyecto TFM")
+    .setTitle("TFM API")
+    .setDescription("API de conexión a la DB del TFM")
     .setVersion("1.0")
     .build();
   const document = SwaggerModule.createDocument(app, config);
@@ -22,4 +29,5 @@ async function bootstrap() {
   await app.listen(port);
   console.log(`App is running on: http://localhost:${port}`);
 }
+
 bootstrap();
