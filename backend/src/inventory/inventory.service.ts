@@ -1,59 +1,44 @@
-
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { Product } from "../products/product.entity"; // Importa la entidad Product
+import { UpdateInventoryDto } from "./update-inventory.dto"; // Importa el DTO para actualizar productos
 
 @Injectable()
 export class InventoryService {
-    private readonly inventories: any[];
+  // Inyectamos el repositorio de productos de TypeORM
+  constructor(
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>
+  ) {}
 
-    constructor() {
-        this.inventories = [
-            {
-                id: 1,
-                product: 'Producto 1',
-                quantity: 10,
-                store: 'Tienda 1'
-            },
-            {
-                id: 2,
-                product: 'Producto 2',
-                quantity: 20,
-                store: 'Tienda 2'
-            },
-            {
-                id: 3,
-                product: 'Producto 3',
-                quantity: 30,
-                store: 'Tienda 3'
-            },
-        ];
-    }
+  // Método para obtener todos los productos desde la base de datos
+  async findAll(): Promise<Product[]> {
+    return this.productRepository.find(); // Encuentra todos los productos
+  }
 
-    findAll() {
-        return this.inventories;
-    }
+  // Método para obtener un producto por su ID
+  async findOne(id: number): Promise<Product> {
+    return this.productRepository.findOne({ where: { id } }); // Encuentra un producto por su ID
+  }
 
-    findOne(id: number) {
-        return this.inventories.find(inventory => inventory.id === id);
-    }
+  // Método para crear un nuevo producto en la base de datos
+  async create(product: Product): Promise<Product> {
+    return this.productRepository.save(product); // Guarda un nuevo producto
+  }
 
-    create(inventory: any) {
-        this.inventories.push(inventory);
-        return inventory;
-    }   
+  // Método para actualizar un producto existente
+  async update(
+    id: number,
+    updateInventoryDto: UpdateInventoryDto
+  ): Promise<Product> {
+    await this.productRepository.update(id, updateInventoryDto); // Usa el DTO correctamente
+    return this.productRepository.findOne({ where: { id } }); // Devuelve el producto actualizado
+  }
 
-    update(id: number, inventory: any) {
-        const index = this.inventories.findIndex(i => i.id === id);
-        if (index !== -1) {
-            this.inventories[index] = inventory;
-        }
-        return inventory;
-    }
-
-    remove(id: number) {
-        const index = this.inventories.findIndex(i => i.id === id);
-        if (index !== -1) {
-            this.inventories.splice(index, 1);
-        }
-        return { message: 'Inventario eliminado exitosamente.' };
-    }
+  // Método para eliminar un producto de la base de datos
+  async remove(id: number): Promise<{ message: string }> {
+    await this.productRepository.delete(id); // Elimina el producto
+    return { message: "Producto eliminado exitosamente." };
+  }
 }

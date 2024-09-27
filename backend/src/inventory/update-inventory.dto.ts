@@ -1,10 +1,16 @@
-
-import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsString, IsOptional } from "class-validator";
 
 export class UpdateInventoryDto {
-  @ApiProperty({ description: 'ID del producto' })
-  productId: number;
+  @IsOptional()
+  @IsNumber()
+  id?: number;
 
-  @ApiProperty({ description: 'Cantidad en inventario' })
+  @IsString()
+  name: string;
+
+  @IsNumber()
   quantity: number;
+
+  @IsString()
+  store: string;
 }
