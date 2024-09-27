@@ -30,14 +30,14 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             # Crear el archivo .env con los secretos de GitHub
-            echo "DB_HOST=${{ secrets.DB_HOST }}" >> /home/ubuntu/SwiftShop/.env
-            echo "DB_PORT=${{ secrets.DB_PORT }}" >> /home/ubuntu/SwiftShop/.env
-            echo "DB_USER=${{ secrets.DB_USER }}" >> /home/ubuntu/SwiftShop/.env
-            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> /home/ubuntu/SwiftShop/.env
-            echo "DB_NAME=${{ secrets.DB_NAME }}" >> /home/ubuntu/SwiftShop/.env
-            echo "PORT=${{ secrets.PORT }}" > /home/ubuntu/SwiftShop/.env
+            echo "DB_HOST=${{ secrets.DB_HOST }}" >> /home/ubuntu/SwiftShop/backend/.env
+            echo "DB_PORT=${{ secrets.DB_PORT }}" >> /home/ubuntu/SwiftShop/backend/.env
+            echo "DB_USER=${{ secrets.DB_USER }}" >> /home/ubuntu/SwiftShop/backend/.env
+            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> /home/ubuntu/SwiftShop/backend/.env
+            echo "DB_NAME=${{ secrets.DB_NAME }}" >> /home/ubuntu/SwiftShop/backend/.env
+            echo "PORT=${{ secrets.PORT }}" > /home/ubuntu/SwiftShop/backend/.env
             # Verificar que el archivo .env se ha creado correctamente
-            cat /home/ubuntu/SwiftShop/.env
+            cat /home/ubuntu/SwiftShop/backend/.env
 
       - name: Execute commands via SSH
         uses: appleboy/ssh-action@v0.1.3
