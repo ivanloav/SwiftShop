@@ -22,8 +22,8 @@ import { StoresModule } from "./stores/stores.module";
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      autoLoadEntities: true, // Carga automáticamente las entidades
-      synchronize: true, // Sincroniza las entidades con la base de datos (solo en desarrollo)
+      autoLoadEntities: true,
+      synchronize: true,
     }),
 
     // Los demás módulos de tu aplicación

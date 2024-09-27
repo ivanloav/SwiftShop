@@ -8,45 +8,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsService = void 0;
 const common_1 = require("@nestjs/common");
-const fs = require("fs");
-const path = require("path");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const product_entity_1 = require("./product.entity");
 let ProductsService = class ProductsService {
-    constructor() {
-        const filePath = path.join(__dirname, '../mock-data/products.json');
-        const fileContents = fs.readFileSync(filePath, 'utf8');
-        this.products = JSON.parse(fileContents);
+    constructor(productRepository) {
+        this.productRepository = productRepository;
     }
     findAll() {
-        return this.products;
+        return this.productRepository.find();
     }
     findOne(id) {
-        return this.products.find(product => product.id === id);
+        return this.productRepository.findOne({ where: { id } });
     }
-    create(product) {
-        this.products.push(product);
-        return product;
+    create(createProductDto) {
+        const newProduct = this.productRepository.create(createProductDto);
+        return this.productRepository.save(newProduct);
     }
-    update(id, product) {
-        const index = this.products.findIndex(p => p.id === id);
-        if (index !== -1) {
-            this.products[index] = product;
-        }
-        return product;
+    async update(id, updateProductDto) {
+        await this.productRepository.update(id, updateProductDto);
+        return this.productRepository.findOne({ where: { id } });
     }
-    remove(id) {
-        const index = this.products.findIndex(p => p.id === id);
-        if (index !== -1) {
-            this.products.splice(index, 1);
-        }
-        return { message: 'Producto eliminado exitosamente.' };
+    async remove(id) {
+        await this.productRepository.delete(id);
     }
 };
 ProductsService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [])
+    __param(0, (0, typeorm_1.InjectRepository)(product_entity_1.Product)),
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], ProductsService);
 exports.ProductsService = ProductsService;
 //# sourceMappingURL=products.service.js.map
