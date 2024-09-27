@@ -9,31 +9,31 @@ import { UpdateProductDto } from "./update-product.dto";
 export class ProductsService {
   constructor(
     @InjectRepository(Product)
-    private readonly productRepository: Repository<Product>
+    private productsRepository: Repository<Product>
   ) {}
 
   findAll(): Promise<Product[]> {
-    return this.productRepository.find();
+    return this.productsRepository.find();
   }
 
   findOne(id: number): Promise<Product> {
-    return this.productRepository.findOne({ where: { id } });
+    return this.productsRepository.findOneBy({ id });
   }
 
   create(createProductDto: CreateProductDto): Promise<Product> {
-    const newProduct = this.productRepository.create(createProductDto);
-    return this.productRepository.save(newProduct);
+    const newProduct = this.productsRepository.create(createProductDto);
+    return this.productsRepository.save(newProduct);
   }
 
   async update(
     id: number,
     updateProductDto: UpdateProductDto
   ): Promise<Product> {
-    await this.productRepository.update(id, updateProductDto);
-    return this.productRepository.findOne({ where: { id } });
+    await this.productsRepository.update(id, updateProductDto);
+    return this.productsRepository.findOneBy({ id });
   }
 
   async remove(id: number): Promise<void> {
-    await this.productRepository.delete(id);
+    await this.productsRepository.delete(id);
   }
 }
