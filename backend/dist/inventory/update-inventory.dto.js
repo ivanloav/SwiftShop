@@ -10,16 +10,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateInventoryDto = void 0;
-const swagger_1 = require("@nestjs/swagger");
+const class_validator_1 = require("class-validator");
 class UpdateInventoryDto {
 }
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'ID del producto' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
-], UpdateInventoryDto.prototype, "productId", void 0);
+], UpdateInventoryDto.prototype, "id", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Cantidad en inventario' }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateInventoryDto.prototype, "name", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], UpdateInventoryDto.prototype, "quantity", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateInventoryDto.prototype, "store", void 0);
 exports.UpdateInventoryDto = UpdateInventoryDto;
 //# sourceMappingURL=update-inventory.dto.js.map

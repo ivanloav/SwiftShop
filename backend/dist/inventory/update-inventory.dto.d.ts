@@ -1,5 +1,7 @@
 export declare class UpdateInventoryDto {
-    productId: number;
+    id?: number;
+    name: string;
     quantity: number;
+    store: string;
 }
 //# sourceMappingURL=update-inventory.dto.d.ts.map

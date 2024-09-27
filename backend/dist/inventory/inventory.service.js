@@ -8,60 +8,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InventoryService = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const product_entity_1 = require("../products/product.entity");
 let InventoryService = class InventoryService {
-    constructor() {
-        this.inventories = [
-            {
-                id: 1,
-                product: 'Producto 1',
-                quantity: 10,
-                store: 'Tienda 1'
-            },
-            {
-                id: 2,
-                product: 'Producto 2',
-                quantity: 20,
-                store: 'Tienda 2'
-            },
-            {
-                id: 3,
-                product: 'Producto 3',
-                quantity: 30,
-                store: 'Tienda 3'
-            },
-        ];
+    constructor(productRepository) {
+        this.productRepository = productRepository;
     }
-    findAll() {
-        return this.inventories;
+    async findAll() {
+        return this.productRepository.find();
     }
-    findOne(id) {
-        return this.inventories.find(inventory => inventory.id === id);
+    async findOne(id) {
+        return this.productRepository.findOne({ where: { id } });
     }
-    create(inventory) {
-        this.inventories.push(inventory);
-        return inventory;
+    async create(product) {
+        return this.productRepository.save(product);
     }
-    update(id, inventory) {
-        const index = this.inventories.findIndex(i => i.id === id);
-        if (index !== -1) {
-            this.inventories[index] = inventory;
-        }
-        return inventory;
+    async update(id, updateInventoryDto) {
+        await this.productRepository.update(id, updateInventoryDto);
+        return this.productRepository.findOne({ where: { id } });
     }
-    remove(id) {
-        const index = this.inventories.findIndex(i => i.id === id);
-        if (index !== -1) {
-            this.inventories.splice(index, 1);
-        }
-        return { message: 'Inventario eliminado exitosamente.' };
+    async remove(id) {
+        await this.productRepository.delete(id);
+        return { message: "Producto eliminado exitosamente." };
     }
 };
 InventoryService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [])
+    __param(0, (0, typeorm_1.InjectRepository)(product_entity_1.Product)),
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], InventoryService);
 exports.InventoryService = InventoryService;
 //# sourceMappingURL=inventory.service.js.map

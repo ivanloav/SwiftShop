@@ -35,18 +35,18 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], InventoryController.prototype, "findAll", null);
 __decorate([
-    (0, swagger_1.ApiParam)({ name: 'id', required: true, description: 'ID del producto' }),
+    (0, swagger_1.ApiParam)({ name: "id", required: true, description: "ID del producto" }),
     (0, swagger_1.ApiBody)({ type: update_inventory_dto_1.UpdateInventoryDto }),
-    (0, common_1.Put)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Put)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, update_inventory_dto_1.UpdateInventoryDto]),
     __metadata("design:returntype", void 0)
 ], InventoryController.prototype, "update", null);
 InventoryController = __decorate([
-    (0, swagger_1.ApiTags)('Inventario'),
-    (0, common_1.Controller)('inventory'),
+    (0, swagger_1.ApiTags)("Inventario"),
+    (0, common_1.Controller)("inventory"),
     __metadata("design:paramtypes", [inventory_service_1.InventoryService])
 ], InventoryController);
 exports.InventoryController = InventoryController;

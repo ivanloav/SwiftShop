@@ -27,7 +27,7 @@ async function bootstrap() {
 
   // Usa el puerto definido en las variables de entorno o el 3000 por defecto
   const port = process.env.PORT || 3000;
-  await app.listen(port, "0.0.0.0"); // Escuchar en todas las interfaces
+  await app.listen(3000, "0.0.0.0"); // Escuchar en todas las interfaces
   console.log(`App is running on: http://localhost:${port}`);
 }
 

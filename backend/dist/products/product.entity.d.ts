@@ -5,5 +5,7 @@ export declare class Product {
     price: number;
     stock: number;
     category: string;
+    created_at: Date;
+    updated_at: Date;
 }
 //# sourceMappingURL=product.entity.d.ts.map
