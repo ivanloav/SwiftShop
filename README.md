@@ -1,3 +1,12 @@
+# Notas personales
+
+- Registro de usuarios en DB con hash de password con bcrypt
+- Creado token JWT en localStorage
+
+- Falta verificar porque puedo entrar en endpoints sin el accessToken (Ejemplo: _/user/dashboard_)
+- Verificar que el registro de usuarios se haga correctamente con bcrypt
+- El token en localStorage tiene una expiración de 1h (_signOptions: { expiresIn: "1h" }_). Hay que verificar que despues de ese tiempo el token expira y se elimina
+
 # Amazon AWS
 
 - Crear instancia EC2 Ubuntu

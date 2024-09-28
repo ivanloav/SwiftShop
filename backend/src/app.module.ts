@@ -6,8 +6,9 @@ import { InventoryModule } from "./inventory/inventory.module";
 import { CustomersModule } from "./customers/customers.module";
 import { OrdersModule } from "./orders/orders.module";
 import { StoresModule } from "./stores/stores.module";
-import { AuthModule } from "./auth/auth.module"; // Importar AuthModule
-import { UsersModule } from "./users/users.module"; // Importar UsersModule
+import { AuthModule } from "./auth/auth.module";
+import { UsersModule } from "./users/users.module";
+import { DashboardController } from "./dashboard/dashboard.controller"; // Importar el DashboardController
 
 @Module({
   imports: [
@@ -29,8 +30,9 @@ import { UsersModule } from "./users/users.module"; // Importar UsersModule
     CustomersModule,
     OrdersModule,
     StoresModule,
-    AuthModule, // Agregar AuthModule
-    UsersModule, // Agregar UsersModule
+    AuthModule,
+    UsersModule,
   ],
+  controllers: [DashboardController], // Registrar el DashboardController
 })
 export class AppModule {}

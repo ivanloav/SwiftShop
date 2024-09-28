@@ -8,6 +8,7 @@ import { Inventario } from "./components/main/modules/inventario/Inventario";
 import { Tienda } from "./components/main/modules/tienda/Tienda";
 import { Customer } from "./components/main/modules/clientes/Customers";
 import { NewProduct } from "./components/main/modules/tienda/NewProduct";
+import PrivateRoute from "./components/PrivateRoute.jsx"; // Importar PrivateRoute
 
 function App() {
   return (
@@ -17,41 +18,28 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
         </Route>
-        <Route path="/user" element={<ScreenLayout />}>
+
+        {/* Rutas protegidas */}
+        <Route
+          path="/user"
+          element={
+            <PrivateRoute>
+              <ScreenLayout />
+            </PrivateRoute>
+          }
+        >
           <Route path="/user/dashboard" element={<Dashboard />} />
           <Route path="/user/tienda" element={<Tienda />} />
           <Route path="/user/inventario" element={<Inventario />} />
           <Route path="/user/Clientes" element={<Customer />} />
         </Route>
 
+        {/* Puedes proteger también esta ruta si es necesario */}
         <Route path="/postproduct" element={<NewProduct />} />
       </Routes>
       {/* <Window /> */}
     </Router>
   );
-}
-
-{
-  /* <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p> */
 }
 
 export default App;

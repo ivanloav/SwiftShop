@@ -1,9 +1,30 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://ec2-54-235-225-199.compute-1.amazonaws.com/api";
+// const API_BASE_URL = "http://ec2-54-235-225-199.compute-1.amazonaws.com/api";
+const API_BASE_URL = "http://localhost:3000/api";
 
 // Get token from localStorage
 const getToken = () => localStorage.getItem("token");
+
+export const getDashboardData = async () => {
+  const token = localStorage.getItem("accessToken");
+
+  if (!token) {
+    throw new Error("No hay token, por favor inicia sesión.");
+  }
+
+  try {
+    const response = await axios.get(`${API_BASE_URL}/dashboard`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Añadir el token en el encabezado
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener datos del dashboard", error);
+    throw error;
+  }
+};
 
 export const getInventory = async () => {
   try {
