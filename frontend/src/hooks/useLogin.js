@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { API_BASE_URL } from "../../../config/apiConfig";
+import { API_BASE_URL } from "../../config";
 
 export const useLogin = () => {
   const [email, setEmail] = useState("");

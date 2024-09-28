@@ -2,6 +2,7 @@ import "./Form.css";
 import logo from "/logo.png";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
+import { API_BASE_URL } from "../../config";
 
 export function RegisterForm() {
   const [error, setError] = useState("");

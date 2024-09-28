@@ -9,6 +9,9 @@ import { StoresModule } from "./stores/stores.module";
 import { AuthModule } from "./auth/auth.module";
 import { UsersModule } from "./users/users.module";
 import { DashboardController } from "./dashboard/dashboard.controller"; // Importar el DashboardController
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 @Module({
   imports: [
