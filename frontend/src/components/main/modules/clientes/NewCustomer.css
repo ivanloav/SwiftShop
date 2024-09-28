@@ -1,0 +1,45 @@
+/* #new-product-form > label {
+    display: flex;
+    align-content: stretch;
+} */
+#new-product-form > input {
+  color: black;
+  font-size: 20px;
+  text-align: center;
+  margin: 5px;
+  height: 30px;
+  border-color: #082F48;
+
+} 
+#new-product-form > input::placeholder {
+    font-weight: 100;
+    text-transform: none;
+    text-align: left;
+    padding: 20px;
+
+}
+.input-numbers {
+    display: flex;
+    justify-content: space-around;
+}
+.form-buttons {
+    position:absolute;
+bottom:0;
+}
+/* #new-product-form  > label > input::placeholder {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 100;
+    color: #8396A380;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+
+}
+form input {
+    margin: 5px;
+    height: 30px;
+    border-color: #082F48;
+    border-radius: 5px;
+    border-style: groove;
+    background-color: white;
+} */

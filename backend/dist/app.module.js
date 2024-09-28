@@ -15,6 +15,9 @@ const inventory_module_1 = require("./inventory/inventory.module");
 const customers_module_1 = require("./customers/customers.module");
 const orders_module_1 = require("./orders/orders.module");
 const stores_module_1 = require("./stores/stores.module");
+const auth_module_1 = require("./auth/auth.module");
+const users_module_1 = require("./users/users.module");
+const dashboard_controller_1 = require("./dashboard/dashboard.controller");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -38,7 +41,10 @@ AppModule = __decorate([
             customers_module_1.CustomersModule,
             orders_module_1.OrdersModule,
             stores_module_1.StoresModule,
+            auth_module_1.AuthModule,
+            users_module_1.UsersModule,
         ],
+        controllers: [dashboard_controller_1.DashboardController],
     })
 ], AppModule);
 exports.AppModule = AppModule;

@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const inventory_service_1 = require("./inventory.service");
 const swagger_1 = require("@nestjs/swagger");
 const update_inventory_dto_1 = require("./update-inventory.dto");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let InventoryController = class InventoryController {
     constructor(inventoryService) {
         this.inventoryService = inventoryService;
@@ -46,6 +47,7 @@ __decorate([
 ], InventoryController.prototype, "update", null);
 InventoryController = __decorate([
     (0, swagger_1.ApiTags)("Inventario"),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)("inventory"),
     __metadata("design:paramtypes", [inventory_service_1.InventoryService])
 ], InventoryController);

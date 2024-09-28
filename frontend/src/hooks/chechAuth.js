@@ -1,9 +1,12 @@
 // auth.js
-export const checkAuth = async (username, password) => {
-  // Simulación de una llamada a la API de autenticación
-  if (username === "admin" && password === "password") {
-    return { success: true, user: { username: "admin" } };
-  } else {
-    return { success: false, message: "Invalid credentials" };
-  }
+export const handleLogout = () => {
+  // Eliminar el token de localStorage o sessionStorage
+  localStorage.removeItem("accessToken");
+
+  // Si es necesario, también puedes hacer una petición al servidor para invalidar la sesión.
+  // Por ejemplo:
+  // fetch("/api/auth/logout", { method: "POST" });
+
+  // Redirigir al usuario a la página de inicio de sesión
+  window.location.href = "/login";
 };

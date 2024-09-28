@@ -18,6 +18,7 @@ const orders_service_1 = require("./orders.service");
 const swagger_1 = require("@nestjs/swagger");
 const create_order_dto_1 = require("./create-order.dto");
 const update_order_dto_1 = require("./update-order.dto");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let OrdersController = class OrdersController {
     constructor(ordersService) {
         this.ordersService = ordersService;
@@ -45,9 +46,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "findAll", null);
 __decorate([
-    (0, swagger_1.ApiParam)({ name: 'id', required: true, description: 'ID del pedido' }),
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, swagger_1.ApiParam)({ name: "id", required: true, description: "ID del pedido" }),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
@@ -61,26 +62,27 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "create", null);
 __decorate([
-    (0, swagger_1.ApiParam)({ name: 'id', required: true, description: 'ID del pedido' }),
+    (0, swagger_1.ApiParam)({ name: "id", required: true, description: "ID del pedido" }),
     (0, swagger_1.ApiBody)({ type: update_order_dto_1.UpdateOrderDto }),
-    (0, common_1.Put)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Put)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, update_order_dto_1.UpdateOrderDto]),
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "update", null);
 __decorate([
-    (0, swagger_1.ApiParam)({ name: 'id', required: true, description: 'ID del pedido' }),
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, swagger_1.ApiParam)({ name: "id", required: true, description: "ID del pedido" }),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "remove", null);
 OrdersController = __decorate([
-    (0, swagger_1.ApiTags)('Pedidos'),
-    (0, common_1.Controller)('orders'),
+    (0, swagger_1.ApiTags)("Pedidos"),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Controller)("orders"),
     __metadata("design:paramtypes", [orders_service_1.OrdersService])
 ], OrdersController);
 exports.OrdersController = OrdersController;

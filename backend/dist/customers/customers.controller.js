@@ -18,6 +18,7 @@ const customers_service_1 = require("./customers.service");
 const swagger_1 = require("@nestjs/swagger");
 const create_customer_dto_1 = require("./create-customer.dto");
 const update_customer_dto_1 = require("./update-customer.dto");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let CustomersController = class CustomersController {
     constructor(customersService) {
         this.customersService = customersService;
@@ -45,9 +46,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CustomersController.prototype, "findAll", null);
 __decorate([
-    (0, swagger_1.ApiParam)({ name: 'id', required: true, description: 'ID del cliente' }),
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, swagger_1.ApiParam)({ name: "id", required: true, description: "ID del cliente" }),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
@@ -61,26 +62,27 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CustomersController.prototype, "create", null);
 __decorate([
-    (0, swagger_1.ApiParam)({ name: 'id', required: true, description: 'ID del cliente' }),
+    (0, swagger_1.ApiParam)({ name: "id", required: true, description: "ID del cliente" }),
     (0, swagger_1.ApiBody)({ type: update_customer_dto_1.UpdateCustomerDto }),
-    (0, common_1.Put)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Put)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, update_customer_dto_1.UpdateCustomerDto]),
     __metadata("design:returntype", void 0)
 ], CustomersController.prototype, "update", null);
 __decorate([
-    (0, swagger_1.ApiParam)({ name: 'id', required: true, description: 'ID del cliente' }),
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, swagger_1.ApiParam)({ name: "id", required: true, description: "ID del cliente" }),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], CustomersController.prototype, "remove", null);
 CustomersController = __decorate([
-    (0, swagger_1.ApiTags)('Clientes'),
-    (0, common_1.Controller)('customers'),
+    (0, swagger_1.ApiTags)("Clientes"),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Controller)("customers"),
     __metadata("design:paramtypes", [customers_service_1.CustomersService])
 ], CustomersController);
 exports.CustomersController = CustomersController;

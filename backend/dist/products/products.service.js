@@ -18,25 +18,25 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const product_entity_1 = require("./product.entity");
 let ProductsService = class ProductsService {
-    constructor(productRepository) {
-        this.productRepository = productRepository;
+    constructor(productsRepository) {
+        this.productsRepository = productsRepository;
     }
     findAll() {
-        return this.productRepository.find();
+        return this.productsRepository.find();
     }
     findOne(id) {
-        return this.productRepository.findOne({ where: { id } });
+        return this.productsRepository.findOneBy({ id });
     }
     create(createProductDto) {
-        const newProduct = this.productRepository.create(createProductDto);
-        return this.productRepository.save(newProduct);
+        const newProduct = this.productsRepository.create(createProductDto);
+        return this.productsRepository.save(newProduct);
     }
     async update(id, updateProductDto) {
-        await this.productRepository.update(id, updateProductDto);
-        return this.productRepository.findOne({ where: { id } });
+        await this.productsRepository.update(id, updateProductDto);
+        return this.productsRepository.findOneBy({ id });
     }
     async remove(id) {
-        await this.productRepository.delete(id);
+        await this.productsRepository.delete(id);
     }
 };
 ProductsService = __decorate([

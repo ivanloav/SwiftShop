@@ -18,6 +18,7 @@ const products_service_1 = require("./products.service");
 const swagger_1 = require("@nestjs/swagger");
 const create_product_dto_1 = require("./create-product.dto");
 const update_product_dto_1 = require("./update-product.dto");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
@@ -45,9 +46,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "findAll", null);
 __decorate([
-    (0, swagger_1.ApiParam)({ name: 'id', required: true, description: 'ID del producto' }),
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, swagger_1.ApiParam)({ name: "id", required: true, description: "ID del producto" }),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
@@ -61,26 +62,27 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "create", null);
 __decorate([
-    (0, swagger_1.ApiParam)({ name: 'id', required: true, description: 'ID del producto' }),
+    (0, swagger_1.ApiParam)({ name: "id", required: true, description: "ID del producto" }),
     (0, swagger_1.ApiBody)({ type: update_product_dto_1.UpdateProductDto }),
-    (0, common_1.Put)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Put)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, update_product_dto_1.UpdateProductDto]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "update", null);
 __decorate([
-    (0, swagger_1.ApiParam)({ name: 'id', required: true, description: 'ID del producto' }),
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, swagger_1.ApiParam)({ name: "id", required: true, description: "ID del producto" }),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "remove", null);
 ProductsController = __decorate([
-    (0, swagger_1.ApiTags)('Products'),
-    (0, common_1.Controller)('products'),
+    (0, swagger_1.ApiTags)("Products"),
+    (0, common_1.Controller)("products"),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __metadata("design:paramtypes", [products_service_1.ProductsService])
 ], ProductsController);
 exports.ProductsController = ProductsController;

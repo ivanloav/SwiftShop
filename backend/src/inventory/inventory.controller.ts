@@ -1,9 +1,11 @@
-import { Controller, Get, Put, Param, Body } from "@nestjs/common";
+import { Controller, Get, Put, Param, Body, UseGuards } from "@nestjs/common";
 import { InventoryService } from "./inventory.service";
 import { ApiTags, ApiParam, ApiBody } from "@nestjs/swagger";
 import { UpdateInventoryDto } from "./update-inventory.dto"; // Asegúrate de importar el DTO
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 
 @ApiTags("Inventario")
+@UseGuards(JwtAuthGuard)
 @Controller("inventory")
 export class InventoryController {
   constructor(private readonly inventoryService: InventoryService) {}
