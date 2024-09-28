@@ -6,38 +6,31 @@ import { ScreenLayout } from "./components/main/layout/MainScreenLayout";
 import { Dashboard } from "./components/main/modules/Dashboard";
 import { Inventario } from "./components/main/modules/inventario/Inventario";
 import { Tienda } from "./components/main/modules/tienda/Tienda";
-import { Customer } from "./components/main/modules/clientes/Customers";
 import { NewProduct } from "./components/main/modules/tienda/NewProduct";
-import PrivateRoute from "./components/PrivateRoute.jsx"; // Importar PrivateRoute
+import PrivateRoute from "./components/PrivateRoute"; // Importa el componente PrivateRoute
 
 function App() {
   return (
     <Router>
       <Routes>
+        {/* Rutas públicas */}
         <Route path="/" element={<LoginScreenLayout />}>
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
         </Route>
 
         {/* Rutas protegidas */}
-        <Route
-          path="/user"
-          element={
-            <PrivateRoute>
-              <ScreenLayout />
-            </PrivateRoute>
-          }
-        >
-          <Route path="/user/dashboard" element={<Dashboard />} />
-          <Route path="/user/tienda" element={<Tienda />} />
-          <Route path="/user/inventario" element={<Inventario />} />
-          <Route path="/user/Clientes" element={<Customer />} />
-        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/user" element={<ScreenLayout />}>
+            <Route path="/user/dashboard" element={<Dashboard />} />
+            <Route path="/user/inventario" element={<Inventario />} />
+            <Route path="/user/tienda" element={<Tienda />} />
+          </Route>
 
-        {/* Puedes proteger también esta ruta si es necesario */}
-        <Route path="/postproduct" element={<NewProduct />} />
+          {/* Ruta protegida para crear nuevos productos */}
+          <Route path="/postproduct" element={<NewProduct />} />
+        </Route>
       </Routes>
-      {/* <Window /> */}
     </Router>
   );
 }
