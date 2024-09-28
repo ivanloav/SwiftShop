@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_URL } from "../config/apiConfig";
+import { API_BASE_URL } from "../config";
 
 //const API_BASE_URL = "http://ec2-54-235-225-199.compute-1.amazonaws.com/api";
 //const API_BASE_URL = "http://localhost:3000/api";
