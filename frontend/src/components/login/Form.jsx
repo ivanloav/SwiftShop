@@ -86,10 +86,11 @@ export function LoginForm() {
     const email = event.target.elements.email.value;
     const password = event.target.elements.password.value;
 
-    console.log(API_BASE_URL); // Debe mostrar la URL completa incluyendo /api
-    console.log(`URL de login: ${API_BASE_URL}/auth/login`);
-
     try {
+      console.log(API_BASE_URL); // Debe mostrar la URL completa incluyendo /api
+      console.log(`URL de login: ${API_BASE_URL}/auth/login`);
+      console.log(import.meta.env);
+
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
