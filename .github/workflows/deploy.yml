@@ -19,7 +19,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
+          key: $(echo "${{ secrets.EC2_SSH_KEY }}" | base64 -d)
           source: "."
           target: "/home/ubuntu/SwiftShop"
 
@@ -28,7 +28,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
+          key: $(echo "${{ secrets.EC2_SSH_KEY }}" | base64 -d)
           script: |
             # Crear el archivo .env con los secretos de GitHub
             echo "DB_HOST=${{ secrets.DB_HOST }}" > /home/ubuntu/SwiftShop/.env
