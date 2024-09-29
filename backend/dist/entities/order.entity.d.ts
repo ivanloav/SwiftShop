@@ -1,4 +1,4 @@
-import { Customer } from "../customers/customer.entity";
+import { Customer } from "./customer.entity";
 import { Product } from "./product.entity";
 export declare class Order {
     orderId: number;

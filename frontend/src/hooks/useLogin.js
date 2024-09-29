@@ -22,6 +22,7 @@ export const useLogin = () => {
       });
 
       const data = await response.json();
+      console.log("DATA: " + data);
 
       if (data.success) {
         // Guardar el token JWT en localStorage o sessionStorage
@@ -31,6 +32,7 @@ export const useLogin = () => {
         setError(data.message);
       }
     } catch (error) {
+      console.error("Error en la solicitud:", error);
       setError("Error en la solicitud de inicio de sesión");
     }
   };

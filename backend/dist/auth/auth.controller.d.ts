@@ -6,10 +6,10 @@ export declare class AuthController {
     constructor(authService: AuthService);
     register(registerDto: RegisterDto): Promise<any>;
     login(loginDto: LoginDto): Promise<{
+        success: boolean;
         message: string;
         accessToken: any;
         user: any;
-        success?: undefined;
     } | {
         message: any;
         success: boolean;
