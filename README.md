@@ -120,9 +120,11 @@
   sudo systemctl restart nginx
 ```
 
-# WorkFlow de GitHub Actions
+# Nota IMPORTANTE WorkFlow de GitHub Actions
 
 Por defecto en Ubuntu de EC2 no funciona, hay que seguir los siguientes pasos:
+
+Acceder al archivo _sshd_config_ en EC2:
 
 ```bash
   sudo nano /etc/ssh/sshd_config
