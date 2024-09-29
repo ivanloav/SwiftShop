@@ -1,6 +1,6 @@
 import { CustomersService } from "./customers.service";
-import { CreateCustomerDto } from "./create-customer.dto";
-import { UpdateCustomerDto } from "./update-customer.dto";
+import { CreateCustomerDto } from "../auth/dto/create-customer.dto";
+import { UpdateCustomerDto } from "../auth/dto/update-customer.dto";
 export declare class CustomersController {
     private readonly customersService;
     constructor(customersService: CustomersService);

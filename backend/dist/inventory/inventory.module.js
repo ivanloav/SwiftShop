@@ -11,7 +11,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const inventory_service_1 = require("./inventory.service");
 const inventory_controller_1 = require("./inventory.controller");
-const product_entity_1 = require("../products/product.entity");
+const product_entity_1 = require("../entities/product.entity");
 let InventoryModule = class InventoryModule {
 };
 InventoryModule = __decorate([

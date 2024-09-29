@@ -1,0 +1,1 @@
+{"version":3,"file":"inventory.entity.d.ts","sourceRoot":"","sources":["../../src/inventory/inventory.entity.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,OAAO,EAAE,MAAM,4BAA4B,CAAC;AAErD,qBACa,SAAS;IAEpB,WAAW,EAAE,MAAM,CAAC;IAGpB,QAAQ,EAAE,MAAM,CAAC;IAIjB,OAAO,EAAE,OAAO,CAAC;IAGjB,UAAU,EAAE,IAAI,CAAC;IAOjB,UAAU,EAAE,IAAI,CAAC;CAClB"}

@@ -16,7 +16,7 @@ exports.InventoryService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const product_entity_1 = require("../products/product.entity");
+const product_entity_1 = require("../entities/product.entity");
 let InventoryService = class InventoryService {
     constructor(productRepository) {
         this.productRepository = productRepository;
@@ -25,14 +25,14 @@ let InventoryService = class InventoryService {
         return this.productRepository.find();
     }
     async findOne(id) {
-        return this.productRepository.findOne({ where: { id } });
+        return this.productRepository.findOne({ where: { productId: id } });
     }
     async create(product) {
         return this.productRepository.save(product);
     }
     async update(id, updateInventoryDto) {
         await this.productRepository.update(id, updateInventoryDto);
-        return this.productRepository.findOne({ where: { id } });
+        return this.productRepository.findOne({ where: { productId: id } });
     }
     async remove(id) {
         await this.productRepository.delete(id);

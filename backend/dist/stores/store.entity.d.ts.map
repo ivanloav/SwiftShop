@@ -1,0 +1,1 @@
+{"version":3,"file":"store.entity.d.ts","sourceRoot":"","sources":["../../src/stores/store.entity.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,OAAO,EAAE,MAAM,4BAA4B,CAAC;AAErD,qBACa,KAAK;IAEhB,OAAO,EAAE,MAAM,CAAC;IAGhB,IAAI,EAAE,MAAM,CAAC;IAGb,KAAK,EAAE,MAAM,CAAC;IAId,QAAQ,EAAE,OAAO,EAAE,CAAC;IAGpB,UAAU,EAAE,IAAI,CAAC;IAOjB,UAAU,EAAE,IAAI,CAAC;CAClB"}

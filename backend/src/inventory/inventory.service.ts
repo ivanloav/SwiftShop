@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Product } from "../products/product.entity"; // Importa la entidad Product
-import { UpdateInventoryDto } from "./update-inventory.dto"; // Importa el DTO para actualizar productos
+import { Product } from "../entities/product.entity"; // Importa la entidad Product
+import { UpdateInventoryDto } from "../auth/dto/update-inventory.dto"; // Importa el DTO para actualizar productos
 
 @Injectable()
 export class InventoryService {
@@ -19,7 +19,7 @@ export class InventoryService {
 
   // Método para obtener un producto por su ID
   async findOne(id: number): Promise<Product> {
-    return this.productRepository.findOne({ where: { id } }); // Encuentra un producto por su ID
+    return this.productRepository.findOne({ where: { productId: id } }); // Encuentra un producto por su ID
   }
 
   // Método para crear un nuevo producto en la base de datos
@@ -33,7 +33,7 @@ export class InventoryService {
     updateInventoryDto: UpdateInventoryDto
   ): Promise<Product> {
     await this.productRepository.update(id, updateInventoryDto); // Usa el DTO correctamente
-    return this.productRepository.findOne({ where: { id } }); // Devuelve el producto actualizado
+    return this.productRepository.findOne({ where: { productId: id } }); // Devuelve el producto actualizado
   }
 
   // Método para eliminar un producto de la base de datos

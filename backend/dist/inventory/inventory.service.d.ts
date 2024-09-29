@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
-import { Product } from "../products/product.entity";
-import { UpdateInventoryDto } from "./update-inventory.dto";
+import { Product } from "../entities/product.entity";
+import { UpdateInventoryDto } from "../auth/dto/update-inventory.dto";
 export declare class InventoryService {
     private readonly productRepository;
     constructor(productRepository: Repository<Product>);

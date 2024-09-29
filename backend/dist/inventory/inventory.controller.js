@@ -16,7 +16,7 @@ exports.InventoryController = void 0;
 const common_1 = require("@nestjs/common");
 const inventory_service_1 = require("./inventory.service");
 const swagger_1 = require("@nestjs/swagger");
-const update_inventory_dto_1 = require("./update-inventory.dto");
+const update_inventory_dto_1 = require("../auth/dto/update-inventory.dto");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let InventoryController = class InventoryController {
     constructor(inventoryService) {

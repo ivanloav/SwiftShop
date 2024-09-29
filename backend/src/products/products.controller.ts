@@ -10,8 +10,8 @@ import {
 } from "@nestjs/common";
 import { ProductsService } from "./products.service";
 import { ApiTags, ApiParam, ApiBody } from "@nestjs/swagger";
-import { CreateProductDto } from "./create-product.dto";
-import { UpdateProductDto } from "./update-product.dto";
+import { CreateProductDto } from "../auth/dto/create-product.dto";
+import { UpdateProductDto } from "../auth/dto/update-product.dto";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
 @ApiTags("Products")

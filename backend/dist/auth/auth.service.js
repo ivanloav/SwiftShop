@@ -42,7 +42,7 @@ let AuthService = class AuthService {
         if (!isPasswordValid) {
             return { success: false, message: "Contraseña incorrecta" };
         }
-        const payload = { email: user.email, sub: user.id };
+        const payload = { email: user.email, sub: user.userId };
         const accessToken = this.jwtService.sign(payload);
         return { success: true, user, accessToken };
     }

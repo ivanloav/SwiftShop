@@ -1,7 +1,7 @@
 import { Controller, Get, Put, Param, Body, UseGuards } from "@nestjs/common";
 import { InventoryService } from "./inventory.service";
 import { ApiTags, ApiParam, ApiBody } from "@nestjs/swagger";
-import { UpdateInventoryDto } from "./update-inventory.dto"; // Asegúrate de importar el DTO
+import { UpdateInventoryDto } from "../auth/dto/update-inventory.dto"; // Asegúrate de importar el DTO
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 
 @ApiTags("Inventario")
