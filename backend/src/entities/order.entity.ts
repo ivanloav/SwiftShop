@@ -5,7 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { Customer } from "../customers/customer.entity";
+import { Customer } from "./customer.entity";
 import { Product } from "./product.entity"; // Importar Product
 
 @Entity("orders")
