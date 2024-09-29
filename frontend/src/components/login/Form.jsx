@@ -82,6 +82,8 @@ export function RegisterForm() {
 
 export function LoginForm() {
   const [error, setError] = useState("");
+  const location = useLocation(); // Usamos useLocation para obtener el mensaje de éxito
+  const successMessage = location.state?.successMessage; // Verificamos si el mensaje de éxito existe
 
   // Maneja la solicitud de inicio de sesión
   async function handleLogin(event) {
