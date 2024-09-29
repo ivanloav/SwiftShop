@@ -1,6 +1,6 @@
 import "./Form.css";
 import logo from "/logo.png";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import React, { useState } from "react";
 import { API_BASE_URL } from "../../config";
 
@@ -35,7 +35,10 @@ export function RegisterForm() {
       const data = await response.json();
 
       if (data.success) {
-        alert("Usuario registrado exitosamente");
+        // alert("Usuario registrado exitosamente");
+        Navigate("/login", {
+          state: { message: "Usuario registrado exitosamente" },
+        });
       } else {
         setError(data.message);
       }
@@ -108,7 +111,7 @@ export function LoginForm() {
         // Almacena el token en localStorage
         localStorage.setItem("accessToken", data.accessToken);
         // Redirige al dashboard
-        window.location.href = "/user/dashboard";
+        Navigate("/user/dashboard");
       } else {
         setError(data.message);
       }
@@ -121,6 +124,10 @@ export function LoginForm() {
     <>
       <div className="container">
         <img src={logo} className="logo" alt="Logo" />
+        {successMessage && (
+          <p style={{ color: "green" }}>{successMessage}</p>
+        )}{" "}
+        {/* Mensaje de éxito */}
         <form onSubmit={handleLogin}>
           <input
             name="email"
