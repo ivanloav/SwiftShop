@@ -1,12 +1,19 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Param,
+  Body,
+} from "@nestjs/common";
+import { StoresService } from "./stores.service";
+import { ApiTags, ApiParam, ApiBody } from "@nestjs/swagger";
+import { CreateStoreDto } from "../auth/dto/create-store.dto";
+import { UpdateStoreDto } from "../auth/dto/update-store.dto";
 
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
-import { StoresService } from './stores.service';
-import { ApiTags, ApiParam, ApiBody } from '@nestjs/swagger';
-import { CreateStoreDto } from './create-store.dto';
-import { UpdateStoreDto } from './update-store.dto';
-
-@ApiTags('Tiendas')
-@Controller('stores')
+@ApiTags("Tiendas")
+@Controller("stores")
 export class StoresController {
   constructor(private readonly storesService: StoresService) {}
 
@@ -15,9 +22,9 @@ export class StoresController {
     return this.storesService.findAll();
   }
 
-  @ApiParam({ name: 'id', required: true, description: 'ID de la tienda' })
-  @Get(':id')
-  findOne(@Param('id') id: number) {
+  @ApiParam({ name: "id", required: true, description: "ID de la tienda" })
+  @Get(":id")
+  findOne(@Param("id") id: number) {
     return this.storesService.findOne(id);
   }
 
@@ -27,16 +34,16 @@ export class StoresController {
     return this.storesService.create(createStoreDto);
   }
 
-  @ApiParam({ name: 'id', required: true, description: 'ID de la tienda' })
+  @ApiParam({ name: "id", required: true, description: "ID de la tienda" })
   @ApiBody({ type: UpdateStoreDto })
-  @Put(':id')
-  update(@Param('id') id: number, @Body() updateStoreDto: UpdateStoreDto) {
+  @Put(":id")
+  update(@Param("id") id: number, @Body() updateStoreDto: UpdateStoreDto) {
     return this.storesService.update(id, updateStoreDto);
   }
 
-  @ApiParam({ name: 'id', required: true, description: 'ID de la tienda' })
-  @Delete(':id')
-  remove(@Param('id') id: number) {
+  @ApiParam({ name: "id", required: true, description: "ID de la tienda" })
+  @Delete(":id")
+  remove(@Param("id") id: number) {
     return this.storesService.remove(id);
   }
 }

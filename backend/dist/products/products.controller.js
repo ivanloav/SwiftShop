@@ -16,8 +16,8 @@ exports.ProductsController = void 0;
 const common_1 = require("@nestjs/common");
 const products_service_1 = require("./products.service");
 const swagger_1 = require("@nestjs/swagger");
-const create_product_dto_1 = require("./create-product.dto");
-const update_product_dto_1 = require("./update-product.dto");
+const create_product_dto_1 = require("../auth/dto/create-product.dto");
+const update_product_dto_1 = require("../auth/dto/update-product.dto");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let ProductsController = class ProductsController {
     constructor(productsService) {

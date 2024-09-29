@@ -16,8 +16,8 @@ exports.OrdersController = void 0;
 const common_1 = require("@nestjs/common");
 const orders_service_1 = require("./orders.service");
 const swagger_1 = require("@nestjs/swagger");
-const create_order_dto_1 = require("./create-order.dto");
-const update_order_dto_1 = require("./update-order.dto");
+const create_order_dto_1 = require("../auth/dto/create-order.dto");
+const update_order_dto_1 = require("../auth/dto/update-order.dto");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let OrdersController = class OrdersController {
     constructor(ordersService) {

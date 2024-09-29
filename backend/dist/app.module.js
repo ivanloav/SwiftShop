@@ -27,6 +27,7 @@ AppModule = __decorate([
         imports: [
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
+                envFilePath: "../.env",
             }),
             typeorm_1.TypeOrmModule.forRoot({
                 type: "mysql",
@@ -35,6 +36,7 @@ AppModule = __decorate([
                 username: process.env.DB_USER,
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_NAME,
+                entities: [__dirname + "/**/*.entity{.ts,.js}"],
                 autoLoadEntities: true,
                 synchronize: true,
             }),

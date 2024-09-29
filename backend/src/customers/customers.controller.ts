@@ -10,8 +10,8 @@ import {
 } from "@nestjs/common";
 import { CustomersService } from "./customers.service";
 import { ApiTags, ApiParam, ApiBody } from "@nestjs/swagger";
-import { CreateCustomerDto } from "./create-customer.dto";
-import { UpdateCustomerDto } from "./update-customer.dto";
+import { CreateCustomerDto } from "../auth/dto/create-customer.dto";
+import { UpdateCustomerDto } from "../auth/dto/update-customer.dto";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 
 @ApiTags("Clientes")

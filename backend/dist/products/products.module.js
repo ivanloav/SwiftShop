@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const product_entity_1 = require("./product.entity");
+const product_entity_1 = require("../entities/product.entity");
 const products_service_1 = require("./products.service");
 const products_controller_1 = require("./products.controller");
 let ProductsModule = class ProductsModule {

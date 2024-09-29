@@ -1,6 +1,6 @@
-import { StoresService } from './stores.service';
-import { CreateStoreDto } from './create-store.dto';
-import { UpdateStoreDto } from './update-store.dto';
+import { StoresService } from "./stores.service";
+import { CreateStoreDto } from "../auth/dto/create-store.dto";
+import { UpdateStoreDto } from "../auth/dto/update-store.dto";
 export declare class StoresController {
     private readonly storesService;
     constructor(storesService: StoresService);

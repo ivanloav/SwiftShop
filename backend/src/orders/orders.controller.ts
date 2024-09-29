@@ -10,8 +10,8 @@ import {
 } from "@nestjs/common";
 import { OrdersService } from "./orders.service";
 import { ApiTags, ApiParam, ApiBody } from "@nestjs/swagger";
-import { CreateOrderDto } from "./create-order.dto";
-import { UpdateOrderDto } from "./update-order.dto";
+import { CreateOrderDto } from "../auth/dto/create-order.dto";
+import { UpdateOrderDto } from "../auth/dto/update-order.dto";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 
 @ApiTags("Pedidos")
