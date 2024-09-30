@@ -22,10 +22,12 @@ let ProductsService = class ProductsService {
         this.productsRepository = productsRepository;
     }
     findAll() {
-        return this.productsRepository.find();
+        return this.productsRepository.find({ relations: ["store"] });
     }
     findOne(id) {
-        return this.productsRepository.findOneBy({ productId: id });
+        return this.productsRepository.findOne({
+            where: { productId: id },
+        });
     }
     create(createProductDto) {
         const newProduct = this.productsRepository.create(createProductDto);

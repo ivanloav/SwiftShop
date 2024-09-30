@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { Inventory } from "./inventory.entity";
 import { Order } from "./order.entity";
@@ -39,6 +40,7 @@ export class Product {
 
   // Relación con Store
   @ManyToOne(() => Store, (store) => store.products)
+  @JoinColumn({ name: "storeId" }) // El nombre de la columna debe ser el correcto en la base de datos
   store: Store;
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })

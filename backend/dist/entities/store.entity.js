@@ -30,18 +30,6 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => product_entity_1.Product, (product) => product.store),
     __metadata("design:type", Array)
 ], Store.prototype, "products", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" }),
-    __metadata("design:type", Date)
-], Store.prototype, "created_at", void 0);
-__decorate([
-    (0, typeorm_1.Column)({
-        type: "timestamp",
-        default: () => "CURRENT_TIMESTAMP",
-        onUpdate: "CURRENT_TIMESTAMP",
-    }),
-    __metadata("design:type", Date)
-], Store.prototype, "updated_at", void 0);
 Store = __decorate([
     (0, typeorm_1.Entity)("stores")
 ], Store);

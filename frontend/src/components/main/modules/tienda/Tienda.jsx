@@ -1,4 +1,5 @@
 import "./Tienda.css";
+import { useEffect } from "react";
 import { useProductsLogic } from "../../../../hooks/useProductsLogic";
 import { OpenInNewWindow } from "../../../../hooks/openWindow";
 import { useRefreshOnLocalStorage } from "../../../../hooks/useRefreshOnLocalStorage";
@@ -13,6 +14,24 @@ export const Tienda = () => {
   const handleOpenProductForm = () => {
     OpenInNewWindow("/postproduct");
   };
+
+  // Escucha los cambios en localStorage
+  useEffect(() => {
+    const handleStorageChange = () => {
+      if (localStorage.getItem("productUpdated") === "true") {
+        fetchData(); // Refrescar la lista de productos
+        localStorage.removeItem("productUpdated"); // Limpiar la señal
+      }
+    };
+
+    // Añadir el listener de cambios en localStorage
+    window.addEventListener("storage", handleStorageChange);
+
+    // Limpiar el listener cuando se desmonte el componente
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [fetchData]);
 
   // Use the custom hook to listen for localStorage changes
   useRefreshOnLocalStorage("refreshTienda", fetchData);
@@ -40,32 +59,38 @@ export const Tienda = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((product) => (
-                <tr key={product.id}>
-                  <td>
-                    {product.id} {product.name}
-                  </td>
-                  <td>{product.price + " €"}</td>
-                  <td>{product.category}</td>
-                  <td>{product.description}</td>
-                  <td>
-                    <button
-                      className="btn btn-icon"
-                      onClick={() =>
-                        OpenInNewWindow(`/editproduct/${product.id}`)
-                      }
-                    >
-                      <FontAwesomeIcon icon={faEdit} />
-                    </button>
-                    <button
-                      className="btn btn-icon cancel"
-                      onClick={() => handleDelete(product.id)}
-                    >
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </td>
+              {data && data.length > 0 ? (
+                data.map((product) => (
+                  <tr key={product.productId}>
+                    <td>
+                      {product.productId} {product.name}
+                    </td>
+                    <td>{product.price + " €"}</td>
+                    <td>{product.category}</td>
+                    <td>{product.description}</td>
+                    <td>
+                      <button
+                        className="btn btn-icon"
+                        onClick={() =>
+                          OpenInNewWindow(`/editproduct/${product.productId}`)
+                        }
+                      >
+                        <FontAwesomeIcon icon={faEdit} />
+                      </button>
+                      <button
+                        className="btn btn-icon cancel"
+                        onClick={() => handleDelete(product.productId)}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4">No hay productos en la tienda</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

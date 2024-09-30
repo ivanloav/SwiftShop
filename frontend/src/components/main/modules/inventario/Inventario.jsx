@@ -6,6 +6,7 @@ export const Inventario = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
+  console.log(data);
   return (
     <div className="full-screen">
       <div className="col col-2">
@@ -15,17 +16,19 @@ export const Inventario = () => {
               <tr height="50px">
                 <th width="10%">ID</th>
                 <th width="50%">Producto</th>
-                <th>Stock</th>
-                <th>Tienda</th>
+                <th width="20%">Stock</th>
+                <th width="20%">Tienda</th>
               </tr>
             </thead>
             <tbody>
               {data.map((product) => (
-                <tr key={product.id}>
-                  <td>{product.id}</td>
-                  <td>{product.product}</td>
-                  <td>{product.quantity}</td>
-                  <td>{product.store}</td>
+                <tr key={product.productId}>
+                  <td>{product.productId}</td>
+                  <td>{product.name}</td>
+                  <td>{product.stock}</td>
+                  <td>
+                    {product.store ? product.store.storeId : "Sin tienda"}
+                  </td>
                 </tr>
               ))}
             </tbody>

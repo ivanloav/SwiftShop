@@ -22,17 +22,25 @@ let InventoryService = class InventoryService {
         this.productRepository = productRepository;
     }
     async findAll() {
-        return this.productRepository.find();
+        return this.productRepository.find({
+            relations: ["store"],
+        });
     }
     async findOne(id) {
-        return this.productRepository.findOne({ where: { productId: id } });
+        return this.productRepository.findOne({
+            where: { productId: id },
+            relations: ["store"],
+        });
     }
     async create(product) {
         return this.productRepository.save(product);
     }
     async update(id, updateInventoryDto) {
         await this.productRepository.update(id, updateInventoryDto);
-        return this.productRepository.findOne({ where: { productId: id } });
+        return this.productRepository.findOne({
+            where: { productId: id },
+            relations: ["store"],
+        });
     }
     async remove(id) {
         await this.productRepository.delete(id);

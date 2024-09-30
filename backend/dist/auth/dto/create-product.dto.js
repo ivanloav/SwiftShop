@@ -34,10 +34,6 @@ __decorate([
     __metadata("design:type", String)
 ], CreateProductDto.prototype, "category", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: "Imagen del producto" }),
-    __metadata("design:type", String)
-], CreateProductDto.prototype, "image", void 0);
-__decorate([
     (0, swagger_1.ApiProperty)({
         description: "ID de la tienda a la que pertenece el producto",
     }),

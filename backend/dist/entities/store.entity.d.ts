@@ -4,7 +4,5 @@ export declare class Store {
     name: string;
     owner: string;
     products: Product[];
-    created_at: Date;
-    updated_at: Date;
 }
 //# sourceMappingURL=store.entity.d.ts.map

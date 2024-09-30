@@ -50,6 +50,7 @@ __decorate([
 ], Product.prototype, "orders", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => store_entity_1.Store, (store) => store.products),
+    (0, typeorm_1.JoinColumn)({ name: "storeId" }),
     __metadata("design:type", store_entity_1.Store)
 ], Product.prototype, "store", void 0);
 __decorate([

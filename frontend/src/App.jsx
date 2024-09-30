@@ -1,4 +1,5 @@
 import "./App.css";
+import PrivateRoute from "./components/PrivateRoute"; // Importa el componente PrivateRoute
 import { LoginScreenLayout } from "./components/login/LoginScreenLayout";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { LoginForm, RegisterForm } from "./components/login/Form";
@@ -7,7 +8,7 @@ import { Dashboard } from "./components/main/modules/Dashboard";
 import { Inventario } from "./components/main/modules/inventario/Inventario";
 import { Tienda } from "./components/main/modules/tienda/Tienda";
 import { NewProduct } from "./components/main/modules/tienda/NewProduct";
-import PrivateRoute from "./components/PrivateRoute"; // Importa el componente PrivateRoute
+import { EditProduct } from "./components/main/modules/tienda/EditProduct";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
 
           {/* Ruta protegida para crear nuevos productos */}
           <Route path="/postproduct" element={<NewProduct />} />
+          <Route path="/editproduct/:productId" element={<EditProduct />} />
         </Route>
       </Routes>
     </Router>

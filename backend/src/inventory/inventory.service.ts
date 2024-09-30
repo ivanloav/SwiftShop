@@ -6,25 +6,29 @@ import { UpdateInventoryDto } from "../auth/dto/update-inventory.dto"; // Import
 
 @Injectable()
 export class InventoryService {
-  // Inyectamos el repositorio de productos de TypeORM
   constructor(
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>
   ) {}
 
-  // Método para obtener todos los productos desde la base de datos
+  // Método para obtener todos los productos, incluyendo la tienda relacionada (store)
   async findAll(): Promise<Product[]> {
-    return this.productRepository.find(); // Encuentra todos los productos
+    return this.productRepository.find({
+      relations: ["store"], // Asegúrate de incluir la relación con la tienda (store)
+    });
   }
 
-  // Método para obtener un producto por su ID
+  // Método para obtener un producto por su ID, incluyendo la tienda relacionada (store)
   async findOne(id: number): Promise<Product> {
-    return this.productRepository.findOne({ where: { productId: id } }); // Encuentra un producto por su ID
+    return this.productRepository.findOne({
+      where: { productId: id },
+      relations: ["store"], // Asegúrate de incluir la relación con la tienda (store)
+    });
   }
 
   // Método para crear un nuevo producto en la base de datos
   async create(product: Product): Promise<Product> {
-    return this.productRepository.save(product); // Guarda un nuevo producto
+    return this.productRepository.save(product);
   }
 
   // Método para actualizar un producto existente
@@ -32,13 +36,16 @@ export class InventoryService {
     id: number,
     updateInventoryDto: UpdateInventoryDto
   ): Promise<Product> {
-    await this.productRepository.update(id, updateInventoryDto); // Usa el DTO correctamente
-    return this.productRepository.findOne({ where: { productId: id } }); // Devuelve el producto actualizado
+    await this.productRepository.update(id, updateInventoryDto);
+    return this.productRepository.findOne({
+      where: { productId: id },
+      relations: ["store"], // Incluye la tienda en la respuesta de actualización
+    });
   }
 
   // Método para eliminar un producto de la base de datos
   async remove(id: number): Promise<{ message: string }> {
-    await this.productRepository.delete(id); // Elimina el producto
+    await this.productRepository.delete(id);
     return { message: "Producto eliminado exitosamente." };
   }
 }

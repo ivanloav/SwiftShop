@@ -5,7 +5,7 @@ import { API_BASE_URL } from "../config";
 //const API_BASE_URL = "http://localhost:3000/api";
 
 // Get token from localStorage
-const getToken = () => localStorage.getItem("token");
+export const getToken = () => localStorage.getItem("accessToken");
 
 export const getDashboardData = async () => {
   const token = localStorage.getItem("accessToken");
