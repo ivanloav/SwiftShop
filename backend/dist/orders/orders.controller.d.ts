@@ -4,12 +4,10 @@ import { UpdateOrderDto } from "../auth/dto/update-order.dto";
 export declare class OrdersController {
     private readonly ordersService;
     constructor(ordersService: OrdersService);
-    findAll(): any[];
-    findOne(id: number): any;
-    create(createOrderDto: CreateOrderDto): any;
-    update(id: number, updateOrderDto: UpdateOrderDto): any;
-    remove(id: number): {
-        message: string;
-    };
+    findAll(): Promise<import("../entities/order.entity").Order[]>;
+    findOne(id: number): Promise<import("../entities/order.entity").Order>;
+    create(createOrderDto: CreateOrderDto): Promise<import("../entities/order.entity").Order>;
+    update(id: number, order: UpdateOrderDto): Promise<import("../entities/order.entity").Order>;
+    remove(id: number): Promise<void>;
 }
 //# sourceMappingURL=orders.controller.d.ts.map

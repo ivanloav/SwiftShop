@@ -1,3 +1,4 @@
+// Este archivo contiene el hook personalizado que se encarga de manejar las acciones de edición y eliminación de productos.
 import { useState } from "react";
 import { deleteProduct, updateProduct } from "../services/api"; // Asegúrate de que estas funciones están implementadas en tu servicio API
 

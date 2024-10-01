@@ -8,69 +8,46 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrdersService = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const order_entity_1 = require("../entities/order.entity");
 let OrdersService = class OrdersService {
-    constructor() {
-        this.orders = [
-            {
-                id: 1,
-                storeId: 1,
-                products: [
-                    { id: 1, name: 'Producto 1', price: 100, quantity: 1 },
-                    { id: 2, name: 'Producto 2', price: 200, quantity: 2 }
-                ],
-                total: 500
-            },
-            {
-                id: 2,
-                storeId: 2,
-                products: [
-                    { id: 3, name: 'Producto 3', price: 300, quantity: 3 },
-                    { id: 4, name: 'Producto 4', price: 400, quantity: 4 }
-                ],
-                total: 2000
-            },
-            {
-                id: 3,
-                storeId: 3,
-                products: [
-                    { id: 5, name: 'Producto 5', price: 500, quantity: 5 },
-                    { id: 6, name: 'Producto 6', price: 600, quantity: 6 }
-                ],
-                total: 5500
-            },
-        ];
+    findOne(id) {
+        return this.ordersRepository.findOne({
+            where: { orderId: id },
+            relations: ["customer", "product"],
+        });
+    }
+    constructor(ordersRepository) {
+        this.ordersRepository = ordersRepository;
     }
     findAll() {
-        return this.orders;
+        return this.ordersRepository.find({
+            relations: ["customer", "product"],
+        });
     }
-    findOne(id) {
-        return this.orders.find(order => order.id === id);
+    create(createOrderDto) {
+        const newOrder = this.ordersRepository.create(createOrderDto);
+        return this.ordersRepository.save(newOrder);
     }
-    create(order) {
-        this.orders.push(order);
-        return order;
+    async update(id, updateOrderDto) {
+        await this.ordersRepository.update(id, updateOrderDto);
+        return this.ordersRepository.findOneBy({ orderId: id });
     }
-    update(id, order) {
-        const index = this.orders.findIndex(o => o.id === id);
-        if (index !== -1) {
-            this.orders[index] = order;
-        }
-        return order;
-    }
-    remove(id) {
-        const index = this.orders.findIndex(o => o.id === id);
-        if (index !== -1) {
-            this.orders.splice(index, 1);
-        }
-        return { message: 'Orden eliminada exitosamente.' };
+    async remove(id) {
+        await this.ordersRepository.delete(id);
     }
 };
 OrdersService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [])
+    __param(0, (0, typeorm_1.InjectRepository)(order_entity_1.Order)),
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], OrdersService);
 exports.OrdersService = OrdersService;
 //# sourceMappingURL=orders.service.js.map

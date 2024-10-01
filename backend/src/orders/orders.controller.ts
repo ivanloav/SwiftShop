@@ -40,8 +40,8 @@ export class OrdersController {
   @ApiParam({ name: "id", required: true, description: "ID del pedido" })
   @ApiBody({ type: UpdateOrderDto })
   @Put(":id")
-  update(@Param("id") id: number, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.ordersService.update(id, updateOrderDto);
+  update(@Param("id") id: number, @Body() order: UpdateOrderDto) {
+    return this.ordersService.update(id, order);
   }
 
   @ApiParam({ name: "id", required: true, description: "ID del pedido" })

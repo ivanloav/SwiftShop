@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useProductsLogic } from "../../../../hooks/useProductsLogic";
 import { OpenInNewWindow } from "../../../../hooks/openWindow";
 import { useRefreshOnLocalStorage } from "../../../../hooks/useRefreshOnLocalStorage";
-import { useProductActions } from "../../../../hooks/useProductAcions";
+import { useProductActions } from "../../../../hooks/useProductActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 

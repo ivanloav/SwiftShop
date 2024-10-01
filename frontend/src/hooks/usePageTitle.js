@@ -15,6 +15,8 @@ export const usePageTitle = () => {
         return "Inventario";
       case "/user/clientes":
         return "Clientes";
+      case "/user/orders":
+        return "Pedidos";
       default:
         return "Default Title";
     }

@@ -19,6 +19,12 @@ export function SideMenu() {
             <div>Tienda</div>
           </div>
         </Link>
+        <Link to="/user/orders" className="no-color-change">
+          <div className="item flex">
+            <i className="bi bi-box-fill icon"></i>
+            <div>Pedidos</div>
+          </div>
+        </Link>
         <Link to="/user/inventario" className="no-color-change">
           <div className="item flex">
             <i className="bi bi-box-fill icon"></i>

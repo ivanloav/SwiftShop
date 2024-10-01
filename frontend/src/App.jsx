@@ -9,6 +9,7 @@ import { Inventario } from "./components/main/modules/inventario/Inventario";
 import { Tienda } from "./components/main/modules/tienda/Tienda";
 import { NewProduct } from "./components/main/modules/tienda/NewProduct";
 import { EditProduct } from "./components/main/modules/tienda/EditProduct";
+import { Orders } from "./components/main/modules/orders/Orders";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/user/dashboard" element={<Dashboard />} />
             <Route path="/user/inventario" element={<Inventario />} />
             <Route path="/user/tienda" element={<Tienda />} />
+            <Route path="/user/orders" element={<Orders />} />
           </Route>
 
           {/* Ruta protegida para crear nuevos productos */}

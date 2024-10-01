@@ -32,8 +32,8 @@ let OrdersController = class OrdersController {
     create(createOrderDto) {
         return this.ordersService.create(createOrderDto);
     }
-    update(id, updateOrderDto) {
-        return this.ordersService.update(id, updateOrderDto);
+    update(id, order) {
+        return this.ordersService.update(id, order);
     }
     remove(id) {
         return this.ordersService.remove(id);

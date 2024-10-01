@@ -1,68 +1,44 @@
-
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { Order } from "../entities/order.entity";
+import { CreateOrderDto } from "src/auth/dto/create-order.dto";
+import { UpdateOrderDto } from "src/auth/dto/update-order.dto";
 
 @Injectable()
 export class OrdersService {
-    private readonly orders: any[];
+  findOne(id: number): Promise<Order> {
+    return this.ordersRepository.findOne({
+      where: { orderId: id },
+      relations: ["customer", "product"], // Incluye las relaciones necesarias
+    });
+  }
+  constructor(
+    @InjectRepository(Order)
+    private readonly ordersRepository: Repository<Order>
+  ) {}
 
-    constructor() {
-        this.orders = [
-            {
-                id: 1,
-                storeId: 1,
-                products: [
-                    { id: 1, name: 'Producto 1', price: 100, quantity: 1 },
-                    { id: 2, name: 'Producto 2', price: 200, quantity: 2 }
-                ],
-                total: 500
-            },
-            {
-                id: 2,
-                storeId: 2,
-                products: [
-                    { id: 3, name: 'Producto 3', price: 300, quantity: 3 },
-                    { id: 4, name: 'Producto 4', price: 400, quantity: 4 }
-                ],
-                total: 2000
-            },
-            {
-                id: 3,
-                storeId: 3,
-                products: [
-                    { id: 5, name: 'Producto 5', price: 500, quantity: 5 },
-                    { id: 6, name: 'Producto 6', price: 600, quantity: 6 }
-                ],
-                total: 5500
-            },
-        ];
-    }
+  findAll(): Promise<Order[]> {
+    // Usa el método `find` para obtener las órdenes y todas sus relaciones
+    return this.ordersRepository.find({
+      relations: ["customer", "product"], // Aquí especificas las relaciones a incluir
+    });
+  }
 
-    findAll() {
-        return this.orders;
-    }
+  create(createOrderDto: CreateOrderDto): Promise<Order> {
+    // Crea una nueva orden y devuélvela
+    const newOrder = this.ordersRepository.create(createOrderDto);
+    return this.ordersRepository.save(newOrder);
+  }
 
-    findOne(id: number) {
-        return this.orders.find(order => order.id === id);
-    }
+  async update(id: number, updateOrderDto: UpdateOrderDto): Promise<Order> {
+    // Actualiza la orden con el ID proporcionado
+    await this.ordersRepository.update(id, updateOrderDto);
+    return this.ordersRepository.findOneBy({ orderId: id });
+  }
 
-    create(order: any) {
-        this.orders.push(order);
-        return order;
-    }
-
-    update(id: number, order: any) {
-        const index = this.orders.findIndex(o => o.id === id);
-        if (index !== -1) {
-            this.orders[index] = order;
-        }
-        return order;
-    }
-
-    remove(id: number) {
-        const index = this.orders.findIndex(o => o.id === id);
-        if (index !== -1) {
-            this.orders.splice(index, 1);
-        }
-        return { message: 'Orden eliminada exitosamente.' };
-    }
+  async remove(id: number): Promise<void> {
+    // Elimina la orden con el ID proporcionado
+    await this.ordersRepository.delete(id);
+  }
 }

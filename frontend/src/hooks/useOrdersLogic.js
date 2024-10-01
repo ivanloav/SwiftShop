@@ -1,18 +1,17 @@
-// Desc: Custom hook to fetch products data from the API
+// Desc: Custom hook to fetch orders data from the API
 import { useState, useEffect } from "react";
-import { getProducts } from "../services/api";
+import { getOrders } from "../services/api";
 
-export function useProductsLogic() {
+export function useOrdersLogic() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Function to fetch data
   const fetchData = async () => {
     setLoading(true);
     try {
-      const result = await getProducts();
+      const result = await getOrders();
       setData(result);
-      console.log("data fetched from useProductsLogic()");
+      console.log("data fetched from useOrdersLogic()");
     } catch (error) {
       console.error("Error fetching data", error);
     } finally {
@@ -20,11 +19,9 @@ export function useProductsLogic() {
     }
   };
 
-  // Fetch data on component mount
   useEffect(() => {
     fetchData();
   }, []);
 
-  // Return data, loading status, and fetchData function
   return { data, loading, fetchData };
 }
