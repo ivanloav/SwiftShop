@@ -2,6 +2,8 @@ import "./Topbar.css";
 import logo from "../../../../public/logo.png";
 import { usePageTitle } from "../../../hooks/usePageTitle"; // Importar el hook
 import { handleLogout } from "../../../hooks/chechAuth"; // Importar la función de logout
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons"; // ícono de salida
 
 export function Topbar() {
   const title = usePageTitle(); // Usar el hook para obtener el título
@@ -17,7 +19,7 @@ export function Topbar() {
         <i className="bi bi-bell-fill"></i>
         <i className="bi bi-chat-fill"></i>
         <button className="btn btn-light logout-button" onClick={handleLogout}>
-          <i className="bi bi-box-arrow-right"></i>
+          <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
         </button>
       </div>
     </div>
