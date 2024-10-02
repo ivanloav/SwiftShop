@@ -35,7 +35,6 @@ export const Inventario = () => {
           </table>
         </div>
       </div>
-      <div className="col"></div>
     </div>
   );
 };

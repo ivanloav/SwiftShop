@@ -42,7 +42,7 @@ export const Tienda = () => {
 
   return (
     <div className="full-screen">
-      <div className="col">
+      <div className="col-2">
         <div className="botones">
           <button className="btn" onClick={handleOpenProductForm}>
             Crear Producto
