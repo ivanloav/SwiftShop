@@ -29,5 +29,9 @@ __decorate([
     (0, swagger_1.ApiProperty)({ description: "Total del pedido en euros" }),
     __metadata("design:type", Number)
 ], CreateOrderDto.prototype, "total", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: "Estado del pedido" }),
+    __metadata("design:type", String)
+], CreateOrderDto.prototype, "status", void 0);
 exports.CreateOrderDto = CreateOrderDto;
 //# sourceMappingURL=create-order.dto.js.map

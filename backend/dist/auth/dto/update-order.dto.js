@@ -29,5 +29,9 @@ __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: "Total del pedido en euros" }),
     __metadata("design:type", Number)
 ], UpdateOrderDto.prototype, "total", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: "Estado del pedido" }),
+    __metadata("design:type", String)
+], UpdateOrderDto.prototype, "status", void 0);
 exports.UpdateOrderDto = UpdateOrderDto;
 //# sourceMappingURL=update-order.dto.js.map

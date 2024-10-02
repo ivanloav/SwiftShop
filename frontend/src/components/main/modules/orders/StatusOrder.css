@@ -1,0 +1,37 @@
+.status-order {
+  padding: 5px 10px;
+  border-radius: 20px; /* Bordes redondeados */
+  font-size: 14px;
+  font-weight: bold;
+  display: inline-block;
+  color: #333; /* Texto oscuro */
+  text-align: center;
+  margin: 5px 0;
+  border: 1px solid transparent; /* Borde transparente */
+  width: 150px; /* Ancho consistente */
+}
+
+/* Estilos para los diferentes estados */
+.badge-received {
+  background-color: #f0a56f; /* Naranja */
+  border-color: #e39259;
+  color: #fff;
+}
+
+.badge-processing {
+  background-color: #f0d57f; /* Amarillo claro */
+  border-color: #e3c159;
+  color: #333;
+}
+
+.badge-sent {
+  background-color: #f0f07f; /* Amarillo */
+  border-color: #e3e159;
+  color: #333;
+}
+
+.badge-delivered {
+  background-color: #6fcf97; /* Verde */
+  border-color: #59c785;
+  color: #fff; /* Texto blanco */
+}

@@ -6,6 +6,7 @@ export declare class Order {
     product: Product;
     quantity: number;
     total: number;
+    status: string;
     created_at: Date;
     updated_at: Date;
 }

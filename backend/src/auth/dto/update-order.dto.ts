@@ -12,4 +12,7 @@ export class UpdateOrderDto {
 
   @ApiPropertyOptional({ description: "Total del pedido en euros" })
   readonly total?: number;
+
+  @ApiPropertyOptional({ description: "Estado del pedido" })
+  readonly status?: string;
 }

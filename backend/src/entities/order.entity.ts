@@ -27,6 +27,9 @@ export class Order {
   @Column("decimal", { precision: 10, scale: 2 })
   total: number;
 
+  @Column("text")
+  status: string;
+
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;
 

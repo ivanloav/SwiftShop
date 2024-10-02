@@ -1,8 +1,9 @@
 import "./Orders.css";
 import React, { useEffect, useState } from "react";
-import { getOrders } from "../../../../services/api"; // Importa tu función de obtener órdenes desde api.js
+//import { getOrders } from "../../../../services/api"; // Importa tu función de obtener órdenes desde api.js
 import { useOrdersLogic } from "../../../../hooks/useOrdersLogic";
 import { useRefreshOnLocalStorage } from "../../../../hooks/useRefreshOnLocalStorage";
+import { StatusOrder } from "./StatusOrder";
 
 export const Orders = () => {
   // Inicializamos sortConfig con orden descendente por defecto (flecha hacia abajo)
@@ -50,10 +51,10 @@ export const Orders = () => {
   const sortedData = Array.isArray(data)
     ? [...data].sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? -1 : 1;
+          return sortConfig.direction === "ascending" ? 1 : -1;
         }
         if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? 1 : -1;
+          return sortConfig.direction === "ascending" ? -1 : 1;
         }
         return 0;
       })
@@ -63,8 +64,94 @@ export const Orders = () => {
     return <p>Cargando pedidos...</p>;
   }
 
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const day = String(date.getDate()).padStart(2, "0"); // Añadir cero si es necesario
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Los meses comienzan desde 0, por eso sumamos 1
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`; // Formato dd-mm-aaaa
+  };
+
+  const formatTotal = (total) => {
+    // Asegurar que siempre haya dos decimales
+    const fixedTotal = Number(total).toFixed(2);
+
+    // Formatear el número como moneda en euros
+    return new Intl.NumberFormat("es-ES", {
+      style: "currency",
+      currency: "EUR",
+    }).format(fixedTotal);
+  };
+
+  // Calcular estadísticas
+  const totalOrders = sortedData.length;
+  const totalItemsOrdered = sortedData.reduce(
+    (sum, order) => sum + order.quantity,
+    0
+  );
+  const totalReceived = sortedData.filter(
+    (order) => order.status === "received"
+  ).length;
+  const totalProcessing = sortedData.filter(
+    (order) => order.status === "processing"
+  ).length;
+  const totalDelivered = sortedData.filter(
+    (order) => order.status === "delivered"
+  ).length;
+  const totalSent = sortedData.filter(
+    (order) => order.status === "sent"
+  ).length;
+
   return (
     <div className="full-screen">
+      {/* Barra de estadísticas con los valores calculados */}
+      <div className="stats-bar">
+        <div className="stat-item">
+          <div className="stat-title">Pedidos totales</div>
+          <div className="stat-value">{totalOrders}</div>
+          <div className="stat-bar">
+            <div className="progress"></div>
+          </div>
+        </div>
+        <div className="stat-item">
+          <div className="stat-title">Artículos pedidos</div>
+          <div className="stat-value">{totalItemsOrdered}</div>
+          <div className="stat-bar">
+            <div className="progress"></div>
+          </div>
+        </div>
+        <div className="stat-item">
+          <div className="stat-title">Pedidos pendientes de preparar</div>
+          <div className="stat-value">{totalReceived}</div>
+          <div className="stat-bar">
+            <div className="progress"></div>
+          </div>
+        </div>
+        <div className="stat-item">
+          <div className="stat-title">Pedidos en preparación</div>
+          <div className="stat-value">{totalProcessing}</div>
+          <div className="stat-bar">
+            <div className="progress"></div>
+          </div>
+        </div>
+        <div className="stat-item">
+          <div className="stat-title">Pedidos enviados</div>
+          <div className="stat-value">{totalSent}</div>
+          <div className="stat-bar">
+            <div className="progress"></div>
+          </div>
+        </div>
+        <div className="stat-item">
+          <div className="stat-title">Pedidos entregados</div>
+          <div className="stat-value">{totalDelivered}</div>
+          <div className="stat-bar">
+            <div className="progress"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Tabla de pedidos */}
       <div className="col col-2">
         <div className="orders">
           <table id="orders">
@@ -112,10 +199,14 @@ export const Orders = () => {
                 sortedData.map((order) => (
                   <tr key={order.orderId}>
                     <td>{order.orderId}</td>
-                    <td>{order.date}</td>
-                    <td>{order.customer}</td>
-                    <td>{order.total}</td>
-                    <td>{order.status}</td>
+                    <td>{formatDate(order.created_at)}</td>{" "}
+                    {/* Formato dd-mm-aaaa */}
+                    <td>{order.customer.name}</td>
+                    <td>{formatTotal(order.total)}</td>{" "}
+                    {/* Formateo del total en euros */}
+                    <td>
+                      <StatusOrder status={order.status} />
+                    </td>
                   </tr>
                 ))
               ) : (
