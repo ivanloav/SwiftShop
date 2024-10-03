@@ -41,18 +41,22 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "category", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => inventory_entity_1.Inventory, (inventory) => inventory.product),
-    __metadata("design:type", Array)
-], Product.prototype, "inventory", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => order_entity_1.Order, (order) => order.product),
-    __metadata("design:type", Array)
-], Product.prototype, "orders", void 0);
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Product.prototype, "image", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => store_entity_1.Store, (store) => store.products),
     (0, typeorm_1.JoinColumn)({ name: "storeId" }),
     __metadata("design:type", store_entity_1.Store)
 ], Product.prototype, "store", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => inventory_entity_1.Inventory, (inventory) => inventory.product),
+    __metadata("design:type", Array)
+], Product.prototype, "inventories", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => order_entity_1.Order, (order) => order.product),
+    __metadata("design:type", Array)
+], Product.prototype, "orders", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" }),
     __metadata("design:type", Date)

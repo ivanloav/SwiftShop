@@ -14,8 +14,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrdersController = void 0;
 const common_1 = require("@nestjs/common");
-const orders_service_1 = require("./orders.service");
 const swagger_1 = require("@nestjs/swagger");
+const orders_service_1 = require("./orders.service");
 const create_order_dto_1 = require("../auth/dto/create-order.dto");
 const update_order_dto_1 = require("../auth/dto/update-order.dto");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
@@ -32,8 +32,8 @@ let OrdersController = class OrdersController {
     create(createOrderDto) {
         return this.ordersService.create(createOrderDto);
     }
-    update(id, order) {
-        return this.ordersService.update(id, order);
+    update(id, updateOrderDto) {
+        return this.ordersService.update(id, updateOrderDto);
     }
     remove(id) {
         return this.ordersService.remove(id);

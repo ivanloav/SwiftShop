@@ -1,56 +1,42 @@
-
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { Customer } from "../entities/customer.entity";
+import { CreateCustomerDto } from "src/auth/dto/create-customer.dto";
+import { UpdateCustomerDto } from "src/auth/dto/update-customer.dto";
 
 @Injectable()
 export class CustomersService {
-    private readonly customers: any[];
+  constructor(
+    @InjectRepository(Customer)
+    private readonly customersRepository: Repository<Customer>
+  ) {}
 
-    constructor() {
-        this.customers = [
-            {
-                id: 1,
-                name: 'Cliente 1',
-                email: ''
-            },
-            {
-                id: 2,
-                name: 'Cliente 2',
-                email: ''
-            },
-            {
-                id: 3,
-                name: 'Cliente 3',
-                email: ''
-            },
-        ];
-    }
+  findAll(): Promise<Customer[]> {
+    return this.customersRepository.find({ relations: ["orders"] });
+  }
 
-    findAll() {
-        return this.customers;
-    }
+  findOne(id: number): Promise<Customer> {
+    return this.customersRepository.findOne({
+      where: { customerId: id },
+      relations: ["orders"],
+    });
+  }
 
-    findOne(id: number) {
-        return this.customers.find(customer => customer.id === id);
-    }
+  create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
+    const newCustomer = this.customersRepository.create(createCustomerDto);
+    return this.customersRepository.save(newCustomer);
+  }
 
-    create(customer: any) {
-        this.customers.push(customer);
-        return customer;
-    }
+  async update(
+    id: number,
+    updateCustomerDto: UpdateCustomerDto
+  ): Promise<Customer> {
+    await this.customersRepository.update(id, updateCustomerDto);
+    return this.customersRepository.findOneBy({ customerId: id });
+  }
 
-    update(id: number, customer: any) {
-        const index = this.customers.findIndex(c => c.id === id);
-        if (index !== -1) {
-            this.customers[index] = customer;
-        }
-        return customer;
-    }
-
-    remove(id: number) {
-        const index = this.customers.findIndex(c => c.id === id);
-        if (index !== -1) {
-            this.customers.splice(index, 1);
-        }
-        return { message: 'Cliente eliminado exitosamente.' };
-    }
+  async remove(id: number): Promise<void> {
+    await this.customersRepository.delete(id);
+  }
 }

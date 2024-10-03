@@ -44,6 +44,7 @@ export const getOrders = async () => {
 
 export const createOrder = async (order) => {
   try {
+    console.log("Datos del pedido:", order);
     console.log("creating new order posting to api.js");
     const response = await axios.post(`${API_BASE_URL}/orders`, order, {
       headers: {
@@ -153,6 +154,21 @@ export const updateProduct = async (productId, updatedData) => {
     });
   } catch (error) {
     console.error("Error updating product", error);
+    throw error;
+  }
+};
+
+// Función para obtener los clientes
+export const getCustomers = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/customers`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
+    return response.data; // Asegúrate de que la API esté devolviendo los clientes correctamente
+  } catch (error) {
+    console.error("Error fetching customers", error);
     throw error;
   }
 };

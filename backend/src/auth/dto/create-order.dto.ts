@@ -14,5 +14,5 @@ export class CreateOrderDto {
   readonly total: number;
 
   @ApiProperty({ description: "Estado del pedido" })
-  readonly status: string;
+  readonly status?: string;
 }

@@ -19,7 +19,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Inventory.prototype, "inventoryId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => product_entity_1.Product, (product) => product.inventory),
+    (0, typeorm_1.ManyToOne)(() => product_entity_1.Product, (product) => product.inventories),
     (0, typeorm_1.JoinColumn)({ name: "productId" }),
     __metadata("design:type", product_entity_1.Product)
 ], Inventory.prototype, "product", void 0);

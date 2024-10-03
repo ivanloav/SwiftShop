@@ -13,7 +13,7 @@ export class Inventory {
   inventoryId: number;
 
   // Relación con Product
-  @ManyToOne(() => Product, (product) => product.inventory)
+  @ManyToOne(() => Product, (product) => product.inventories)
   @JoinColumn({ name: "productId" }) // El nombre de la columna debe ser el correcto en la base de datos
   product: Product;
 

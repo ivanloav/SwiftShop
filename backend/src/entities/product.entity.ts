@@ -30,18 +30,18 @@ export class Product {
   @Column()
   category: string;
 
-  // Relación con Inventory
-  @OneToMany(() => Inventory, (inventory) => inventory.product)
-  inventory: Inventory[];
+  @Column()
+  image: string;
 
-  // Relación con Order
+  @ManyToOne(() => Store, (store) => store.products)
+  @JoinColumn({ name: "storeId" })
+  store: Store;
+
+  @OneToMany(() => Inventory, (inventory) => inventory.product)
+  inventories: Inventory[];
+
   @OneToMany(() => Order, (order) => order.product)
   orders: Order[];
-
-  // Relación con Store
-  @ManyToOne(() => Store, (store) => store.products)
-  @JoinColumn({ name: "storeId" }) // El nombre de la columna debe ser el correcto en la base de datos
-  store: Store;
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;

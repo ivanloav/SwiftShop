@@ -18,12 +18,6 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const order_entity_1 = require("../entities/order.entity");
 let OrdersService = class OrdersService {
-    findOne(id) {
-        return this.ordersRepository.findOne({
-            where: { orderId: id },
-            relations: ["customer", "product"],
-        });
-    }
     constructor(ordersRepository) {
         this.ordersRepository = ordersRepository;
     }
@@ -32,8 +26,14 @@ let OrdersService = class OrdersService {
             relations: ["customer", "product"],
         });
     }
-    create(createOrderDto) {
-        const newOrder = this.ordersRepository.create(createOrderDto);
+    findOne(id) {
+        return this.ordersRepository.findOne({
+            where: { orderId: id },
+            relations: ["customer", "product"],
+        });
+    }
+    async create(createOrderDto) {
+        const newOrder = this.ordersRepository.create(Object.assign(Object.assign({}, createOrderDto), { customer: { customerId: createOrderDto.customerId }, product: { productId: createOrderDto.productId } }));
         return this.ordersRepository.save(newOrder);
     }
     async update(id, updateOrderDto) {

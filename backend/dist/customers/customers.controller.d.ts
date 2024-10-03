@@ -4,12 +4,10 @@ import { UpdateCustomerDto } from "../auth/dto/update-customer.dto";
 export declare class CustomersController {
     private readonly customersService;
     constructor(customersService: CustomersService);
-    findAll(): any[];
-    findOne(id: number): any;
-    create(createCustomerDto: CreateCustomerDto): any;
-    update(id: number, updateCustomerDto: UpdateCustomerDto): any;
-    remove(id: number): {
-        message: string;
-    };
+    findAll(): Promise<import("../entities/customer.entity").Customer[]>;
+    findOne(id: number): Promise<import("../entities/customer.entity").Customer>;
+    create(createCustomerDto: CreateCustomerDto): Promise<import("../entities/customer.entity").Customer>;
+    update(id: number, updateCustomerDto: UpdateCustomerDto): Promise<import("../entities/customer.entity").Customer>;
+    remove(id: number): Promise<void>;
 }
 //# sourceMappingURL=customers.controller.d.ts.map

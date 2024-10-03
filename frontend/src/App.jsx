@@ -10,6 +10,8 @@ import { Tienda } from "./components/main/modules/tienda/Tienda";
 import { NewProduct } from "./components/main/modules/tienda/NewProduct";
 import { EditProduct } from "./components/main/modules/tienda/EditProduct";
 import { Orders } from "./components/main/modules/orders/Orders";
+import { NewOrder } from "./components/main/modules/orders/NewOrder";
+import { EditOrder } from "./components/main/modules/orders/EditOrder";
 
 function App() {
   return (
@@ -33,6 +35,10 @@ function App() {
           {/* Ruta protegida para crear nuevos productos */}
           <Route path="/postproduct" element={<NewProduct />} />
           <Route path="/editproduct/:productId" element={<EditProduct />} />
+
+          {/* Ruta protegida para crear nuevos productos */}
+          <Route path="/neworder" element={<NewOrder />} />
+          <Route path="/editorder/:orderId" element={<EditOrder />} />
         </Route>
       </Routes>
     </Router>

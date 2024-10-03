@@ -8,9 +8,10 @@ export declare class Product {
     price: number;
     stock: number;
     category: string;
-    inventory: Inventory[];
-    orders: Order[];
+    image: string;
     store: Store;
+    inventories: Inventory[];
+    orders: Order[];
     created_at: Date;
     updated_at: Date;
 }
