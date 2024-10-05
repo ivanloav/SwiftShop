@@ -10,8 +10,15 @@ import { Tienda } from "./components/main/modules/tienda/Tienda";
 import { Orders } from "./components/main/modules/orders/Orders";
 import { OrderForm } from "./components/main/modules/orders/OrderForm";
 import { ProductForm } from "./components/main/modules/tienda/ProductForm";
+import { useEffect } from "react";
+import checkTokenExpiration from "./services/checkTokenExpiration"; // Importación por defecto
 
 function App() {
+  // Llama a checkTokenExpiration cuando el componente App se monte
+  useEffect(() => {
+    checkTokenExpiration(); // Verifica la expiración del token
+  }, []); // El array vacío significa que esto solo se ejecuta al montar el componente
+
   return (
     <Router>
       <Routes>

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProducts, updateProduct, getToken } from "../../../../services/api";
 import useProductForm from "../../../../hooks/useProductForm";
+import { BaseImgURL } from "../../../../config";
 
 export const ProductForm = ({ isEditMode }) => {
   const { formData, handleChange, handleSubmit, error, loading, setFormData } =
@@ -79,6 +80,10 @@ export const ProductForm = ({ isEditMode }) => {
     return <div>Cargando datos del producto...</div>;
   }
 
+  const handleImageError = (e) => {
+    e.target.src = BaseImgURL + "no-image-icon.png"; // Imagen genérica si falla la carga
+  };
+
   return (
     <div className="modal">
       <div className="modal-content">
@@ -121,10 +126,17 @@ export const ProductForm = ({ isEditMode }) => {
 
           {/* Mostrar la imagen de S3 si existe */}
           <div className="image-preview">
-            {formData.image && (
+            {formData.image ? (
               <img
-                src={formData.image}
+                src={`${BaseImgURL}${formData.image}`}
                 alt="Imagen del producto"
+                style={{ width: "200px", height: "200px", margin: "10px 0" }}
+                onError={handleImageError} // Si falla, cambiará a una imagen genérica
+              />
+            ) : (
+              <img
+                src={`${BaseImgURL}no-image-icon.png`} // Imagen genérica
+                alt="Imagen no disponible"
                 style={{ width: "200px", height: "200px", margin: "10px 0" }}
               />
             )}

@@ -10,6 +10,7 @@ export const useOrderForm = () => {
   });
   const [customers, setCustomers] = useState([]);
   const [products, setProducts] = useState([]);
+  const [selectedProductImage, setSelectedProductImage] = useState(""); // Estado para la imagen del producto seleccionado
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -35,7 +36,7 @@ export const useOrderForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Si se selecciona un producto, calcular el total basado en la cantidad y el precio
+    // Si se selecciona un producto, calcular el total basado en la cantidad y el precio, y actualizar la imagen
     if (name === "productId") {
       const selectedProduct = products.find(
         (p) => p.productId === parseInt(value)
@@ -44,6 +45,13 @@ export const useOrderForm = () => {
         ? selectedProduct.price * formData.quantity
         : 0;
       setFormData({ ...formData, productId: parseInt(value), total });
+
+      // Establecer la imagen del producto seleccionado
+      if (selectedProduct && selectedProduct.image) {
+        setSelectedProductImage(selectedProduct.image);
+      } else {
+        setSelectedProductImage(""); // Si no hay imagen, limpiar la imagen seleccionada
+      }
     } else if (name === "quantity") {
       // Si se cambia la cantidad, recalcular el total
       const selectedProduct = products.find(
@@ -80,6 +88,7 @@ export const useOrderForm = () => {
     formData,
     customers,
     products,
+    selectedProductImage, // Devuelve la URL de la imagen seleccionada
     handleChange,
     handleSubmit,
     error,

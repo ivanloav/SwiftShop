@@ -1,16 +1,22 @@
 import "./OrderForm.css";
 import { useOrderForm } from "../../../../hooks/useOrderForm";
+import { BaseImgURL } from "../../../../config";
 
 export const OrderForm = () => {
   const {
     formData,
     products,
     customers,
+    selectedProductImage, // Obtén la URL de la imagen seleccionada
     handleChange,
     handleSubmit,
     error,
     loading,
   } = useOrderForm();
+
+  const handleImageError = (e) => {
+    e.target.src = BaseImgURL + "no-image-icon.png"; // Imagen genérica si falla la carga
+  };
 
   return (
     <div className="modal">
@@ -64,10 +70,17 @@ export const OrderForm = () => {
           </select>
           {/* Mostrar la imagen de S3 si existe */}
           <div className="image-preview">
-            {formData.image && (
+            {selectedProductImage ? (
               <img
-                src={formData.image}
+                src={`${BaseImgURL}${selectedProductImage}`}
                 alt="Imagen del producto"
+                style={{ width: "200px", height: "200px", margin: "10px 0" }}
+                onError={handleImageError} // Si falla, cambiará a una imagen genérica
+              />
+            ) : (
+              <img
+                src={`${BaseImgURL}no-image-icon.png`} // Imagen genérica
+                alt="Imagen no disponible"
                 style={{ width: "200px", height: "200px", margin: "10px 0" }}
               />
             )}
