@@ -45,7 +45,6 @@ export const OrderForm = () => {
               <option value="">No hay clientes disponibles</option>
             )}
           </select>
-
           {/* Selección de producto */}
           <select
             className="select"
@@ -95,7 +94,6 @@ export const OrderForm = () => {
             required
             placeholder="Cantidad"
           />
-
           {/* Total calculado */}
           <input
             type="text"
@@ -103,6 +101,7 @@ export const OrderForm = () => {
             value={formData.total.toFixed(2)} // Mostrar total con dos decimales
             readOnly
             placeholder="Total"
+            className="currency-input"
           />
 
           {/* Botones del formulario */}
