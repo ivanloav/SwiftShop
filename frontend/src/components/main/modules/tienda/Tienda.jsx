@@ -12,7 +12,7 @@ export const Tienda = () => {
   const { handleDelete } = useProductActions();
 
   const handleOpenProductForm = () => {
-    OpenInNewWindow("/postproduct");
+    OpenInNewWindow("/newProduct", 900, 1100);
   };
 
   // Escucha los cambios en localStorage
@@ -72,7 +72,11 @@ export const Tienda = () => {
                       <button
                         className="btn btn-icon"
                         onClick={() =>
-                          OpenInNewWindow(`/editproduct/${product.productId}`)
+                          OpenInNewWindow(
+                            `/editproduct/${product.productId}`,
+                            900,
+                            1100
+                          )
                         }
                       >
                         <FontAwesomeIcon icon={faEdit} />

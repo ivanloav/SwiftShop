@@ -1,55 +1,35 @@
 .container {
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 20px;
 }
 
 .logo {
-    height: 100px;
-    width: 100px;
-    align-self: center;
+  height: 100px;
+  width: 100px;
+  align-self: center;
 }
-/* form {
-    display: flex;
-    flex-direction: column;
-}
+
 form input {
-    margin: 5px;
-    height: 30px;
-    border-color: #082F48;
-    border-radius: 5px;
-    border-style: groove;
-    background-color: white;
+  width: 100%;
+  margin: 10px 0;
+  height: 40px;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
 
-}
-    
-form input::placeholder {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 100;
-    color: #8396A380;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-align: center;
-
-}
-form button {
-    margin: 5px;
-    border-radius: 5px;
-    border-style: groove;
-    background-color: #082F48;
-} */
-.client {
-    background-color: #DFE4E7;
-}
 .link {
-    align-self: flex-end;
-    padding-right: 10px;
-    color: #082F48;
-    
+  align-self: flex-end;
+  padding-right: 10px;
+  color: #082f48;
 }
 .link:hover {
-    color: #DFE4E7 ;
-    cursor: pointer;
+  color: #dfe4e7;
+  cursor: pointer;
 }

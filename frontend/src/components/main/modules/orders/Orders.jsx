@@ -21,7 +21,7 @@ export const Orders = () => {
   const { handleDelete } = useOrdersActions();
 
   const handleOpenOrderForm = () => {
-    OpenInNewWindow("/neworder");
+    OpenInNewWindow("/neworder", 900, 900);
   };
 
   useEffect(() => {
@@ -257,7 +257,11 @@ export const Orders = () => {
                       <button
                         className="btn btn-icon"
                         onClick={() =>
-                          OpenInNewWindow(`/editorder/${order.orderId}`)
+                          OpenInNewWindow(
+                            `/editorder/${order.orderId}`,
+                            900,
+                            900
+                          )
                         }
                         disabled={order.status !== "received"}
                       >

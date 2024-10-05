@@ -1,5 +1,4 @@
 import "./Form.css";
-import logo from "/logo.png";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 import { API_BASE_URL } from "../../config";
@@ -52,7 +51,7 @@ export function RegisterForm() {
 
   return (
     <div className="container">
-      <img src={logo} className="logo" alt="Logo" />
+      <img src="/logo.png" alt="Logo" />
       <form onSubmit={handleRegister}>
         <input
           name="email"
@@ -119,7 +118,7 @@ export function LoginForm() {
 
   return (
     <div className="container">
-      <img src={logo} className="logo" alt="Logo" />
+      <img src="/logo.png" alt="Logo" className="logo" />
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
       <form onSubmit={handleLogin}>
         <input

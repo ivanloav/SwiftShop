@@ -135,7 +135,7 @@ export const EditOrder = () => {
           </div>
           <div className="form-buttons">
             <button type="submit" disabled={loading}>
-              {loading ? "Actualizando..." : "Actualizar Producto"}
+              {loading ? "Actualizando..." : "Actualizar pedido"}
             </button>
             <button className="cancel" type="button" onClick={window.close}>
               Cancelar

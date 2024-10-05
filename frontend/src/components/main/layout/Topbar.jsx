@@ -1,5 +1,4 @@
 import "./Topbar.css";
-import logo from "../../../../public/logo.png";
 import { usePageTitle } from "../../../hooks/usePageTitle"; // Importar el hook
 import { handleLogout } from "../../../hooks/chechAuth"; // Importar la función de logout
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,7 +10,7 @@ export function Topbar() {
   return (
     <div className="head flex">
       <div className="logo">
-        <img src={logo} alt="Logo" />
+        <img src="/logo.png" alt="Logo" />
       </div>
       <div className="title flex">{title}</div>
       <div className="configButtons flex">

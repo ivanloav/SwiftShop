@@ -1,7 +1,7 @@
-import "./NewOrder.css";
+import "./OrderForm.css";
 import { useOrderForm } from "../../../../hooks/useOrderForm";
 
-export const NewOrder = () => {
+export const OrderForm = () => {
   const {
     formData,
     products,
@@ -62,7 +62,16 @@ export const NewOrder = () => {
               <option value="">No hay productos disponibles</option>
             )}
           </select>
-
+          {/* Mostrar la imagen de S3 si existe */}
+          <div className="image-preview">
+            {formData.image && (
+              <img
+                src={formData.image}
+                alt="Imagen del producto"
+                style={{ width: "200px", height: "200px", margin: "10px 0" }}
+              />
+            )}
+          </div>
           {/* Cantidad */}
           <input
             type="number"

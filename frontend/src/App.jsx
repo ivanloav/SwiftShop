@@ -7,11 +7,9 @@ import { ScreenLayout } from "./components/main/layout/MainScreenLayout";
 import { Dashboard } from "./components/main/modules/Dashboard";
 import { Inventario } from "./components/main/modules/inventario/Inventario";
 import { Tienda } from "./components/main/modules/tienda/Tienda";
-import { NewProduct } from "./components/main/modules/tienda/NewProduct";
-import { EditProduct } from "./components/main/modules/tienda/EditProduct";
 import { Orders } from "./components/main/modules/orders/Orders";
-import { NewOrder } from "./components/main/modules/orders/NewOrder";
-import { EditOrder } from "./components/main/modules/orders/EditOrder";
+import { OrderForm } from "./components/main/modules/orders/OrderForm";
+import { ProductForm } from "./components/main/modules/tienda/ProductForm";
 
 function App() {
   return (
@@ -33,12 +31,21 @@ function App() {
           </Route>
 
           {/* Ruta protegida para crear nuevos productos */}
-          <Route path="/postproduct" element={<NewProduct />} />
-          <Route path="/editproduct/:productId" element={<EditProduct />} />
+          <Route
+            path="/newproduct"
+            element={<ProductForm isEditMode={false} />}
+          />
+          <Route
+            path="/editproduct/:productId"
+            element={<ProductForm isEditMode={true} />}
+          />
 
           {/* Ruta protegida para crear nuevos productos */}
-          <Route path="/neworder" element={<NewOrder />} />
-          <Route path="/editorder/:orderId" element={<EditOrder />} />
+          <Route path="/neworder" element={<OrderForm isEditMode={false} />} />
+          <Route
+            path="/editorder/:orderId"
+            element={<OrderForm isEditMode={true} />}
+          />
         </Route>
       </Routes>
     </Router>

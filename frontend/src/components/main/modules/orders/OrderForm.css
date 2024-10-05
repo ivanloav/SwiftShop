@@ -67,6 +67,15 @@ input {
   border-radius: 5px;
 }
 
+.image-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+  margin: 60px 0;
+}
+
 .input-numbers {
   display: flex;
   gap: 10px;
