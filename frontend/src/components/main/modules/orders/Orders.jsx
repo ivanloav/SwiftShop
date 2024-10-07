@@ -8,9 +8,12 @@ import {
   faEdit,
   faTrash,
   faCirclePlus,
+  faEllipsisV,
 } from "@fortawesome/free-solid-svg-icons";
 import { OpenInNewWindow } from "../../../../hooks/openWindow";
 import { useOrdersActions } from "../../../../hooks/useOrdersActions";
+import DropdownActions from "./DropdownActions";
+import { updateOrderStatus } from "../../../../services/api";
 
 export const Orders = () => {
   const [sortConfig, setSortConfig] = useState({
@@ -88,6 +91,10 @@ export const Orders = () => {
     }).format(fixedTotal);
   };
 
+  const getProgressPercentage = (count, total) => {
+    return total === 0 ? "0%" : `${((count / total) * 100).toFixed(2)}%`;
+  };
+
   // Calcular estadísticas
   const totalOrders = sortedData.length;
   const totalItemsOrdered = sortedData.reduce(
@@ -103,14 +110,24 @@ export const Orders = () => {
   const totalDelivered = sortedData.filter(
     (order) => order.status === "delivered"
   ).length;
-  const totalSent = sortedData.filter(
-    (order) => order.status === "sent"
+  const totalShipped = sortedData.filter(
+    (order) => order.status === "shipped"
   ).length;
 
-  const getProgressPercentage = (value, total) => {
-    if (total === 0) return "0%";
-    const percentage = (value / total) * 100;
-    return `${Math.min(percentage, 100).toFixed(2)}%`; // Limita el porcentaje a 100%
+  const handleUpdateOrderStatus = async (orderId, newState) => {
+    try {
+      await updateOrderStatus(orderId, newState);
+      fetchData(); // Refrescar los datos después de la actualización
+    } catch (error) {
+      console.error("Error al actualizar el estado del pedido:", error);
+    }
+  };
+
+  const stateTranslations = {
+    processing: "en proceso",
+    shipped: "enviado",
+    delivered: "entregado",
+    // Añade más estados según sea necesario
   };
 
   return (
@@ -128,25 +145,9 @@ export const Orders = () => {
         </div>
 
         <div className="stat-item">
-          <div className="stat-title">Pedidos totales</div>
-          <div className="stat-value">{totalOrders}</div>
-          <div className="stat-bar">
-            <div
-              className="progress"
-              style={{ width: getProgressPercentage(totalOrders, totalOrders) }}
-            ></div>
-          </div>
-        </div>
-        <div className="stat-item">
-          <div className="stat-title">Artículos pedidos</div>
-          <div className="stat-value">{totalItemsOrdered}</div>
-          <div className="stat-bar">
-            <div
-              className="progress"
-              style={{
-                width: getProgressPercentage(totalItemsOrdered, totalOrders),
-              }}
-            ></div>
+          <div className="stat-title2">
+            Pedidos totales: {totalOrders} <br /> <br />
+            Artículos pedidos: {totalItemsOrdered}
           </div>
         </div>
         <div className="stat-item">
@@ -175,11 +176,13 @@ export const Orders = () => {
         </div>
         <div className="stat-item">
           <div className="stat-title">Pedidos enviados</div>
-          <div className="stat-value">{totalSent}</div>
+          <div className="stat-value">{totalShipped}</div>
           <div className="stat-bar">
             <div
               className="progress"
-              style={{ width: getProgressPercentage(totalSent, totalOrders) }}
+              style={{
+                width: getProgressPercentage(totalShipped, totalOrders),
+              }}
             ></div>
           </div>
         </div>
@@ -253,7 +256,30 @@ export const Orders = () => {
                     <td>
                       <StatusOrder status={order.status} />
                     </td>
-                    <td>
+                    <td className="action-buttons">
+                      <DropdownActions
+                        icon={faEllipsisV}
+                        onDetails={() =>
+                          OpenInNewWindow(
+                            `/vieworder/${order.orderId}`,
+                            900,
+                            900
+                          )
+                        }
+                        onStateChange={(newState) => {
+                          const translatedState =
+                            stateTranslations[newState] || newState;
+                          if (
+                            window.confirm(
+                              `¿Realmente quieres cambiar el estado a ${translatedState}?`
+                            )
+                          ) {
+                            handleUpdateOrderStatus(order.orderId, newState);
+                          }
+                        }}
+                        currentStatus={order.status}
+                        statuses={["En proceso", "Enviado", "Entregado"]}
+                      />
                       <button
                         className="btn btn-icon"
                         onClick={() =>

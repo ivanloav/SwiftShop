@@ -39,4 +39,4 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateOrderDto.prototype, "status", void 0);
 exports.UpdateOrderDto = UpdateOrderDto;
-//# sourceMappingURL=update-order.dto.js.map
+//# sourceMappingURL=update-order.dto%20copy.js.map

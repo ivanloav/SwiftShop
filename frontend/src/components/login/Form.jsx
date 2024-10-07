@@ -51,7 +51,7 @@ export function RegisterForm() {
 
   return (
     <div className="container">
-      <img src="/logo.png" alt="Logo" />
+      <img src="/logo.png" alt="Logo" className="logo" />
       <form onSubmit={handleRegister}>
         <input
           name="email"

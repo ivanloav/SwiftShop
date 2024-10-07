@@ -74,11 +74,31 @@ export const deleteOrder = async (orderId) => {
   }
 };
 
-export const updateOrder = async (orderId, updatedData) => {
+export const updateOrder = async (orderId, orderData, token) => {
   try {
     const response = await api.put(
       `${API_BASE_URL}/orders/${orderId}`,
-      updatedData,
+      orderData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating order", error);
+    throw error;
+  }
+};
+
+// Función para actualizar el estado de un pedido
+export const updateOrderStatus = async (orderId, newState) => {
+  try {
+    const response = await api.put(
+      `${API_BASE_URL}/orders/${orderId}/status`,
+      { status: newState },
       {
         headers: {
           Authorization: `Bearer ${getToken()}`,
@@ -88,7 +108,22 @@ export const updateOrder = async (orderId, updatedData) => {
     );
     return response.data;
   } catch (error) {
-    console.error("Error updating order", error);
+    console.error("Error al actualizar el estado del pedido:", error);
+    throw error;
+  }
+};
+
+// Nueva función getOrderById
+export const getOrderById = async (orderId) => {
+  try {
+    const response = await api.get(`${API_BASE_URL}/orders/${orderId}`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching order by ID", error);
     throw error;
   }
 };

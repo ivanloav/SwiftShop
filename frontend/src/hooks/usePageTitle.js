@@ -9,8 +9,8 @@ export const usePageTitle = () => {
         return "Iniciar Sesión";
       case "/user/dashboard":
         return "Dashboard";
-      case "/user/tienda":
-        return "Tienda";
+      case "/user/Products":
+        return "Productos";
       case "/user/inventario":
         return "Inventario";
       case "/user/clientes":

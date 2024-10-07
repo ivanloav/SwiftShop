@@ -13,10 +13,10 @@ export function SideMenu() {
             <div>Tablero</div>
           </div>
         </Link>
-        <Link to="/user/tienda" className="no-color-change">
+        <Link to="/user/Products" className="no-color-change">
           <div className="item flex">
             <span className="material-symbols-outlined icon">storefront</span>{" "}
-            <div>Tienda</div>
+            <div>Productos</div>
           </div>
         </Link>
         <Link to="/user/orders" className="no-color-change">

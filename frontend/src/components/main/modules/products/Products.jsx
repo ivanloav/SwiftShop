@@ -1,4 +1,4 @@
-import "./Tienda.css";
+import "./Products.css";
 import { useEffect } from "react";
 import { useProductsLogic } from "../../../../hooks/useProductsLogic";
 import { OpenInNewWindow } from "../../../../hooks/openWindow";
@@ -7,7 +7,7 @@ import { useProductActions } from "../../../../hooks/useProductActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
-export const Tienda = () => {
+export const Products = () => {
   const { data, loading, fetchData } = useProductsLogic();
   const { handleDelete } = useProductActions();
 

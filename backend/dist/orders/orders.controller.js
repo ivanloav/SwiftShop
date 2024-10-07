@@ -18,7 +18,9 @@ const swagger_1 = require("@nestjs/swagger");
 const orders_service_1 = require("./orders.service");
 const create_order_dto_1 = require("../auth/dto/create-order.dto");
 const update_order_dto_1 = require("../auth/dto/update-order.dto");
+const update_order_status_dto_1 = require("../auth/dto/update-order-status.dto");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
+const common_2 = require("@nestjs/common");
 let OrdersController = class OrdersController {
     constructor(ordersService) {
         this.ordersService = ordersService;
@@ -37,6 +39,9 @@ let OrdersController = class OrdersController {
     }
     remove(id) {
         return this.ordersService.remove(id);
+    }
+    updateStatus(id, updateOrderStatusDto) {
+        return this.ordersService.updateStatus(id, updateOrderStatusDto);
     }
 };
 __decorate([
@@ -79,9 +84,19 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "remove", null);
+__decorate([
+    (0, swagger_1.ApiParam)({ name: "id", required: true, description: "ID del pedido" }),
+    (0, swagger_1.ApiBody)({ type: update_order_status_dto_1.UpdateOrderStatusDto }),
+    (0, common_1.Put)(":id/status"),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, update_order_status_dto_1.UpdateOrderStatusDto]),
+    __metadata("design:returntype", void 0)
+], OrdersController.prototype, "updateStatus", null);
 OrdersController = __decorate([
     (0, swagger_1.ApiTags)("Pedidos"),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_2.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)("orders"),
     __metadata("design:paramtypes", [orders_service_1.OrdersService])
 ], OrdersController);

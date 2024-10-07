@@ -5,4 +5,4 @@ export declare class UpdateOrderDto {
     total?: number;
     status?: string;
 }
-//# sourceMappingURL=update-order.dto.d.ts.map
+//# sourceMappingURL=update-order.dto%20copy.d.ts.map

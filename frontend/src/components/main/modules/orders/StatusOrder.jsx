@@ -5,8 +5,8 @@ export const StatusOrder = ({ status }) => {
   // Traducir los estados
   const translateStatus = {
     received: "Recibido",
-    processing: "Procesando",
-    sent: "Enviado",
+    processing: "En proceso",
+    shipped: "Enviado",
     delivered: "Entregado",
   };
 
@@ -17,8 +17,8 @@ export const StatusOrder = ({ status }) => {
         return "badge-received"; // Color naranja
       case "processing":
         return "badge-processing"; // Color amarillo
-      case "sent":
-        return "badge-sent"; // Color amarillo claro
+      case "shipped":
+        return "badge-shipped"; // Color amarillo claro
       case "delivered":
         return "badge-delivered"; // Color verde
       default:

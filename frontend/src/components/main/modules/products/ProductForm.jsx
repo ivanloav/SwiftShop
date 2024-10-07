@@ -84,6 +84,19 @@ export const ProductForm = ({ isEditMode }) => {
     e.target.src = BaseImgURL + "no-image-icon.png"; // Imagen genérica si falla la carga
   };
 
+  // Nuevo handle para manejar el cambio en el input 'name'
+  const handleNameChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+      // Si isEditMode es false, actualiza automáticamente el campo 'image'
+      image: !isEditMode
+        ? value.replace(/\s+/g, "").toLowerCase()
+        : prevData.image,
+    }));
+  };
+
   return (
     <div className="modal">
       <div className="modal-content">
@@ -93,7 +106,7 @@ export const ProductForm = ({ isEditMode }) => {
             type="text"
             name="name"
             value={formData.name || ""}
-            onChange={handleChange}
+            onChange={handleNameChange}
             required
             placeholder="Nombre del producto"
           />

@@ -1,8 +1,12 @@
 import "./OrderForm.css";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useOrderForm } from "../../../../hooks/useOrderForm";
 import { BaseImgURL } from "../../../../config";
+import { getOrders, updateOrder, getToken } from "../../../../services/api";
 
-export const OrderForm = () => {
+export const OrderForm = ({ isEditMode, isViewMode }) => {
+  const { orderId } = useParams();
   const {
     formData,
     products,
@@ -12,7 +16,82 @@ export const OrderForm = () => {
     handleSubmit,
     error,
     loading,
-  } = useOrderForm();
+    setFormData,
+  } = useOrderForm(orderId, isEditMode);
+  const [loadingOrder, setLoadingOrder] = useState(true);
+  const [productImage, setProductImage] = useState(""); // Estado para la imagen del producto
+
+  useEffect(() => {
+    if ((isEditMode || isViewMode) && orderId) {
+      const fetchOrder = async () => {
+        try {
+          const token = getToken();
+          const orders = await getOrders(token);
+
+          // Filtrar para obtener el pedido que coincida con el orderId
+          const order = orders.find((o) => o.orderId === parseInt(orderId));
+
+          if (order) {
+            console.log("Pedido obtenido para edición:", order);
+
+            // Establece los valores del pedido en el formulario
+            setFormData({
+              orderId: order.orderId || "",
+              customerId: order.customer.customerId || "",
+              productId: order.product.productId || "",
+              quantity: order.quantity || 1,
+              total: Number(order.total) || 0, // Asegurarse de que total sea un número
+              status: order.status || "",
+              //items: order.items || [],
+            });
+
+            // Establecer la imagen del producto
+            setProductImage(order.product.image || "");
+
+            setLoadingOrder(false);
+          } else {
+            console.error("Pedido no encontrado");
+            setLoadingOrder(false);
+          }
+        } catch (error) {
+          console.error("Error al obtener el pedido:", error);
+          setLoadingOrder(false);
+        }
+      };
+      fetchOrder();
+    } else {
+      setLoadingOrder(false);
+    }
+  }, [isEditMode, isViewMode, orderId, setFormData]);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (isEditMode) {
+      try {
+        const token = getToken();
+        const { items, ...orderData } = formData; // Eliminar el campo items
+        orderData.customerId = formData.customerId;
+        orderData.productId = formData.productId;
+        orderData.total = parseFloat(formData.total).toFixed(2); // Convertir a cadena con dos decimales
+        console.log("TOTAL: " + orderData.total);
+        console.log("Datos enviados al servidor:", orderData); // Agregar console.log para verificar los datos
+        await updateOrder(orderId, orderData, token);
+        localStorage.setItem("orderUpdated", "true");
+        alert("Pedido actualizado con éxito.");
+        window.close();
+      } catch (error) {
+        console.error("Error al actualizar el pedido:", error);
+      }
+    } else {
+      handleSubmit(e);
+
+      // Notificar a otras ventanas o componentes que se creó un nuevo pedido
+      localStorage.setItem("orderCreated", "true");
+    }
+  };
+  if ((isEditMode || isViewMode) && loadingOrder) {
+    return <div>Cargando datos del pedido...</div>;
+  }
 
   const handleImageError = (e) => {
     e.target.src = BaseImgURL + "no-image-icon.png"; // Imagen genérica si falla la carga
@@ -21,15 +100,22 @@ export const OrderForm = () => {
   return (
     <div className="modal">
       <div className="modal-content">
-        <h2>Crear Nuevo Pedido</h2>
-        <form onSubmit={handleSubmit} id="new-order-form" className="form">
+        <h2>
+          {isEditMode
+            ? "Editar pedido"
+            : isViewMode
+            ? "Detalles del pedido"
+            : "Crear nuevo pedido"}
+        </h2>
+        <form onSubmit={onSubmit} id="new-order-form" className="form">
           {/* Selección de cliente */}
           <select
             className="select"
             name="customerId"
-            value={formData.customerId}
+            value={formData.customerId || ""}
             onChange={handleChange}
             required
+            disabled={isViewMode}
           >
             <option value="">Seleccionar Cliente</option>
             {customers && customers.length > 0 ? (
@@ -49,9 +135,10 @@ export const OrderForm = () => {
           <select
             className="select"
             name="productId"
-            value={formData.productId}
+            value={formData.productId || ""}
             onChange={handleChange}
             required
+            disabled={isViewMode}
           >
             <option value="">Seleccionar Producto</option>
             {products && products.length > 0 ? (
@@ -69,9 +156,9 @@ export const OrderForm = () => {
           </select>
           {/* Mostrar la imagen de S3 si existe */}
           <div className="image-preview">
-            {selectedProductImage ? (
+            {productImage ? (
               <img
-                src={`${BaseImgURL}${selectedProductImage}`}
+                src={`${BaseImgURL}${productImage}`}
                 alt="Imagen del producto"
                 style={{ width: "200px", height: "200px", margin: "10px 0" }}
                 onError={handleImageError} // Si falla, cambiará a una imagen genérica
@@ -88,27 +175,29 @@ export const OrderForm = () => {
           <input
             type="number"
             name="quantity"
-            value={formData.quantity}
+            value={formData.quantity || 1}
             onChange={handleChange}
             min="1"
             required
             placeholder="Cantidad"
+            disabled={isViewMode}
           />
           {/* Total calculado */}
           <input
             type="text"
             name="total"
-            value={formData.total.toFixed(2)} // Mostrar total con dos decimales
+            value={`${parseFloat(formData.total).toFixed(2)} €`} // Mostrar total con dos decimales
             readOnly
             placeholder="Total"
             className="currency-input"
+            disabled={isViewMode}
           />
 
           {/* Botones del formulario */}
           {/* Los botones están dentro del formulario */}
           <div className="content-buttons">
             <button type="submit" disabled={loading}>
-              {loading ? "Creando..." : "Crear Pedido"}
+              {isEditMode ? "Actualizar pedido" : "Crear pedido"}
             </button>
             <button className="cancel" type="button" onClick={window.close}>
               Cancelar

@@ -1,12 +1,14 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { OrdersController } from "./orders.controller";
 import { OrdersService } from "./orders.service";
-import { Order } from "../entities/order.entity"; // Asegúrate de que la entidad existe
+import { OrdersController } from "./orders.controller";
+import { Order } from "../entities/order.entity";
+import { Customer } from "../entities/customer.entity";
+import { Product } from "../entities/product.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Order])], // Importar la entidad de TypeORM
-  controllers: [OrdersController],
+  imports: [TypeOrmModule.forFeature([Order, Customer, Product])],
   providers: [OrdersService],
+  controllers: [OrdersController],
 })
 export class OrdersModule {}

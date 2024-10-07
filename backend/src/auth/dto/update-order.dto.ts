@@ -1,18 +1,23 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsDecimal, IsInt } from "class-validator";
 
 export class UpdateOrderDto {
   @ApiPropertyOptional({ description: "ID del cliente que realiza el pedido" })
-  readonly customerId?: number;
+  @IsInt()
+  customerId?: number;
 
   @ApiPropertyOptional({ description: "ID del producto pedido" })
-  readonly productId?: number;
+  @IsInt()
+  productId?: number;
 
   @ApiPropertyOptional({ description: "Cantidad de productos pedidos" })
-  readonly quantity?: number;
+  @IsInt()
+  quantity?: number;
 
   @ApiPropertyOptional({ description: "Total del pedido en euros" })
-  readonly total?: number;
+  @IsDecimal({ decimal_digits: "2", force_decimal: true })
+  total?: number;
 
   @ApiPropertyOptional({ description: "Estado del pedido" })
-  readonly status?: string;
+  status?: string;
 }
