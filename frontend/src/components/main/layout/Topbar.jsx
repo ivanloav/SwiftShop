@@ -12,7 +12,7 @@ export function Topbar() {
       <div className="logo">
         <img src="/logo.png" alt="Logo" />
       </div>
-      <div className="title flex">{title}</div>
+      <div className="title">{title}</div>
       <div className="configButtons flex">
         <i className="bi bi-gear-fill"></i>
         <i className="bi bi-bell-fill"></i>

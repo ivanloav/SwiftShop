@@ -2,6 +2,7 @@
   grid-area: main;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 60px;
 }
 .mainContent hr {
   border: 2px solid #f7f7fa;
@@ -20,9 +21,14 @@
 }
 .boards {
   width: 90%;
-  height: 90vh;
+  height: 90%;
   display: grid;
   grid-template: 1fr 1fr / 1fr 1fr;
   gap: 25px;
-  margin-top: 20px;
+}
+
+.ordersReduced {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box; /* Asegura que el padding y border se incluyan en el tamaño total */
 }

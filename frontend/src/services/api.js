@@ -220,3 +220,29 @@ export const getCustomers = async () => {
     throw error;
   }
 };
+
+export const getStatisticsDataOrders = async () => {
+  try {
+    const response = await api.get(`${API_BASE_URL}/orders`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    }); // Ajusta la URL según sea necesario
+    const orders = response.data;
+
+    // Procesar los datos para obtener las estadísticas
+    const statisticsData = {
+      received: orders.filter((order) => order.status === "received").length,
+      processing: orders.filter((order) => order.status === "processing")
+        .length,
+      shipped: orders.filter((order) => order.status === "shipped").length,
+      delivered: orders.filter((order) => order.status === "delivered").length,
+      labels: ["Recibidos", "En proceso", "Enviados", "Entregados"],
+    };
+
+    return statisticsData;
+  } catch (error) {
+    console.error("Error fetching statistics data:", error);
+    throw error;
+  }
+};
