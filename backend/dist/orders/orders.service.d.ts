@@ -14,7 +14,7 @@ export declare class OrdersService {
     findOne(id: number): Promise<Order>;
     create(createOrderDto: CreateOrderDto): Promise<Order>;
     update(id: number, updateOrderDto: UpdateOrderDto): Promise<Order>;
-    remove(id: number): Promise<void>;
     updateStatus(id: number, updateOrderStatusDto: UpdateOrderStatusDto): Promise<Order>;
+    remove(id: number): Promise<void>;
 }
 //# sourceMappingURL=orders.service.d.ts.map

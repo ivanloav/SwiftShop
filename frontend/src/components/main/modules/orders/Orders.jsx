@@ -9,6 +9,8 @@ import {
   faTrash,
   faCirclePlus,
   faEllipsisV,
+  faChevronLeft,
+  faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { OpenInNewWindow } from "../../../../hooks/openWindow";
 import { useOrdersActions } from "../../../../hooks/useOrdersActions";
@@ -22,6 +24,9 @@ export const Orders = () => {
   });
   const { data, loading, fetchData } = useOrdersLogic();
   const { handleDelete } = useOrdersActions();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const handleOpenOrderForm = () => {
     OpenInNewWindow("/neworder", 900, 900);
@@ -59,15 +64,64 @@ export const Orders = () => {
     return "";
   };
 
+  const stateTranslations = {
+    received: "recibido",
+    processing: "en proceso",
+    shipped: "enviado",
+    delivered: "entregado",
+    // Añade más estados según sea necesario
+  };
+  // Asignamos un valor de prioridad para ordenar los estados
+  const statusOrder = {
+    recibido: 1,
+    "en proceso": 2,
+    enviado: 3,
+    entregado: 4,
+  };
+
   const sortedData = Array.isArray(data)
     ? [...data].sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? 1 : -1;
+        let aValue, bValue;
+
+        if (sortConfig.key === "customer") {
+          aValue = a.customer?.name || "";
+          bValue = b.customer?.name || "";
+        } else if (sortConfig.key === "status") {
+          // Utiliza el valor traducido en español para obtener la prioridad
+          aValue = statusOrder[stateTranslations[a.status]] || 0;
+          bValue = statusOrder[stateTranslations[b.status]] || 0;
+        } else if (sortConfig.key === "total") {
+          // Asegura que total se maneje como un número
+          aValue = parseFloat(a.total);
+          bValue = parseFloat(b.total);
+        } else {
+          aValue = a[sortConfig.key];
+          bValue = b[sortConfig.key];
         }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? -1 : 1;
+
+        // Comparación para `status` usando el valor de prioridad
+        if (sortConfig.key === "status") {
+          return sortConfig.direction === "ascending"
+            ? aValue - bValue
+            : bValue - aValue;
+        } else if (sortConfig.key === "total") {
+          // Comparación numérica para total
+          return sortConfig.direction === "ascending"
+            ? aValue - bValue
+            : bValue - aValue;
+        } else if (typeof aValue === "string" && typeof bValue === "string") {
+          // Ordena otras cadenas normalmente
+          return sortConfig.direction === "ascending"
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        } else if (typeof aValue === "number" && typeof bValue === "number") {
+          // Comparación numérica para cualquier otro número
+          return sortConfig.direction === "ascending"
+            ? aValue - bValue
+            : bValue - aValue;
+        } else {
+          return 0;
         }
-        return 0;
       })
     : [];
 
@@ -123,11 +177,18 @@ export const Orders = () => {
     }
   };
 
-  const stateTranslations = {
-    processing: "en proceso",
-    shipped: "enviado",
-    delivered: "entregado",
-    // Añade más estados según sea necesario
+  // Calcular los elementos a mostrar en la página actual
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = sortedData.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Calcular el número total de páginas
+  const totalPages = Math.ceil(sortedData.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
   };
 
   return (
@@ -215,10 +276,10 @@ export const Orders = () => {
                 </th>
                 <th
                   width="15%"
-                  onClick={() => requestSort("date")}
-                  className={sortConfig.key === "date" ? "sorted" : ""}
+                  onClick={() => requestSort("created_at")}
+                  className={sortConfig.key === "created_at" ? "sorted" : ""}
                 >
-                  Fecha {getSortArrow("date")}
+                  Fecha {getSortArrow("created_at")}
                 </th>
                 <th
                   width="20%"
@@ -244,8 +305,8 @@ export const Orders = () => {
               </tr>
             </thead>
             <tbody>
-              {sortedData && sortedData.length > 0 ? (
-                sortedData.map((order) => (
+              {currentItems && currentItems.length > 0 ? (
+                currentItems.map((order) => (
                   <tr key={order.orderId}>
                     <td>{order.orderId}</td>
                     <td>{formatDate(order.created_at)}</td>
@@ -310,6 +371,26 @@ export const Orders = () => {
               )}
             </tbody>
           </table>
+          {/* Controles de paginación */}
+          <div className="pagination">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="pagination-button"
+            >
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </button>
+            <span className="pagination-info">
+              Página {currentPage} de {totalPages}
+            </span>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="pagination-button"
+            >
+              <FontAwesomeIcon icon={faChevronRight} />
+            </button>
+          </div>
         </div>
       </div>
     </div>

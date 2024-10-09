@@ -20,7 +20,6 @@ const create_order_dto_1 = require("../auth/dto/create-order.dto");
 const update_order_dto_1 = require("../auth/dto/update-order.dto");
 const update_order_status_dto_1 = require("../auth/dto/update-order-status.dto");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
-const common_2 = require("@nestjs/common");
 let OrdersController = class OrdersController {
     constructor(ordersService) {
         this.ordersService = ordersService;
@@ -96,7 +95,7 @@ __decorate([
 ], OrdersController.prototype, "updateStatus", null);
 OrdersController = __decorate([
     (0, swagger_1.ApiTags)("Pedidos"),
-    (0, common_2.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)("orders"),
     __metadata("design:paramtypes", [orders_service_1.OrdersService])
 ], OrdersController);

@@ -1,7 +1,7 @@
 import { OrdersService } from "./orders.service";
-import { CreateOrderDto } from "../auth/dto/create-order.dto";
-import { UpdateOrderDto } from "../auth/dto/update-order.dto";
-import { UpdateOrderStatusDto } from "../auth/dto/update-order-status.dto";
+import { CreateOrderDto } from "src/auth/dto/create-order.dto";
+import { UpdateOrderDto } from "src/auth/dto/update-order.dto";
+import { UpdateOrderStatusDto } from "src/auth/dto/update-order-status.dto";
 export declare class OrdersController {
     private readonly ordersService;
     constructor(ordersService: OrdersService);

@@ -43,17 +43,78 @@ export const OrdersReduced = () => {
     return "";
   };
 
-  const sortedData = Array.isArray(data)
-    ? [...data].sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? 1 : -1;
-        }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? -1 : 1;
-        }
-        return 0;
-      })
-    : [];
+  const stateTranslations = {
+    received: "recibido",
+    processing: "en proceso",
+    shipped: "enviado",
+    delivered: "entregado",
+    // Añade más estados según sea necesario
+  };
+
+  // Asignamos un valor de prioridad para ordenar los estados
+  const statusOrder = {
+    recibido: 1,
+    "en proceso": 2,
+    enviado: 3,
+    entregado: 4,
+  };
+
+  // Filtrar primero los 10 últimos pedidos (sin ordenar)
+  const latestOrdersUnsorted = Array.isArray(data) ? data.slice(-10) : [];
+
+  // Ordenar los 10 últimos pedidos según el `sortConfig`
+  const sortedData = latestOrdersUnsorted.sort((a, b) => {
+    let aValue, bValue;
+
+    if (sortConfig.key === "customer") {
+      aValue = a.customer?.name || "";
+      bValue = b.customer?.name || "";
+    } else if (sortConfig.key === "status") {
+      // Utiliza el valor traducido en español para obtener la prioridad
+      aValue = statusOrder[stateTranslations[a.status]] || 0;
+      bValue = statusOrder[stateTranslations[b.status]] || 0;
+    } else if (sortConfig.key === "total") {
+      // Asegura que total se maneje como un número
+      aValue = parseFloat(a.total);
+      bValue = parseFloat(b.total);
+    } else if (sortConfig.key === "date" || sortConfig.key === "created_at") {
+      // Ordenar por fecha
+      aValue = new Date(a.created_at);
+      bValue = new Date(b.created_at);
+    } else {
+      aValue = a[sortConfig.key];
+      bValue = b[sortConfig.key];
+    }
+
+    // Comparación para `status` usando el valor de prioridad
+    if (sortConfig.key === "status") {
+      return sortConfig.direction === "ascending"
+        ? aValue - bValue
+        : bValue - aValue;
+    } else if (sortConfig.key === "total") {
+      // Comparación numérica para total
+      return sortConfig.direction === "ascending"
+        ? aValue - bValue
+        : bValue - aValue;
+    } else if (typeof aValue === "string" && typeof bValue === "string") {
+      // Ordena otras cadenas normalmente
+      return sortConfig.direction === "ascending"
+        ? aValue.localeCompare(bValue)
+        : bValue.localeCompare(aValue);
+    } else if (typeof aValue === "number" && typeof bValue === "number") {
+      // Comparación numérica para cualquier otro número
+      return sortConfig.direction === "ascending"
+        ? aValue - bValue
+        : bValue - aValue;
+    } else if (aValue instanceof Date && bValue instanceof Date) {
+      // Comparación de fechas
+      return sortConfig.direction === "ascending"
+        ? aValue - bValue
+        : bValue - aValue;
+    } else {
+      return 0;
+    }
+  });
 
   if (loading) {
     return <p>Cargando pedidos...</p>;

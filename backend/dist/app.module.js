@@ -17,8 +17,8 @@ const orders_module_1 = require("./orders/orders.module");
 const stores_module_1 = require("./stores/stores.module");
 const auth_module_1 = require("./auth/auth.module");
 const users_module_1 = require("./users/users.module");
-const dashboard_controller_1 = require("./dashboard/dashboard.controller");
 const dotenv = require("dotenv");
+const dashboard_module_1 = require("./dashboard/dashboard.module");
 dotenv.config();
 let AppModule = class AppModule {
 };
@@ -47,8 +47,8 @@ AppModule = __decorate([
             stores_module_1.StoresModule,
             auth_module_1.AuthModule,
             users_module_1.UsersModule,
+            dashboard_module_1.DashboardModule,
         ],
-        controllers: [dashboard_controller_1.DashboardController],
     })
 ], AppModule);
 exports.AppModule = AppModule;

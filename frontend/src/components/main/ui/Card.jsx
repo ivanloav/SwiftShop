@@ -8,7 +8,7 @@ export function Card(props) {
         {props.cardName}{" "}
         <span className="material-symbols-outlined plusIcon">add</span>
       </h3>
-      <div className="board ">{props.children}</div>
+      <div className="board">{props.children}</div>
     </div>
   );
 }

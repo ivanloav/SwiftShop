@@ -6,22 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrdersModule = void 0;
+exports.DashboardModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const orders_service_1 = require("./orders.service");
-const orders_controller_1 = require("./orders.controller");
-const order_entity_1 = require("../entities/order.entity");
-const customer_entity_1 = require("../entities/customer.entity");
+const dashboard_controller_1 = require("./dashboard.controller");
+const dashboard_service_1 = require("./dashboard.service");
 const product_entity_1 = require("../entities/product.entity");
-let OrdersModule = class OrdersModule {
+const order_entity_1 = require("../entities/order.entity");
+let DashboardModule = class DashboardModule {
 };
-OrdersModule = __decorate([
+DashboardModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([order_entity_1.Order, customer_entity_1.Customer, product_entity_1.Product])],
-        controllers: [orders_controller_1.OrdersController],
-        providers: [orders_service_1.OrdersService],
+        imports: [typeorm_1.TypeOrmModule.forFeature([product_entity_1.Product, order_entity_1.Order])],
+        controllers: [dashboard_controller_1.DashboardController],
+        providers: [dashboard_service_1.DashboardService],
     })
-], OrdersModule);
-exports.OrdersModule = OrdersModule;
-//# sourceMappingURL=orders.module.js.map
+], DashboardModule);
+exports.DashboardModule = DashboardModule;
+//# sourceMappingURL=dashboard.module.js.map

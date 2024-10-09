@@ -30,7 +30,7 @@ export const getDashboardData = async () => {
 
 export const getOrders = async () => {
   try {
-    console.log("fetching orders from api.js...");
+    //console.log("fetching orders from api.js...");
     const response = await api.get(`${API_BASE_URL}/orders`, {
       headers: {
         Authorization: `Bearer ${getToken()}`,
@@ -243,6 +243,18 @@ export const getStatisticsDataOrders = async () => {
     return statisticsData;
   } catch (error) {
     console.error("Error fetching statistics data:", error);
+    throw error;
+  }
+};
+
+export const getTopProducts = async () => {
+  try {
+    const response = await api.get(`${API_BASE_URL}/dashboard/top-products`, {
+      headers: { Authorization: `Bearer ${getToken()}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching top products", error);
     throw error;
   }
 };

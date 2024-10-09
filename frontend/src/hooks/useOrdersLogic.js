@@ -11,7 +11,7 @@ export function useOrdersLogic() {
     try {
       const result = await getOrders();
       setData(result);
-      console.log("data fetched from useOrdersLogic()");
+      //console.log("data fetched from useOrdersLogic()");
     } catch (error) {
       console.error("Error fetching data", error);
     } finally {

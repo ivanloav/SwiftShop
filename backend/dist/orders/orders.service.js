@@ -81,21 +81,22 @@ let OrdersService = class OrdersService {
         Object.assign(order, updateData);
         return this.ordersRepository.save(order);
     }
+    async updateStatus(id, updateOrderStatusDto) {
+        const order = await this.ordersRepository.findOne({
+            where: { orderId: id },
+            relations: ["customer", "product"],
+        });
+        if (!order) {
+            throw new common_1.NotFoundException(`Order with ID ${id} not found`);
+        }
+        Object.assign(order, updateOrderStatusDto);
+        return this.ordersRepository.save(order);
+    }
     async remove(id) {
         const result = await this.ordersRepository.delete(id);
         if (result.affected === 0) {
             throw new common_1.NotFoundException(`Order with ID ${id} not found`);
         }
-    }
-    async updateStatus(id, updateOrderStatusDto) {
-        const order = await this.ordersRepository.findOne({
-            where: { orderId: id },
-        });
-        if (!order) {
-            throw new common_1.NotFoundException(`Pedido con ID ${id} no encontrado`);
-        }
-        order.status = updateOrderStatusDto.status;
-        return this.ordersRepository.save(order);
     }
 };
 OrdersService = __decorate([

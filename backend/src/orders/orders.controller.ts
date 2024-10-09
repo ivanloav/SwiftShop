@@ -1,19 +1,20 @@
 import {
   Controller,
   Get,
-  Post,
-  Body,
   Param,
-  Delete,
+  Body,
+  Post,
   Put,
+  Delete,
+  UseGuards,
 } from "@nestjs/common";
 import { ApiTags, ApiParam, ApiBody } from "@nestjs/swagger";
 import { OrdersService } from "./orders.service";
-import { CreateOrderDto } from "../auth/dto/create-order.dto";
-import { UpdateOrderDto } from "../auth/dto/update-order.dto";
-import { UpdateOrderStatusDto } from "../auth/dto/update-order-status.dto";
+import { CreateOrderDto } from "src/auth/dto/create-order.dto";
+import { UpdateOrderDto } from "src/auth/dto/update-order.dto";
+import { UpdateOrderStatusDto } from "src/auth/dto/update-order-status.dto";
+import { TopSellingProductDto } from "src/auth/dto/top-selling-product.dto";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
-import { UseGuards } from "@nestjs/common";
 
 @ApiTags("Pedidos")
 @UseGuards(JwtAuthGuard)
@@ -51,7 +52,6 @@ export class OrdersController {
     return this.ordersService.remove(id);
   }
 
-  // Nuevo método para actualizar el estado del pedido
   @ApiParam({ name: "id", required: true, description: "ID del pedido" })
   @ApiBody({ type: UpdateOrderStatusDto })
   @Put(":id/status")

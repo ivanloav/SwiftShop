@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box; /* Asegura que el padding y border se incluyan en el tamaño total */
+  margin-bottom: 10px;
 }
 
 .containerBoard h3 {

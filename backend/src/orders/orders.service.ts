@@ -7,6 +7,7 @@ import { UpdateOrderDto } from "src/auth/dto/update-order.dto";
 import { Customer } from "../entities/customer.entity";
 import { Product } from "../entities/product.entity";
 import { UpdateOrderStatusDto } from "src/auth/dto/update-order-status.dto";
+import { TopSellingProductDto } from "src/auth/dto/top-selling-product.dto";
 
 @Injectable()
 export class OrdersService {
@@ -73,7 +74,22 @@ export class OrdersService {
     }
 
     Object.assign(order, updateData);
+    return this.ordersRepository.save(order);
+  }
 
+  async updateStatus(
+    id: number,
+    updateOrderStatusDto: UpdateOrderStatusDto
+  ): Promise<Order> {
+    const order = await this.ordersRepository.findOne({
+      where: { orderId: id },
+      relations: ["customer", "product"],
+    });
+    if (!order) {
+      throw new NotFoundException(`Order with ID ${id} not found`);
+    }
+
+    Object.assign(order, updateOrderStatusDto);
     return this.ordersRepository.save(order);
   }
 
@@ -82,17 +98,5 @@ export class OrdersService {
     if (result.affected === 0) {
       throw new NotFoundException(`Order with ID ${id} not found`);
     }
-  }
-
-  // Nuevo método para actualizar el estado del pedido
-  async updateStatus(id: number, updateOrderStatusDto: UpdateOrderStatusDto) {
-    const order = await this.ordersRepository.findOne({
-      where: { orderId: id },
-    });
-    if (!order) {
-      throw new NotFoundException(`Pedido con ID ${id} no encontrado`);
-    }
-    order.status = updateOrderStatusDto.status;
-    return this.ordersRepository.save(order);
   }
 }
