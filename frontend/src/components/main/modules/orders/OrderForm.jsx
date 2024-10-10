@@ -87,8 +87,11 @@ export const OrderForm = ({ isEditMode, isViewMode }) => {
 
       // Notificar a otras ventanas o componentes que se creó un nuevo pedido
       localStorage.setItem("orderCreated", "true");
+      alert("Pedido creado con éxito.");
+      window.close();
     }
   };
+
   if ((isEditMode || isViewMode) && loadingOrder) {
     return <div>Cargando datos del pedido...</div>;
   }
@@ -160,14 +163,14 @@ export const OrderForm = ({ isEditMode, isViewMode }) => {
               <img
                 src={`${BaseImgURL}${productImage}`}
                 alt="Imagen del producto"
-                style={{ width: "200px", height: "200px", margin: "10px 0" }}
+                style={{ height: "200px", margin: "10px 0" }}
                 onError={handleImageError} // Si falla, cambiará a una imagen genérica
               />
             ) : (
               <img
                 src={`${BaseImgURL}no-image-icon.png`} // Imagen genérica
                 alt="Imagen no disponible"
-                style={{ width: "200px", height: "200px", margin: "10px 0" }}
+                style={{ height: "200px", margin: "10px 0" }}
               />
             )}
           </div>
@@ -196,11 +199,17 @@ export const OrderForm = ({ isEditMode, isViewMode }) => {
           {/* Botones del formulario */}
           {/* Los botones están dentro del formulario */}
           <div className="content-buttons">
-            <button type="submit" disabled={loading}>
-              {isEditMode ? "Actualizar pedido" : "Crear pedido"}
-            </button>
-            <button className="cancel" type="button" onClick={window.close}>
-              Cancelar
+            {!isViewMode && (
+              <button type="submit" disabled={loading}>
+                {isEditMode ? "Actualizar pedido" : "Crear pedido"}
+              </button>
+            )}
+            <button
+              className="cancel"
+              type="button"
+              onClick={() => window.close()}
+            >
+              {isViewMode ? "Cerrar" : "Cancelar"}
             </button>
           </div>
         </form>

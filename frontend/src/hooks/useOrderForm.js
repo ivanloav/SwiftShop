@@ -121,6 +121,7 @@ export const useOrderForm = (orderId, isEditMode) => {
         await updateOrder(orderId, formData);
         localStorage.setItem("orderUpdated", "true");
       } else {
+        formData.status = "received";
         await createOrder(formData);
         localStorage.setItem("orderCreated", "true");
       }

@@ -34,8 +34,12 @@ export const Orders = () => {
 
   useEffect(() => {
     const handleStorageChange = () => {
-      if (localStorage.getItem("orderUpdated") === "true") {
+      if (
+        localStorage.getItem("orderCreated") === "true" ||
+        localStorage.getItem("orderUpdated") === "true"
+      ) {
         fetchData();
+        localStorage.removeItem("orderCreated");
         localStorage.removeItem("orderUpdated");
       }
     };

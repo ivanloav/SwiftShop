@@ -11,7 +11,7 @@ export function useProductActions() {
     setError(null);
     try {
       await deleteProduct(productId);
-      alert("Product deleted successfully!");
+      alert("¡Producto eliminado exitosamente!");
       window.location.reload(); // Optionally reload the page to reflect changes
     } catch (error) {
       setError("Failed to delete product");
@@ -25,7 +25,7 @@ export function useProductActions() {
     setError(null);
     try {
       await updateProduct(productId, updatedData);
-      alert("Product updated successfully!");
+      alert("¡Producto actualizado exitosamente!");
       window.location.reload(); // Optionally reload the page to reflect changes
     } catch (error) {
       setError("Failed to update product");
