@@ -2,7 +2,7 @@ import "./OrdersReduced.css";
 import React, { useEffect, useState } from "react";
 import { useOrdersLogic } from "../../../../hooks/useOrdersLogic";
 import { useRefreshOnLocalStorage } from "../../../../hooks/useRefreshOnLocalStorage";
-import { StatusOrder } from "./StatusOrder";
+import { StatusOrder } from "../orders/StatusOrder";
 
 export const OrdersReduced = () => {
   const [sortConfig, setSortConfig] = useState({

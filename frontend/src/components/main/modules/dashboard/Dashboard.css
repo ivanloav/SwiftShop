@@ -38,7 +38,7 @@
 .product-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2 columnas */
-  gap: 20px;
+  gap: 100px;
   width: 100%;
   padding: 0;
   list-style: none;
@@ -58,8 +58,8 @@
 
 .product-item img {
   float: right; /* Flota la imagen a la derecha */
-  width: 100%; /* Ajusta el ancho para que no ocupe todo el espacio */
-  height: 100%;
+  width: 90%; /* Ajusta el ancho para que no ocupe todo el espacio */
+  height: 90%;
   object-fit: contain;
   border-radius: 10px;
   margin-left: 150px; /* Espacio entre la imagen y el texto */

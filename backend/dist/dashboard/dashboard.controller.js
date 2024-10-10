@@ -23,6 +23,9 @@ let DashboardController = class DashboardController {
     async getTopProducts() {
         return this.dashboardService.getTopProducts();
     }
+    async getSalesData() {
+        return this.dashboardService.getSalesData();
+    }
 };
 __decorate([
     (0, common_1.Get)(),
@@ -36,6 +39,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], DashboardController.prototype, "getTopProducts", null);
+__decorate([
+    (0, common_1.Get)("sales-data"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], DashboardController.prototype, "getSalesData", null);
 DashboardController = __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)("dashboard"),

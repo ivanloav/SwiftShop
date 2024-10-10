@@ -4,7 +4,7 @@ import { LoginScreenLayout } from "./components/login/LoginScreenLayout";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { LoginForm, RegisterForm } from "./components/login/Form";
 import { ScreenLayout } from "./components/main/layout/MainScreenLayout";
-import { Dashboard } from "./components/main/modules/Dashboard";
+import { Dashboard } from "./components/main/modules/dashboard/Dashboard";
 import { Inventario } from "./components/main/modules/inventario/Inventario";
 import { Products } from "./components/main/modules/products/Products";
 import { Orders } from "./components/main/modules/orders/Orders";

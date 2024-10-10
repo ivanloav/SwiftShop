@@ -17,4 +17,9 @@ export class DashboardController {
   async getTopProducts() {
     return this.dashboardService.getTopProducts();
   }
+
+  @Get("sales-data")
+  async getSalesData() {
+    return this.dashboardService.getSalesData();
+  }
 }

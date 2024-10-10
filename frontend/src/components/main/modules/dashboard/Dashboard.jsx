@@ -1,11 +1,13 @@
 import "./Dashboard.css";
-import { Card } from "../ui/Card";
+import { Card } from "../../ui/Card";
 import React, { useEffect, useState } from "react";
-import { OrdersReduced } from "./orders/OrdersReduced"; // Ajusta la ruta según sea necesario
-import { StatisticsChart } from "./statistics/StatisticsChart"; // Ajusta la ruta según sea necesario
-import { getStatisticsDataOrders, getOrders } from "../../../services/api"; // Ajusta la ruta según sea necesario
-import { useTopProductsLogic } from "../../../hooks/useTopProductsLogic"; // Ajusta la ruta según sea necesario
-import { BaseImgURL } from "../../../config";
+import { OrdersReduced } from "./OrdersReduced"; // Ajusta la ruta según sea necesario
+import { StatisticsChart } from "./StatisticsChart"; // Ajusta la ruta según sea necesario
+import { getStatisticsDataOrders, getOrders } from "../../../../services/api"; // Ajusta la ruta según sea necesario
+import { useTopProductsLogic } from "../../../../hooks/useTopProductsLogic"; // Ajusta la ruta según sea necesario
+import { BaseImgURL } from "../../../../config";
+import { SalesLineChart } from "./SalesLineChart";
+import { fetchSalesData } from "../../../../services/api";
 
 export function Dashboard() {
   const [data, setData] = useState({
@@ -19,6 +21,8 @@ export function Dashboard() {
   const { topProducts, loading: loadingTopProducts } = useTopProductsLogic();
   const [orders, setOrders] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
+  const [loadingSalesData, setLoadingSalesData] = useState(true); // Estado para cargar datos de ventas
+  const [salesData, setSalesData] = useState([]); // Estado para los datos de ventas
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,6 +49,18 @@ export function Dashboard() {
     fetchOrders();
   }, []);
 
+  useEffect(() => {
+    fetchSalesData()
+      .then((data) => {
+        setSalesData(data);
+        setLoadingSalesData(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching sales data:", error);
+        setLoadingSalesData(false);
+      });
+  }, []);
+
   // Filtrar los 10 últimos pedidos
   const latestOrders = orders.slice(-10);
 
@@ -56,6 +72,25 @@ export function Dashboard() {
       </div>
       <hr></hr>
       <div className="boards">
+        <Card cardName="Estadísticas de pedidos">
+          <div className="StatisticsChart">
+            <StatisticsChart data={data} />
+          </div>
+        </Card>
+        <Card cardName="Estadísticas Diarias de Ventas">
+          {loadingSalesData ? (
+            <p>Loading...</p>
+          ) : (
+            <SalesLineChart data={salesData} />
+          )}
+        </Card>
+        <Card cardName="Pedidos">
+          {loadingOrders ? (
+            <p>Loading...</p>
+          ) : (
+            <OrdersReduced orders={latestOrders} />
+          )}
+        </Card>
         <Card cardName="Top 4 Productos Más Vendidos">
           <br></br>
           {loadingTopProducts ? (
@@ -79,18 +114,6 @@ export function Dashboard() {
                 </li>
               ))}
             </ul>
-          )}
-        </Card>
-        <Card cardName="Ventas">
-          <div className="StatisticsChart">
-            <StatisticsChart data={data} />
-          </div>
-        </Card>
-        <Card cardName="Pedidos">
-          {loadingOrders ? (
-            <p>Loading...</p>
-          ) : (
-            <OrdersReduced orders={latestOrders} />
           )}
         </Card>
       </div>

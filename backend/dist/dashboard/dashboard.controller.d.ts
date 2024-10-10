@@ -6,5 +6,9 @@ export declare class DashboardController {
         message: string;
     };
     getTopProducts(): Promise<import("../entities/product.entity").Product[]>;
+    getSalesData(): Promise<{
+        date: any;
+        sales: number;
+    }[]>;
 }
 //# sourceMappingURL=dashboard.controller.d.ts.map

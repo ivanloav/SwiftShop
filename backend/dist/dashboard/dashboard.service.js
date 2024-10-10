@@ -39,6 +39,19 @@ let DashboardService = class DashboardService {
             .limit(4)
             .getRawMany();
     }
+    async getSalesData() {
+        const salesData = await this.orderRepository
+            .createQueryBuilder("order")
+            .select("DATE(order.created_at)", "date")
+            .addSelect("SUM(order.total)", "sales")
+            .groupBy("DATE(order.created_at)")
+            .orderBy("DATE(order.created_at)", "ASC")
+            .getRawMany();
+        return salesData.map((entry) => ({
+            date: entry.date,
+            sales: parseFloat(entry.sales),
+        }));
+    }
 };
 DashboardService = __decorate([
     (0, common_1.Injectable)(),

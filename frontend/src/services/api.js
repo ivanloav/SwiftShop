@@ -258,3 +258,15 @@ export const getTopProducts = async () => {
     throw error;
   }
 };
+
+export const fetchSalesData = async () => {
+  try {
+    const response = await api.get(`${API_BASE_URL}/dashboard/sales-data`, {
+      headers: { Authorization: `Bearer ${getToken()}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching sales data:", error);
+    throw error;
+  }
+};
