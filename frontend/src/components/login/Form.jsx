@@ -19,7 +19,7 @@ export function RegisterForm() {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/register`, {
+      /*      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,7 +33,8 @@ export function RegisterForm() {
 
       const data = await response.json();
 
-      if (data.success) {
+      if (data.success) {*/
+      if (password === confirmPassword) {
         // Redirigir al login con el mensaje de éxito
         navigate("/login", {
           state: {
