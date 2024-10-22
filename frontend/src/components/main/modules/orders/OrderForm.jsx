@@ -161,7 +161,7 @@ export const OrderForm = ({ isEditMode, isViewMode }) => {
           <div className="image-preview">
             {productImage ? (
               <img
-                src={`${BaseImgURL}${productImage}`}
+                src={`${BaseImgURL}${productImage}.png`}
                 alt="Imagen del producto"
                 style={{ height: "200px", margin: "10px 0" }}
                 onError={handleImageError} // Si falla, cambiará a una imagen genérica
