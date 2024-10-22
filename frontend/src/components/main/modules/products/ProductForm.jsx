@@ -141,7 +141,7 @@ export const ProductForm = ({ isEditMode }) => {
           <div className="image-preview">
             {formData.image ? (
               <img
-                src={`${BaseImgURL}${formData.image}`}
+                src={`${BaseImgURL}${formData.image}.png`}
                 alt="Imagen del producto"
                 style={{ height: "200px", margin: "10px 0" }}
                 onError={handleImageError} // Si falla, cambiará a una imagen genérica
