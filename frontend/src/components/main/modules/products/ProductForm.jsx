@@ -119,7 +119,7 @@ export const ProductForm = ({ isEditMode }) => {
             onChange={handleChange}
             required
           />
-          <input
+          <textarea
             placeholder="Descripción"
             type="text"
             name="description"
