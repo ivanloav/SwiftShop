@@ -1,4 +1,4 @@
-import { Customer } from "../customers/customer.entity";
+import { Customer } from "./customer.entity";
 import { Product } from "./product.entity";
 export declare class Order {
     orderId: number;
@@ -6,6 +6,7 @@ export declare class Order {
     product: Product;
     quantity: number;
     total: number;
+    status: string;
     created_at: Date;
     updated_at: Date;
 }

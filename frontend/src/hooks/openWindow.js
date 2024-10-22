@@ -1,5 +1,4 @@
-
-export const OpenInNewWindow = (url) => {
-    const features = "width=600,height=600,scrollbars=yes,resizable=yes";
-    window.open(url, "_blank", features);
-}
+export const OpenInNewWindow = (url, width, height) => {
+  const features = `width=${width},height=${height},scrollbars=yes,resizable=yes`;
+  window.open(url, "_blank", features);
+};

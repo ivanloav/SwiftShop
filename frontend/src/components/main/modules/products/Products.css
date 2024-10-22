@@ -1,0 +1,33 @@
+.full-screen {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  /* flex-wrap: wrap;
+    justify-content: stretch; */
+}
+
+.col-2 {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inventario {
+  height: 85%;
+  border-radius: 25px;
+  background-color: #f7f7fa;
+  background-image: linear-gradient(62deg, #ffffff 0%, #f0f2f8 100%);
+  box-shadow: 1px 1px 2px 0;
+  padding: 15px;
+}
+
+#inventario {
+  width: 100%;
+}
+
+.botones button {
+  height: 50%;
+  margin: auto 0;
+}

@@ -1,13 +1,12 @@
 import "./Form.css";
-import logo from "/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 import { API_BASE_URL } from "../../config";
 
 export function RegisterForm() {
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // Hook de navegación
 
-  // Maneja la solicitud de registro
   async function handleRegister(event) {
     event.preventDefault();
     const email = event.target.elements.email.value;
@@ -20,7 +19,7 @@ export function RegisterForm() {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/register`, {
+      /*      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,14 +27,21 @@ export function RegisterForm() {
         body: JSON.stringify({
           email,
           password,
-          name: "defaultName", // Si el campo `name` no está en el formulario
+          name: "defaultName",
         }),
       });
 
       const data = await response.json();
 
-      if (data.success) {
-        alert("Usuario registrado exitosamente");
+      if (data.success) {*/
+      if (password === confirmPassword) {
+        // Redirigir al login con el mensaje de éxito
+        navigate("/login", {
+          state: {
+            successMessage:
+              "Usuario registrado. Por favor, loguéate para continuar",
+          },
+        });
       } else {
         setError(data.message);
       }
@@ -45,52 +51,48 @@ export function RegisterForm() {
   }
 
   return (
-    <>
-      <div className="container">
-        <img src={logo} className="logo" alt="Logo" />
-        <form onSubmit={handleRegister}>
-          <input
-            name="email"
-            className="client"
-            placeholder="Correo electrónico"
-            type="email"
-            required
-          />
-          <input
-            name="password"
-            placeholder="Crear contraseña"
-            type="password"
-            required
-          />
-          <input
-            name="confirmPassword"
-            placeholder="Confirmar contraseña"
-            type="password"
-            required
-          />
-          <button type="submit">Registrarse</button>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          <Link to="/login">Ir a Login</Link>
-        </form>
-      </div>
-    </>
+    <div className="container">
+      <img src="/logo.png" alt="Logo" className="logo" />
+      <form onSubmit={handleRegister}>
+        <input
+          name="email"
+          className="client"
+          placeholder="Correo electrónico"
+          type="email"
+          required
+        />
+        <input
+          name="password"
+          placeholder="Crear contraseña"
+          type="password"
+          required
+        />
+        <input
+          name="confirmPassword"
+          placeholder="Confirmar contraseña"
+          type="password"
+          required
+        />
+        <button type="submit">Registrarse</button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <Link to="/login">Ir a Login</Link>
+      </form>
+    </div>
   );
 }
 
 export function LoginForm() {
   const [error, setError] = useState("");
+  const location = useLocation();
+  const successMessage = location.state?.successMessage;
+  const navigate = useNavigate(); // Hook de navegación
 
-  // Maneja la solicitud de inicio de sesión
   async function handleLogin(event) {
     event.preventDefault();
     const email = event.target.elements.email.value;
     const password = event.target.elements.password.value;
 
     try {
-      console.log(API_BASE_URL); // Debe mostrar la URL completa incluyendo /api
-      console.log(`URL de login: ${API_BASE_URL}/auth/login`);
-      console.log(import.meta.env);
-
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
@@ -105,10 +107,8 @@ export function LoginForm() {
       const data = await response.json();
 
       if (data.accessToken) {
-        // Almacena el token en localStorage
         localStorage.setItem("accessToken", data.accessToken);
-        // Redirige al dashboard
-        window.location.href = "/user/dashboard";
+        navigate("/user/dashboard");
       } else {
         setError(data.message);
       }
@@ -118,28 +118,27 @@ export function LoginForm() {
   }
 
   return (
-    <>
-      <div className="container">
-        <img src={logo} className="logo" alt="Logo" />
-        <form onSubmit={handleLogin}>
-          <input
-            name="email"
-            className="client"
-            placeholder="Correo electrónico"
-            type="email"
-            required
-          />
-          <input
-            name="password"
-            placeholder="Contraseña"
-            type="password"
-            required
-          />
-          <button type="submit">Iniciar Sesión</button>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          <Link to="/register">Ir a Registro</Link>
-        </form>
-      </div>
-    </>
+    <div className="container">
+      <img src="/logo.png" alt="Logo" className="logo" />
+      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+      <form onSubmit={handleLogin}>
+        <input
+          name="email"
+          className="client"
+          placeholder="Correo electrónico"
+          type="email"
+          required
+        />
+        <input
+          name="password"
+          placeholder="Contraseña"
+          type="password"
+          required
+        />
+        <button type="submit">Iniciar Sesión</button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <Link to="/register">Ir a Registro</Link>
+      </form>
+    </div>
   );
 }

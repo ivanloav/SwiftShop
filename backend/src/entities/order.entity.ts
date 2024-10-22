@@ -6,7 +6,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { Customer } from "./customer.entity";
-import { Product } from "./product.entity"; // Importar Product
+import { Product } from "./product.entity";
 
 @Entity("orders")
 export class Order {
@@ -26,6 +26,9 @@ export class Order {
 
   @Column("decimal", { precision: 10, scale: 2 })
   total: number;
+
+  @Column("text")
+  status: string;
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;

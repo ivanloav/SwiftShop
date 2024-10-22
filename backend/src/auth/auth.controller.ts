@@ -20,7 +20,8 @@ export class AuthController {
     // Verificamos si el login fue exitoso y, en caso positivo, devolvemos el token
     if (result.success) {
       return {
-        message: "Login exitoso22",
+        success: true,
+        message: "Login exitoso",
         accessToken: result.accessToken, // Incluimos el token JWT en la respuesta
         user: result.user,
       };

@@ -1,3 +1,4 @@
+// Desc: Custom hook to fetch products data from the API
 import { useState, useEffect } from "react";
 import { getProducts } from "../services/api";
 

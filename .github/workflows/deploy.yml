@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      #- develop
+      - develop
 
 jobs:
   deploy:
@@ -40,6 +40,7 @@ jobs:
             echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> /home/ubuntu/SwiftShop/.env
             echo "API_BASE_URL=${{ secrets.API_BASE_URL_EC2 }}" >> /home/ubuntu/SwiftShop/.env
             echo "VITE_API_BASE_URL=${{ secrets.API_BASE_URL_EC2 }}" >> /home/ubuntu/SwiftShop/.env
+            echo "VITE_IMG_BASE_URL=${{ secrets.IMG_BASE_URL_S3 }}" >> /home/ubuntu/SwiftShop/.env
             # Verificar que el archivo .env se ha creado correctamente
             cat /home/ubuntu/SwiftShop/.env
 

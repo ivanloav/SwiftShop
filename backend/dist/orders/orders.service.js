@@ -8,69 +8,105 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrdersService = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const order_entity_1 = require("../entities/order.entity");
+const customer_entity_1 = require("../entities/customer.entity");
+const product_entity_1 = require("../entities/product.entity");
 let OrdersService = class OrdersService {
-    constructor() {
-        this.orders = [
-            {
-                id: 1,
-                storeId: 1,
-                products: [
-                    { id: 1, name: 'Producto 1', price: 100, quantity: 1 },
-                    { id: 2, name: 'Producto 2', price: 200, quantity: 2 }
-                ],
-                total: 500
-            },
-            {
-                id: 2,
-                storeId: 2,
-                products: [
-                    { id: 3, name: 'Producto 3', price: 300, quantity: 3 },
-                    { id: 4, name: 'Producto 4', price: 400, quantity: 4 }
-                ],
-                total: 2000
-            },
-            {
-                id: 3,
-                storeId: 3,
-                products: [
-                    { id: 5, name: 'Producto 5', price: 500, quantity: 5 },
-                    { id: 6, name: 'Producto 6', price: 600, quantity: 6 }
-                ],
-                total: 5500
-            },
-        ];
+    constructor(ordersRepository, customerRepository, productRepository) {
+        this.ordersRepository = ordersRepository;
+        this.customerRepository = customerRepository;
+        this.productRepository = productRepository;
     }
     findAll() {
-        return this.orders;
+        return this.ordersRepository.find({
+            relations: ["customer", "product"],
+        });
     }
     findOne(id) {
-        return this.orders.find(order => order.id === id);
+        return this.ordersRepository.findOne({
+            where: { orderId: id },
+            relations: ["customer", "product"],
+        });
     }
-    create(order) {
-        this.orders.push(order);
-        return order;
+    async create(createOrderDto) {
+        const newOrder = this.ordersRepository.create(Object.assign(Object.assign({}, createOrderDto), { customer: { customerId: createOrderDto.customerId }, product: { productId: createOrderDto.productId } }));
+        return this.ordersRepository.save(newOrder);
     }
-    update(id, order) {
-        const index = this.orders.findIndex(o => o.id === id);
-        if (index !== -1) {
-            this.orders[index] = order;
+    async update(id, updateOrderDto) {
+        const { customerId, productId } = updateOrderDto, updateData = __rest(updateOrderDto, ["customerId", "productId"]);
+        const order = await this.ordersRepository.findOne({
+            where: { orderId: id },
+            relations: ["customer", "product"],
+        });
+        if (!order) {
+            throw new common_1.NotFoundException(`Order with ID ${id} not found`);
         }
-        return order;
-    }
-    remove(id) {
-        const index = this.orders.findIndex(o => o.id === id);
-        if (index !== -1) {
-            this.orders.splice(index, 1);
+        if (customerId) {
+            const customer = await this.customerRepository.findOne({
+                where: { customerId: customerId },
+            });
+            if (!customer) {
+                throw new common_1.NotFoundException(`Customer with ID ${customerId} not found`);
+            }
+            order.customer = customer;
         }
-        return { message: 'Orden eliminada exitosamente.' };
+        if (productId) {
+            const product = await this.productRepository.findOne({
+                where: { productId: productId },
+            });
+            if (!product) {
+                throw new common_1.NotFoundException(`Product with ID ${productId} not found`);
+            }
+            order.product = product;
+        }
+        Object.assign(order, updateData);
+        return this.ordersRepository.save(order);
+    }
+    async updateStatus(id, updateOrderStatusDto) {
+        const order = await this.ordersRepository.findOne({
+            where: { orderId: id },
+            relations: ["customer", "product"],
+        });
+        if (!order) {
+            throw new common_1.NotFoundException(`Order with ID ${id} not found`);
+        }
+        Object.assign(order, updateOrderStatusDto);
+        return this.ordersRepository.save(order);
+    }
+    async remove(id) {
+        const result = await this.ordersRepository.delete(id);
+        if (result.affected === 0) {
+            throw new common_1.NotFoundException(`Order with ID ${id} not found`);
+        }
     }
 };
 OrdersService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [])
+    __param(0, (0, typeorm_1.InjectRepository)(order_entity_1.Order)),
+    __param(1, (0, typeorm_1.InjectRepository)(customer_entity_1.Customer)),
+    __param(2, (0, typeorm_1.InjectRepository)(product_entity_1.Product)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
+        typeorm_2.Repository])
 ], OrdersService);
 exports.OrdersService = OrdersService;
 //# sourceMappingURL=orders.service.js.map

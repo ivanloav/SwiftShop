@@ -10,6 +10,7 @@ import { AuthModule } from "./auth/auth.module";
 import { UsersModule } from "./users/users.module";
 import { DashboardController } from "./dashboard/dashboard.controller"; // Importar el DashboardController
 import * as dotenv from "dotenv";
+import { DashboardModule } from "./dashboard/dashboard.module";
 
 dotenv.config();
 
@@ -37,7 +38,8 @@ dotenv.config();
     StoresModule,
     AuthModule,
     UsersModule,
+    DashboardModule,
   ],
-  controllers: [DashboardController], // Registrar el DashboardController
+  //controllers: [DashboardController], // Registrar el DashboardController
 })
 export class AppModule {}

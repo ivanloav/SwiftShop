@@ -11,23 +11,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateOrderDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const class_validator_1 = require("class-validator");
 class UpdateOrderDto {
 }
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: "ID del cliente que realiza el pedido" }),
+    (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
 ], UpdateOrderDto.prototype, "customerId", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: "ID del producto pedido" }),
+    (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
 ], UpdateOrderDto.prototype, "productId", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: "Cantidad de productos pedidos" }),
+    (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
 ], UpdateOrderDto.prototype, "quantity", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: "Total del pedido en euros" }),
+    (0, class_validator_1.IsDecimal)({ decimal_digits: "2", force_decimal: true }),
     __metadata("design:type", Number)
 ], UpdateOrderDto.prototype, "total", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: "Estado del pedido" }),
+    __metadata("design:type", String)
+], UpdateOrderDto.prototype, "status", void 0);
 exports.UpdateOrderDto = UpdateOrderDto;
 //# sourceMappingURL=update-order.dto.js.map

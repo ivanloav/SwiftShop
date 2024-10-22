@@ -4,7 +4,6 @@ export declare class CreateProductDto {
     readonly price: number;
     readonly stock: number;
     readonly category: string;
-    readonly image: string;
     readonly storeId: number;
 }
 //# sourceMappingURL=create-product.dto.d.ts.map

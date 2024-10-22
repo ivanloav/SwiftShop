@@ -8,57 +8,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomersService = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const customer_entity_1 = require("../entities/customer.entity");
 let CustomersService = class CustomersService {
-    constructor() {
-        this.customers = [
-            {
-                id: 1,
-                name: 'Cliente 1',
-                email: ''
-            },
-            {
-                id: 2,
-                name: 'Cliente 2',
-                email: ''
-            },
-            {
-                id: 3,
-                name: 'Cliente 3',
-                email: ''
-            },
-        ];
+    constructor(customersRepository) {
+        this.customersRepository = customersRepository;
     }
     findAll() {
-        return this.customers;
+        return this.customersRepository.find({ relations: ["orders"] });
     }
     findOne(id) {
-        return this.customers.find(customer => customer.id === id);
+        return this.customersRepository.findOne({
+            where: { customerId: id },
+            relations: ["orders"],
+        });
     }
-    create(customer) {
-        this.customers.push(customer);
-        return customer;
+    create(createCustomerDto) {
+        const newCustomer = this.customersRepository.create(createCustomerDto);
+        return this.customersRepository.save(newCustomer);
     }
-    update(id, customer) {
-        const index = this.customers.findIndex(c => c.id === id);
-        if (index !== -1) {
-            this.customers[index] = customer;
-        }
-        return customer;
+    async update(id, updateCustomerDto) {
+        await this.customersRepository.update(id, updateCustomerDto);
+        return this.customersRepository.findOneBy({ customerId: id });
     }
-    remove(id) {
-        const index = this.customers.findIndex(c => c.id === id);
-        if (index !== -1) {
-            this.customers.splice(index, 1);
-        }
-        return { message: 'Cliente eliminado exitosamente.' };
+    async remove(id) {
+        await this.customersRepository.delete(id);
     }
 };
 CustomersService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [])
+    __param(0, (0, typeorm_1.InjectRepository)(customer_entity_1.Customer)),
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], CustomersService);
 exports.CustomersService = CustomersService;
 //# sourceMappingURL=customers.service.js.map

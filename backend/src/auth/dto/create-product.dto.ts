@@ -16,11 +16,8 @@ export class CreateProductDto {
   @ApiProperty({ description: "Categoría del producto" })
   readonly category: string;
 
-  @ApiProperty({ description: "Imagen del producto" })
-  readonly image: string;
-
   @ApiProperty({
     description: "ID de la tienda a la que pertenece el producto",
   })
-  readonly storeId: number;
+  readonly storeId: number; // Asegúrate de que este campo esté presente
 }

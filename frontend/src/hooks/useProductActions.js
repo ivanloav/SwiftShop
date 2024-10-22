@@ -1,3 +1,4 @@
+// Este archivo contiene el hook personalizado que se encarga de manejar las acciones de edición y eliminación de productos.
 import { useState } from "react";
 import { deleteProduct, updateProduct } from "../services/api"; // Asegúrate de que estas funciones están implementadas en tu servicio API
 
@@ -10,7 +11,7 @@ export function useProductActions() {
     setError(null);
     try {
       await deleteProduct(productId);
-      alert("Product deleted successfully!");
+      alert("¡Producto eliminado exitosamente!");
       window.location.reload(); // Optionally reload the page to reflect changes
     } catch (error) {
       setError("Failed to delete product");
@@ -24,7 +25,7 @@ export function useProductActions() {
     setError(null);
     try {
       await updateProduct(productId, updatedData);
-      alert("Product updated successfully!");
+      alert("¡Producto actualizado exitosamente!");
       window.location.reload(); // Optionally reload the page to reflect changes
     } catch (error) {
       setError("Failed to update product");

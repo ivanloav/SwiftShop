@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Order = void 0;
 const typeorm_1 = require("typeorm");
-const customer_entity_1 = require("../customers/customer.entity");
+const customer_entity_1 = require("./customer.entity");
 const product_entity_1 = require("./product.entity");
 let Order = class Order {
 };
@@ -37,6 +37,10 @@ __decorate([
     (0, typeorm_1.Column)("decimal", { precision: 10, scale: 2 }),
     __metadata("design:type", Number)
 ], Order.prototype, "total", void 0);
+__decorate([
+    (0, typeorm_1.Column)("text"),
+    __metadata("design:type", String)
+], Order.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" }),
     __metadata("design:type", Date)

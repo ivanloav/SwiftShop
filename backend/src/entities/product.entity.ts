@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { Inventory } from "./inventory.entity";
 import { Order } from "./order.entity";
@@ -29,17 +30,18 @@ export class Product {
   @Column()
   category: string;
 
-  // Relación con Inventory
-  @OneToMany(() => Inventory, (inventory) => inventory.product)
-  inventory: Inventory[];
+  @Column()
+  image: string;
 
-  // Relación con Order
+  @ManyToOne(() => Store, (store) => store.products)
+  @JoinColumn({ name: "storeId" })
+  store: Store;
+
+  @OneToMany(() => Inventory, (inventory) => inventory.product)
+  inventories: Inventory[];
+
   @OneToMany(() => Order, (order) => order.product)
   orders: Order[];
-
-  // Relación con Store
-  @ManyToOne(() => Store, (store) => store.products)
-  store: Store;
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;

@@ -6,7 +6,7 @@
     "build": "nest build",
     "start": "nest start",
     "dev": "nodemon main.js",
-    "start:dev": "nest start --watch",
+    "start:dev": "bash ../ssh-tunnel.sh && nest start --watch",
     "start:debug": "nest start --debug --watch"
   },
   "dependencies": {
@@ -19,8 +19,14 @@
     "@nestjs/swagger": "^5.2.1",
     "@nestjs/typeorm": "^10.0.2",
     "bcrypt": "^5.1.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
+    "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.3",
+    "nodemailer": "^6.9.15",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.1.13",

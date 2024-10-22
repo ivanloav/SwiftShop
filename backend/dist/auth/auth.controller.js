@@ -28,7 +28,8 @@ let AuthController = class AuthController {
         const result = await this.authService.login(loginDto);
         if (result.success) {
             return {
-                message: "Login exitoso22",
+                success: true,
+                message: "Login exitoso",
                 accessToken: result.accessToken,
                 user: result.user,
             };

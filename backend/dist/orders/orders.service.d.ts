@@ -1,12 +1,20 @@
+import { Repository } from "typeorm";
+import { Order } from "../entities/order.entity";
+import { CreateOrderDto } from "src/auth/dto/create-order.dto";
+import { UpdateOrderDto } from "src/auth/dto/update-order.dto";
+import { Customer } from "../entities/customer.entity";
+import { Product } from "../entities/product.entity";
+import { UpdateOrderStatusDto } from "src/auth/dto/update-order-status.dto";
 export declare class OrdersService {
-    private readonly orders;
-    constructor();
-    findAll(): any[];
-    findOne(id: number): any;
-    create(order: any): any;
-    update(id: number, order: any): any;
-    remove(id: number): {
-        message: string;
-    };
+    private readonly ordersRepository;
+    private readonly customerRepository;
+    private readonly productRepository;
+    constructor(ordersRepository: Repository<Order>, customerRepository: Repository<Customer>, productRepository: Repository<Product>);
+    findAll(): Promise<Order[]>;
+    findOne(id: number): Promise<Order>;
+    create(createOrderDto: CreateOrderDto): Promise<Order>;
+    update(id: number, updateOrderDto: UpdateOrderDto): Promise<Order>;
+    updateStatus(id: number, updateOrderStatusDto: UpdateOrderStatusDto): Promise<Order>;
+    remove(id: number): Promise<void>;
 }
 //# sourceMappingURL=orders.service.d.ts.map

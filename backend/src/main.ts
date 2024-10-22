@@ -28,7 +28,7 @@ async function bootstrap() {
 
   // Habilita la validación global
   app.useGlobalPipes(new ValidationPipe());
-
+  console.log("Servidor configurado correctamente con CORS y prefijo /api.");
   // Usa el puerto definido en las variables de entorno o el 3000 por defecto
   const port = process.env.PORT || 3000;
   await app.listen(port, "0.0.0.0"); // Escuchar en todas las interfaces

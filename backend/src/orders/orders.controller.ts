@@ -1,17 +1,19 @@
 import {
   Controller,
   Get,
+  Param,
+  Body,
   Post,
   Put,
   Delete,
-  Param,
-  Body,
   UseGuards,
 } from "@nestjs/common";
-import { OrdersService } from "./orders.service";
 import { ApiTags, ApiParam, ApiBody } from "@nestjs/swagger";
-import { CreateOrderDto } from "../auth/dto/create-order.dto";
-import { UpdateOrderDto } from "../auth/dto/update-order.dto";
+import { OrdersService } from "./orders.service";
+import { CreateOrderDto } from "src/auth/dto/create-order.dto";
+import { UpdateOrderDto } from "src/auth/dto/update-order.dto";
+import { UpdateOrderStatusDto } from "src/auth/dto/update-order-status.dto";
+import { TopSellingProductDto } from "src/auth/dto/top-selling-product.dto";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 
 @ApiTags("Pedidos")
@@ -48,5 +50,15 @@ export class OrdersController {
   @Delete(":id")
   remove(@Param("id") id: number) {
     return this.ordersService.remove(id);
+  }
+
+  @ApiParam({ name: "id", required: true, description: "ID del pedido" })
+  @ApiBody({ type: UpdateOrderStatusDto })
+  @Put(":id/status")
+  updateStatus(
+    @Param("id") id: number,
+    @Body() updateOrderStatusDto: UpdateOrderStatusDto
+  ) {
+    return this.ordersService.updateStatus(id, updateOrderStatusDto);
   }
 }

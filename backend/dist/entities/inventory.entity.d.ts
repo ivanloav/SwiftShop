@@ -1,8 +1,8 @@
 import { Product } from "./product.entity";
 export declare class Inventory {
     inventoryId: number;
-    quantity: number;
     product: Product;
+    quantity: number;
     created_at: Date;
     updated_at: Date;
 }

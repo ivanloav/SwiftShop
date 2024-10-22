@@ -11,11 +11,7 @@ export class Store {
 
   @Column()
   owner: string;
-
-  // Relación con Product
-  @OneToMany(() => Product, (product) => product.store) // Define la relación inversa
-  products: Product[];
-
+  /*
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;
 
@@ -25,4 +21,8 @@ export class Store {
     onUpdate: "CURRENT_TIMESTAMP",
   })
   updated_at: Date;
+*/
+  // Relación con Product
+  @OneToMany(() => Product, (product) => product.store) // Define la relación inversa
+  products: Product[];
 }
