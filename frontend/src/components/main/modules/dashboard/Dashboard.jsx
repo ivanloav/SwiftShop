@@ -102,7 +102,7 @@ export function Dashboard() {
               {topProducts.map((product) => (
                 <li key={product.product_productId} className="product-item">
                   <img
-                    src={`${BaseImgURL}${product.product_image}`}
+                    src={`${BaseImgURL}${product.product_image}.png`}
                     alt={product.product_name}
                   />
                   <div className="product-info">
