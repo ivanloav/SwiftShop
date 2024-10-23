@@ -91,9 +91,7 @@ export const ProductForm = ({ isEditMode }) => {
       ...prevData,
       [name]: value,
       // Si isEditMode es false, actualiza automáticamente el campo 'image'
-      image: !isEditMode
-        ? value.replace(/\s+/g, "").toLowerCase()
-        : prevData.image,
+      image: !isEditMode ? value.replace(/\s+/g, "") : prevData.image,
     }));
   };
 
@@ -119,7 +117,7 @@ export const ProductForm = ({ isEditMode }) => {
             onChange={handleChange}
             required
           />
-          <input
+          <textarea
             placeholder="Descripción"
             type="text"
             name="description"
