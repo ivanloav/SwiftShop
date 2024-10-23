@@ -91,9 +91,7 @@ export const ProductForm = ({ isEditMode }) => {
       ...prevData,
       [name]: value,
       // Si isEditMode es false, actualiza automáticamente el campo 'image'
-      image: !isEditMode
-        ? value.replace(/\s+/g, "").toLowerCase()
-        : prevData.image,
+      image: !isEditMode ? value.replace(/\s+/g, "") : prevData.image,
     }));
   };
 
