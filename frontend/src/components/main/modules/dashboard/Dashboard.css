@@ -100,15 +100,16 @@
   flex-direction: column;
   justify-content: center; /* Centra el contenido verticalmente */
   align-items: center; /* Centra el contenido horizontalmente */
-  height: 100%; /* Asegura que la tarjeta ocupe todo el espacio disponible */
+  height: 95%; /* Asegura que la tarjeta ocupe todo el espacio disponible */
   box-sizing: border-box; /* Incluye padding y border en el tamaño total */
 }
 
 /* Ajusta el contenido dentro de la tarjeta Ventas */
-.StatisticsChart {
+.StatisticsChart,
+.SalesLineChart {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%; /* Asegura que el gráfico ocupe todo el espacio disponible */
-  width: 100%; /* Asegura que el gráfico ocupe todo el espacio disponible */
+  height: 95%; /* Asegura que el gráfico ocupe todo el espacio disponible */
+  width: 95%; /* Asegura que el gráfico ocupe todo el espacio disponible */
 }

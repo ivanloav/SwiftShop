@@ -78,11 +78,13 @@ export function Dashboard() {
           </div>
         </Card>
         <Card cardName="Estadísticas Diarias de Ventas">
-          {loadingSalesData ? (
-            <p>Loading...</p>
-          ) : (
-            <SalesLineChart data={salesData} />
-          )}
+          <div className="SalesLineChart">
+            {loadingSalesData ? (
+              <p>Loading...</p>
+            ) : (
+              <SalesLineChart data={salesData} />
+            )}
+          </div>
         </Card>
         <Card cardName="Pedidos">
           {loadingOrders ? (
