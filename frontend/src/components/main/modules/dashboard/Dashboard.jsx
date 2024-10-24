@@ -87,11 +87,13 @@ export function Dashboard() {
           </div>
         </Card>
         <Card cardName="Pedidos">
-          {loadingOrders ? (
-            <p>Loading...</p>
-          ) : (
-            <OrdersReduced orders={latestOrders} />
-          )}
+          <div className="OrdersReduced">
+            {loadingOrders ? (
+              <p>Loading...</p>
+            ) : (
+              <OrdersReduced orders={latestOrders} />
+            )}
+          </div>
         </Card>
         <Card cardName="Top 4 Productos Más Vendidos">
           <br></br>

@@ -1,7 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
 .containerBoard {
   width: 100%;
   height: 100%; /* Asegúrate de que ocupe toda la altura disponible */
@@ -28,10 +24,8 @@
   width: 100%;
 }
 
-.orders {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+.OrdersReduced {
   width: 100%;
+  min-width: 100%;
   min-height: 100%;
 }
